@@ -13,6 +13,9 @@
             android:name=".GovernMenuActivity"
             android:exported="false" />
         <activity
+            android:name=".StartMainProcessActivity"
+            android:exported="false" />
+        <activity
             android:name=".StartOfNewGameActivity"
             android:exported="false" />
         <activity
@@ -24,6 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MapActivity"
+            android:exported="false"></activity>
     </application>
 
 </manifest>

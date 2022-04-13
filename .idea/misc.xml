@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyGame/app/src/main/res/layout/activity_govern_menu.xml" value="0.34057971014492755" />
+        <entry key="..\:/MyGame/app/src/main/res/layout/activity_govern_menu.xml" value="0.31543624161073824" />
+        <entry key="..\:/MyGame/app/src/main/res/layout/activity_govern_menu_start.xml" value="0.1" />
         <entry key="..\:/MyGame/app/src/main/res/layout/activity_main.xml" value="0.30344202898550726" />
+        <entry key="..\:/MyGame/app/src/main/res/layout/activity_map.xml" value="0.1" />
         <entry key="..\:/MyGame/app/src/main/res/layout/activity_start_of_new_game.xml" value="0.34782608695652173" />
       </map>
     </option>

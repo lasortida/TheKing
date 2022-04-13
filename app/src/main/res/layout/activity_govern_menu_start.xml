@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper"
-    tools:context=".GovernMenuActivity">
+    tools:context=".StartMainProcessActivity">
 
     <ImageView
         android:id="@+id/imageViewButton"
@@ -47,8 +47,8 @@
 
     <ImageView
         android:id="@+id/curtain"
-        android:layout_width="20000dp"
-        android:layout_height="20000dp"
+        android:layout_width="2000dp"
+        android:layout_height="2000dp"
         android:src="@drawable/curtain"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
