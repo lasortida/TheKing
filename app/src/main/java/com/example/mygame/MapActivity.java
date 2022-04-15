@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class MapActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MapActivity extends AppCompatActivity {
     public TextView numberOfWeek;
     public Thread curtainAnimation;
     public Thread numberOfWeekAnimation;
+    public TextView signature;
 
     public boolean isWorkCurtain;
     public boolean isWorkNumber;
@@ -125,18 +127,40 @@ public class MapActivity extends AppCompatActivity {
         numberOfWeek = findViewById(R.id.textViewNumberOfWeek);
         map = findViewById(R.id.imageViewMap);
         view = findViewById(R.id.screen);
+        signature= findViewById(R.id.textViewTask);
+
+        int value;
+        try{
+            Bundle arguments = getIntent().getExtras();
+            value = arguments.getInt("INTERMEDIATE");
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            value = 0;
+        }
 
         numberOfWeekAnimation.start();
         curtainAnimation.start();
-        showStart(1);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (continuade){
-                    startActivity(new Intent(MapActivity.this, GovernMenuActivity.class));
+
+        if (value == 1){
+            showOnlyMap();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
                 }
-            }
-        });
+            });
+        }
+        else{
+            showStart(1);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (continuade){
+                        startActivity(new Intent(MapActivity.this, GovernMenuActivity.class));
+                    }
+                }
+            });
+        }
     }
 
 
@@ -148,6 +172,9 @@ public class MapActivity extends AppCompatActivity {
         isWorkCurtain = true;
     }
 
-
+    public void showOnlyMap(){
+        curtain.setVisibility(View.INVISIBLE);
+        signature.setText("Нажмите, чтобы свернуть...");
+    }
 
 }
