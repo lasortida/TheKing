@@ -1,6 +1,9 @@
 package com.example.mygame;
 
-public class Storage {
+import java.io.Serializable;
+
+public class Storage implements Serializable {
+
     Country[] listOfCountries = {
             new Country("Грандерберг"),
             new Country("Гоуланд"),
@@ -12,7 +15,7 @@ public class Storage {
             new Country("Гринленд"),
     };
 
-    Act[] acts = new Act[]{
+    public Act[] acts = new Act[]{
             new Act("Наши агенты узнали, что у нас есть угроза нападения на востоке. Что будем делать?", new Answer[]{
                     new Answer("Укрепим крепость", new Effect(0, 0, -0.17, 0.17, 0)),
                     new Answer("Успокоимся...", new Effect(0, 0, 0.17, -0.17, 0))

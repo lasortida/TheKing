@@ -1,6 +1,8 @@
 package com.example.mygame;
 
-public class Country {
+import java.io.Serializable;
+
+public class Country implements Serializable {
     String name;
     boolean isInterWar;
     boolean isCivilWar;

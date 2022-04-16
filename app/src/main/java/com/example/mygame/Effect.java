@@ -1,6 +1,8 @@
 package com.example.mygame;
 
-public class Effect {
+import java.io.Serializable;
+
+public class Effect implements Serializable {
     private double bourgeoisMoodChange;
     private double workersMoodChange;
     private double moneyStatusChange;

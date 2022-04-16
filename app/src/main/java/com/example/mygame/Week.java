@@ -1,9 +1,11 @@
 package com.example.mygame;
 
-public class Day {
+import java.io.Serializable;
+
+public class Week implements Serializable {
     private Act[] acts = new Act[3];
 
-    public Day(Storage storage){
+    public Week(Storage storage){
         for (int i = 0; i < 3; ++i){
             int number = (int) (Math.random() * storage.acts.length);
             while (storage.getAct(number) == null){

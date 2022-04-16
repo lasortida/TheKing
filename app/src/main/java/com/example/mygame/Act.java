@@ -1,6 +1,8 @@
 package com.example.mygame;
 
-public class Act {
+import java.io.Serializable;
+
+public class Act implements Serializable {
 
     private String text;
     private Answer[] answers;

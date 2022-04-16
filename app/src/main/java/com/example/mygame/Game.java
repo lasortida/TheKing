@@ -2,31 +2,41 @@ package com.example.mygame;
 
 import java.io.Serializable;
 
-public class Game {
+public class Game implements Serializable {
 
-    private static double bourgeoisMood = 0.5;
-    private static double workersMood = 0.5;
-    private static double moneyStatus = 0.5;
-    private static double armyMood = 0.5;
-    private static double foodStatus = 0.5;
+    private double bourgeoisMood = 0.5;
+    private double workersMood = 0.5;
+    private double moneyStatus = 0.5;
+    private double armyMood = 0.5;
+    private double foodStatus = 0.5;
 
     private Storage storage;
 
+    private Week week;
+    private static int numberOfWeek = 0;
+
     public Game(Storage storage){
-        bourgeoisMood = 0.5;
-        workersMood = 0.5;
-        moneyStatus = 0.5;
-        armyMood = 0.5;
-        foodStatus = 0.5;
         this.storage = storage;
     }
 
-    public static void takeChanges(Effect effect) {
+    public void takeChanges(Effect effect) {
         bourgeoisMood += effect.getBourgeoisMoodChange();
         workersMood += effect.getWorkersMoodChange();
         moneyStatus += effect.getMoneyStatusChange();
         armyMood += effect.getArmyMoodChange();
         foodStatus += effect.getFoodStatusChange();
+    }
+
+    public void setWeek(){
+        week = new Week(storage);
+        numberOfWeek++;
+    }
+    public Week getWeek(){
+        return week;
+    }
+
+    public int getNumberOfWeek(){
+        return numberOfWeek;
     }
 
     public double getBourgeoisMood(){

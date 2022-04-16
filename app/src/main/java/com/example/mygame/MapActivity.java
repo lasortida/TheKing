@@ -129,10 +129,12 @@ public class MapActivity extends AppCompatActivity {
         view = findViewById(R.id.screen);
         signature= findViewById(R.id.textViewTask);
 
+        Bundle args = getIntent().getExtras();
+
         int value;
+
         try{
-            Bundle arguments = getIntent().getExtras();
-            value = arguments.getInt("INTERMEDIATE");
+            value = args.getInt("INTERMEDIATE");
         } catch (NullPointerException e){
             e.printStackTrace();
             value = 0;
@@ -151,12 +153,14 @@ public class MapActivity extends AppCompatActivity {
             });
         }
         else{
-            showStart(1);
+            Game game = (Game) args.getSerializable("GAME");
+            int number = game.getNumberOfWeek();
+            showStart(number);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (continuade){
-                        startActivity(new Intent(MapActivity.this, GovernMenuActivity.class));
+                        startActivity(new Intent(MapActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
                     }
                 }
             });

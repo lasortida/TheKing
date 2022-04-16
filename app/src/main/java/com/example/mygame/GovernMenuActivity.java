@@ -26,6 +26,9 @@ public class GovernMenuActivity extends AppCompatActivity {
         curtain = findViewById(R.id.curtain);
         jobButton = findViewById(R.id.buttonTasks);
 
+        Bundle arguments = getIntent().getExtras();
+        Game game = (Game) arguments.getSerializable("GAME");
+
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +53,8 @@ public class GovernMenuActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                        startActivity(new Intent(GovernMenuActivity.this, MapActivity.class));
+                        game.setWeek();
+                        startActivity(new Intent(GovernMenuActivity.this, MapActivity.class).putExtra("GAME", game));
                     }
                 }.start();
             }
@@ -58,7 +62,7 @@ public class GovernMenuActivity extends AppCompatActivity {
         jobButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(GovernMenuActivity.this, JobActivity.class).putExtra("GAME", game));
             }
         });
     }

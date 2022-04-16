@@ -17,6 +17,8 @@ public class StartMainProcessActivity extends AppCompatActivity {
         ImageView curtain = findViewById(R.id.curtain);
         curtain.setImageAlpha(0);
         ImageView button = findViewById(R.id.imageViewButton);
+        Game game = new Game(new Storage());
+        game.setWeek();
         Thread thread = new Thread(){
             boolean isFinish = false;
 
@@ -30,7 +32,7 @@ public class StartMainProcessActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                startActivity(new Intent(getApplicationContext(), MapActivity.class).putExtra("GAME", game));
             }
         };
         button.setOnClickListener(new View.OnClickListener() {

@@ -1,11 +1,10 @@
 package com.example.mygame;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class JobActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    private Storage storage;
     private boolean flag = false;
     private Game game;
-    private Day day;
+    private Week week;
     private View frameView;
     private View mainView;
     private TextView textViewLeft, textViewRight, textViewTask;
@@ -32,7 +30,10 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
         textViewTask.setVisibility(View.VISIBLE);
         frameView = findViewById(R.id.frame);
         frameView.setOnTouchListener(this);
-        storage = new Storage(); // исправить
+
+        Bundle arguments = getIntent().getExtras();
+        game = (Game) arguments.getSerializable("GAME");
+        week = game.getWeek();
 
         mainView = findViewById(R.id.fullscreen);
         textViewLeft = findViewById(R.id.textLeft);
@@ -48,6 +49,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
         anvilUnder = findViewById(R.id.imageViewAnvilUnderwrite);
         breadUnder = findViewById(R.id.imageViewBreadUnderwrite);
         thread.start();
+        flag = true;
     }
 
     private int numberOfDay = 0;
@@ -72,16 +74,16 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
             textViewRight.setVisibility(View.INVISIBLE);
             if (v.getX() < 0 - mainView.getWidth() / 3 || v.getX() > mainView.getWidth() / 3){
                 if (end){
-                    finish();
                     v.setX(0);
+                    startActivity(new Intent(JobActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
                     return true;
                 }
                 if (v.getX() < 0  - mainView.getWidth() / 3 && numberOfActInADay != 0){
-                    game.takeChanges(day.getActs()[numberOfActInADay - 1].getAnswer(0).getEffect());
+                    game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(0).getEffect());
                     flag = true;
                 }
                 if (v.getX() > mainView.getWidth() / 3 && numberOfActInADay != 0){
-                    game.takeChanges(day.getActs()[numberOfActInADay - 1].getAnswer(1).getEffect());
+                    game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(1).getEffect());
                     flag = true;
                 }
                 if (numberOfActInADay == 3){
@@ -90,12 +92,12 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                     textViewRight.setText("Далее");
                     v.setX(0);
                     end = true;
-                    return false;
+                    return true;
 
                 }
-                textViewTask.setText(day.getActs()[numberOfActInADay].getText());
-                textViewLeft.setText(day.getActs()[numberOfActInADay].getAnswer(0).getText());
-                textViewRight.setText(day.getActs()[numberOfActInADay].getAnswer(1).getText());
+                textViewTask.setText(week.getActs()[numberOfActInADay].getText());
+                textViewLeft.setText(week.getActs()[numberOfActInADay].getAnswer(0).getText());
+                textViewRight.setText(week.getActs()[numberOfActInADay].getAnswer(1).getText());
                 numberOfActInADay++;
                 v.setX(0);
             }
@@ -103,7 +105,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                 v.setX(0);
             }
         }
-        return false;
+        return true;
     }
 
     private Thread thread = new Thread(new Runnable() {
