@@ -184,6 +184,30 @@ public class Storage implements Serializable {
 //            }),
     };
 
+    private static Post[] posts = new Post[] {
+            new Post("Минимтр финансов"),
+            new Post("Министр военных дел"),
+            new Post("Министр сельского хозяйства"),
+            new Post("Личный телохранитель"),
+            new Post("Начальник полиции"),
+            new Post("Министр иностранных дел"),
+            new Post("Личный шеф-повар")
+    };
+
+    public Hero[] postHeroes = new Hero[]{
+            new Hero("Джек", posts[0]),
+            new Hero("Шон", posts[1]),
+            new Hero("Лара", posts[2]),
+            new Hero("Саймон", posts[3]),
+            new Hero("Эйвон", posts[4]),
+            new Hero("Мария", posts[5]),
+            new Hero("Элиат", posts[6])
+    };
+
+    public void setNewsNull(int id){
+        sampleNews[id] = null;
+    }
+
     public void setActsNull(int number){
         acts[number] = null;
     }

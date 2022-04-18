@@ -10,7 +10,7 @@ public class Game implements Serializable {
     private double armyMood = 0.5;
     private double foodStatus = 0.5;
 
-    private Storage storage;
+    public Storage storage;
 
     private Week week;
     private static int numberOfWeek = 0;
@@ -41,6 +41,7 @@ public class Game implements Serializable {
             random = (int) Math.random() * storage.sampleNews.length;
         }
         this.news = storage.sampleNews[random];
+        storage.setNewsNull(random);
     }
 
     public String getNews(){
