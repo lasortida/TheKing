@@ -15,6 +15,16 @@ public class Storage implements Serializable {
             new Country("Гринленд"),
     };
 
+    String[] sampleNews = {
+            "Тест 1",
+            "Тест 2",
+            "Тест 7",
+            "Тест 6",
+            "Тест 5",
+            "Тест 4",
+            "Тест 3"
+    };
+
     public Act[] acts = new Act[]{
             new Act("Наши агенты узнали, что у нас есть угроза нападения на востоке. Что будем делать?", new Answer[]{
                     new Answer("Укрепим крепость", new Effect(0, 0, -0.17, 0.17, 0)),

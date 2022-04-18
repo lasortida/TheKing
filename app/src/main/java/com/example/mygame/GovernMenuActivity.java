@@ -53,7 +53,7 @@ public class GovernMenuActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                        game.setWeek();
+                        game.setNewWeek();
                         startActivity(new Intent(GovernMenuActivity.this, MapActivity.class).putExtra("GAME", game));
                     }
                 }.start();

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.controls.templates.ThumbnailTemplate;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,7 +17,7 @@ public class StartMainProcessActivity extends AppCompatActivity {
         curtain.setImageAlpha(0);
         ImageView button = findViewById(R.id.imageViewButton);
         Game game = new Game(new Storage());
-        game.setWeek();
+        game.setNewWeek();
         Thread thread = new Thread(){
             boolean isFinish = false;
 

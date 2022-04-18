@@ -68,7 +68,6 @@ public class MapActivity extends AppCompatActivity {
                                 public void run() {
                                     view.setBackgroundResource(R.drawable.wallpaper_text);
                                     title.setVisibility(View.VISIBLE);
-                                    newsText.setText("Новостей нет!");
                                     newsText.setVisibility(View.VISIBLE);
                                 }
                             });
@@ -156,6 +155,7 @@ public class MapActivity extends AppCompatActivity {
             Game game = (Game) args.getSerializable("GAME");
             int number = game.getNumberOfWeek();
             showStart(number);
+            newsText.setText(game.getNews());
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

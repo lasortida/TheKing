@@ -15,6 +15,8 @@ public class Game implements Serializable {
     private Week week;
     private static int numberOfWeek = 0;
 
+    private String news;
+
     public Game(Storage storage){
         this.storage = storage;
     }
@@ -27,10 +29,24 @@ public class Game implements Serializable {
         foodStatus += effect.getFoodStatusChange();
     }
 
-    public void setWeek(){
+    public void setNewWeek(){
         week = new Week(storage);
         numberOfWeek++;
+        setNews();
     }
+
+    public void setNews(){
+        int random = (int) Math.random() * storage.sampleNews.length;
+        while (storage.sampleNews[random] == null){
+            random = (int) Math.random() * storage.sampleNews.length;
+        }
+        this.news = storage.sampleNews[random];
+    }
+
+    public String getNews(){
+        return news;
+    }
+
     public Week getWeek(){
         return week;
     }
