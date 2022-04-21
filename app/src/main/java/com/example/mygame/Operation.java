@@ -1,6 +1,8 @@
 package com.example.mygame;
 
-public class Operation {
+import java.io.Serializable;
+
+public class Operation implements Serializable {
     private String title;
 
     public Operation(String title){

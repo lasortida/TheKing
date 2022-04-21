@@ -17,7 +17,7 @@ public class StartMainProcessActivity extends AppCompatActivity {
         curtain.setImageAlpha(0);
         ImageView button = findViewById(R.id.imageViewButton);
         Game game = new Game(new Storage());
-        game.setNewWeek();
+        game.setWeek();
         Thread thread = new Thread(){
             boolean isFinish = false;
 

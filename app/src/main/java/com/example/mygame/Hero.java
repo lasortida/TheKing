@@ -1,6 +1,8 @@
 package com.example.mygame;
 
-public class Hero {
+import java.io.Serializable;
+
+public class Hero implements Serializable {
 
     private String name;
     private Post post;

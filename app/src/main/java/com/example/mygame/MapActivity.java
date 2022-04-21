@@ -138,10 +138,8 @@ public class MapActivity extends AppCompatActivity {
             e.printStackTrace();
             value = 0;
         }
-
         numberOfWeekAnimation.start();
         curtainAnimation.start();
-
         if (value == 1){
             showOnlyMap();
             view.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +152,7 @@ public class MapActivity extends AppCompatActivity {
         else{
             Game game = (Game) args.getSerializable("GAME");
             int number = game.getNumberOfWeek();
+            Log.d("number", String.valueOf(number));
             showStart(number);
             newsText.setText(game.getNews());
             view.setOnClickListener(new View.OnClickListener() {

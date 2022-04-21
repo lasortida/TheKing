@@ -49,7 +49,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
         anvilUnder = findViewById(R.id.imageViewAnvilUnderwrite);
         breadUnder = findViewById(R.id.imageViewBreadUnderwrite);
         thread.start();
-        flag = true;
+        setImagesWithGame(game);
     }
 
     private int numberOfDay = 0;
@@ -75,8 +75,9 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
             if (v.getX() < 0 - mainView.getWidth() / 3 || v.getX() > mainView.getWidth() / 3){
                 if (end){
                     v.setX(0);
+                    game.weekFinish();
                     startActivity(new Intent(JobActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
-                    return true;
+                    finish();
                 }
                 if (v.getX() < 0  - mainView.getWidth() / 3 && numberOfActInADay != 0){
                     game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(0).getEffect());
@@ -86,7 +87,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                     game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(1).getEffect());
                     flag = true;
                 }
-                if (numberOfActInADay == 3){
+                if (numberOfActInADay == 3 || game.isGameOver()){
                     textViewTask.setText("Приём окончен!");
                     textViewLeft.setText("Далее");
                     textViewRight.setText("Далее");
@@ -113,6 +114,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
         public void run() {
             while(true){
                 if (flag){
+                    flag = false;
                     double nowCoin = game.getMoneyStatus();
                     double nowBomb = game.getArmyMood();
                     double nowTie = game.getBourgeoisMood();
@@ -174,6 +176,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
+                        if (flag) continue;
                         if (isChangeCoin) { coinImage.setNewImage(nowCoin); }
                         if (isChangeBomb) { bombImage.setNewImage(nowBomb); }
                         if (isChangeTie) { tieImage.setNewImage(nowTie); }
@@ -187,6 +190,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
+                        if (flag) continue;
                         for (int i = 255; i >= 0; --i){
                             if (isChangeCoin) { coinImage.setVis(i); }
                             if (isChangeBomb) { bombImage.setVis(i); }
@@ -195,6 +199,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
+                        if (flag) continue;
                         for (int i = 0; i < 256; ++i){
                             if (isChangeCoin) { coinImage.setVis(i); }
                             if (isChangeBomb) { bombImage.setVis(i); }
@@ -204,6 +209,7 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             Thread.sleep(1
                             );
                         }
+                        if (flag) continue;
                         if (isChangeCoin) { coinUnder.post(new Runnable() {
                             @Override
                             public void run() {
@@ -235,12 +241,18 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             }
                         }); }
                     } catch (InterruptedException e){
-
-                    } finally {
-                        flag = false;
+                        e.printStackTrace();
                     }
                 }
             }
         }
     });
+
+    public void setImagesWithGame(Game game){
+        coinImage.setNewImage(game.getMoneyStatus());
+        bombImage.setNewImage(game.getArmyMood());
+        tieImage.setNewImage(game.getBourgeoisMood());
+        anvilImage.setNewImage(game.getWorkersMood());
+        breadImage.setNewImage(game.getFoodStatus());
+    }
 }

@@ -10,15 +10,19 @@ public class Game implements Serializable {
     private double armyMood = 0.5;
     private double foodStatus = 0.5;
 
+    private Country[] listOfCountries;
+
     public Storage storage;
 
     private Week week;
     private static int numberOfWeek = 0;
+    private boolean isWeekDone;
 
     private String news;
 
     public Game(Storage storage){
         this.storage = storage;
+        this.listOfCountries = storage.listOfCountries;
     }
 
     public void takeChanges(Effect effect) {
@@ -29,23 +33,35 @@ public class Game implements Serializable {
         foodStatus += effect.getFoodStatusChange();
     }
 
-    public void setNewWeek(){
+    public void setWeek(){
         week = new Week(storage);
         numberOfWeek++;
-        setNews();
+        isWeekDone = false;
+
+        setRandomSimpleNews();
+
     }
 
-    public void setNews(){
-        int random = (int) Math.random() * storage.sampleNews.length;
-        while (storage.sampleNews[random] == null){
-            random = (int) Math.random() * storage.sampleNews.length;
+    public void setRandomSimpleNews(){
+        int number = (int) (Math.random() * storage.simpleNews.length);
+        while (storage.simpleNews[number] == null){
+            number = (int) Math.random() * storage.simpleNews.length;
         }
-        this.news = storage.sampleNews[random];
-        storage.setNewsNull(random);
+        String result = storage.simpleNews[number];
+        storage.setNewsNull(number);
+        this.news = result;
     }
 
     public String getNews(){
         return news;
+    }
+
+    public boolean isWeekDone(){
+        return isWeekDone;
+    }
+
+    public void weekFinish(){
+        isWeekDone = true;
     }
 
     public Week getWeek(){
@@ -109,7 +125,7 @@ public class Game implements Serializable {
 
     public boolean isGameOver(){
         if (bourgeoisMood <= 0 || workersMood <= 0 || moneyStatus <= 0 || armyMood <= 0 || foodStatus <= 0){
-            return false;
+            return true;
         }
         if (bourgeoisMood >= 0.85 || workersMood >= 0.85 || moneyStatus >= 0.85 || armyMood >= 0.85 || foodStatus >= 0.85){
             return true;
