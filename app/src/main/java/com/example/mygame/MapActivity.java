@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MapActivity extends AppCompatActivity {
@@ -28,6 +29,8 @@ public class MapActivity extends AppCompatActivity {
     public boolean isWorkNumber;
     public boolean directionOfNumber;
     public boolean continuade;
+
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +93,6 @@ public class MapActivity extends AppCompatActivity {
             public void run() {
                 while(true){
                     if (isWorkNumber && !directionOfNumber){
-                        Log.d("Hello", "hello");
                         float alpha = 1;
                         for (int i = 400; i >= 0; --i){
                             numberOfWeek.setAlpha(alpha);
@@ -150,16 +152,30 @@ public class MapActivity extends AppCompatActivity {
             });
         }
         else{
-            Game game = (Game) args.getSerializable("GAME");
+            game = (Game) args.getSerializable("GAME");
             int number = game.getNumberOfWeek();
-            Log.d("number", String.valueOf(number));
             showStart(number);
-            newsText.setText(game.getNews());
+
+            if (game.isGameOver()){
+                newsText.setText(game.getEndOfGame());
+            }
+            else{
+                newsText.setText(game.getNews());
+            }
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (continuade){
-                        startActivity(new Intent(MapActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
+                        numberOfWeekAnimation.interrupt();
+                        curtainAnimation.interrupt();
+
+                        if (game.isGameOver()){
+                            startActivity(new Intent(MapActivity.this, MainActivity.class));
+                        }
+                        else{
+                            startActivity(new Intent(MapActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
+                        }
                     }
                 }
             });
@@ -171,7 +187,15 @@ public class MapActivity extends AppCompatActivity {
         curtain.setVisibility(View.VISIBLE);
         numberOfWeek.setAlpha(0);
         numberOfWeek.setVisibility(View.VISIBLE);
-        numberOfWeek.setText("Неделя: " + number);
+
+        if (game.isGameOver()){
+            number++;
+            numberOfWeek.setText("Неделя: " + number + "\n Конец игры!");
+        }
+        else{
+            numberOfWeek.setText("Неделя: " + number);
+        }
+
         isWorkCurtain = true;
     }
 

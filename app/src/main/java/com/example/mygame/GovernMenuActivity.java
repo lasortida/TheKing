@@ -45,6 +45,7 @@ public class GovernMenuActivity extends AppCompatActivity {
         Game game = (Game) arguments.getSerializable("GAME");
 
         setImagesWithGame(game);
+
         if (game.isWeekDone()){
             done.setVisibility(View.VISIBLE);
         }
@@ -59,6 +60,9 @@ public class GovernMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (game.isWeekDone()){
+                    if (!game.isGameOver()){
+                        game.setWeek();
+                    }
                     curtain.setAlpha(0);
                     curtain.setVisibility(View.VISIBLE);
                     mapButton.setEnabled(false);
@@ -77,7 +81,6 @@ public class GovernMenuActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
-                            game.setWeek();
                             startActivity(new Intent(GovernMenuActivity.this, MapActivity.class).putExtra("GAME", game));
                         }
                     }.start();

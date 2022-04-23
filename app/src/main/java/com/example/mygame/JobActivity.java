@@ -176,12 +176,23 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
-                        if (flag) continue;
                         if (isChangeCoin) { coinImage.setNewImage(nowCoin); }
                         if (isChangeBomb) { bombImage.setNewImage(nowBomb); }
                         if (isChangeTie) { tieImage.setNewImage(nowTie); }
                         if (isChangeAnvil) { anvilImage.setNewImage(nowAnvil); }
                         if (isChangeBread) { breadImage.setNewImage(nowBread); }
+                        if (flag) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    coinUnder.setVisibility(View.INVISIBLE);
+                                    bombUnder.setVisibility(View.INVISIBLE);
+                                    tieUnder.setVisibility(View.INVISIBLE);
+                                    anvilUnder.setVisibility(View.INVISIBLE);
+                                    breadUnder.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
                         for (int i = 0; i < 256; ++i){
                             if (isChangeCoin) { coinImage.setVis(i); }
                             if (isChangeBomb) { bombImage.setVis(i); }
@@ -190,7 +201,18 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
-                        if (flag) continue;
+                        if (flag) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    coinUnder.setVisibility(View.INVISIBLE);
+                                    bombUnder.setVisibility(View.INVISIBLE);
+                                    tieUnder.setVisibility(View.INVISIBLE);
+                                    anvilUnder.setVisibility(View.INVISIBLE);
+                                    breadUnder.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
                         for (int i = 255; i >= 0; --i){
                             if (isChangeCoin) { coinImage.setVis(i); }
                             if (isChangeBomb) { bombImage.setVis(i); }
@@ -199,7 +221,18 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             if (isChangeBread) { breadImage.setVis(i); }
                             Thread.sleep(1);
                         }
-                        if (flag) continue;
+                        if (flag) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    coinUnder.setVisibility(View.INVISIBLE);
+                                    bombUnder.setVisibility(View.INVISIBLE);
+                                    tieUnder.setVisibility(View.INVISIBLE);
+                                    anvilUnder.setVisibility(View.INVISIBLE);
+                                    breadUnder.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
                         for (int i = 0; i < 256; ++i){
                             if (isChangeCoin) { coinImage.setVis(i); }
                             if (isChangeBomb) { bombImage.setVis(i); }
@@ -209,7 +242,18 @@ public class JobActivity extends AppCompatActivity implements View.OnTouchListen
                             Thread.sleep(1
                             );
                         }
-                        if (flag) continue;
+                        if (flag){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    coinUnder.setVisibility(View.INVISIBLE);
+                                    bombUnder.setVisibility(View.INVISIBLE);
+                                    tieUnder.setVisibility(View.INVISIBLE);
+                                    anvilUnder.setVisibility(View.INVISIBLE);
+                                    breadUnder.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
                         if (isChangeCoin) { coinUnder.post(new Runnable() {
                             @Override
                             public void run() {

@@ -1,5 +1,8 @@
 package com.example.mygame;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import java.io.Serializable;
 
 public class Game implements Serializable {
@@ -42,10 +45,38 @@ public class Game implements Serializable {
 
     }
 
+    public String getEndOfGame(){
+        String result = "";
+        double[] array = {bourgeoisMood, workersMood, moneyStatus, armyMood, foodStatus};
+        boolean downOrUp = false;
+        int index = 0;
+        for (int i = 0; i < array.length; ++i){
+            if (array[i] <= 0){
+                index = i;
+                downOrUp = false;
+                break;
+            }
+            if (array[i] >= 85){
+                index = i;
+                downOrUp = true;
+                break;
+            }
+        }
+        if (!downOrUp){
+            int number = (int) (Math.random() * storage.gameOverZero[index].length);
+            result = storage.gameOverZero[index][number];
+        }
+        if (downOrUp){
+            int number = (int) (Math.random() * storage.gameOverFull[index].length);
+            result = storage.gameOverFull[index][number];
+        }
+        return result;
+    }
+
     public void setRandomSimpleNews(){
         int number = (int) (Math.random() * storage.simpleNews.length);
         while (storage.simpleNews[number] == null){
-            number = (int) Math.random() * storage.simpleNews.length;
+            number = (int) (Math.random() * storage.simpleNews.length);
         }
         String result = storage.simpleNews[number];
         storage.setNewsNull(number);
@@ -148,5 +179,29 @@ public class Game implements Serializable {
 
     public int minResultIndex(){
         return minResultIndex(-1);
+    }
+
+    public void saveData(SharedPreferences sharedPreferences){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        double[] moods = { bourgeoisMood, workersMood, moneyStatus, armyMood, foodStatus };
+        String[] names = {"bourgeoisMood", "workersMood", "moneyStatus", "armyMood", "foodStatus"};
+        for (int i = 0; i < names.length; ++i){
+            editor.putFloat(names[i], (float) moods[i]);
+        }
+        editor.putInt("numberOfWeek", numberOfWeek);
+        editor.putBoolean("isWeekDone", isWeekDone);
+        editor.putString("news", news);
+        editor.apply();
+    }
+
+    public void loadData(SharedPreferences sp){
+        bourgeoisMood = (double) sp.getFloat("bourgeoisMood", -1);
+        workersMood = (double) sp.getFloat("workersMood", -1);
+        moneyStatus = (double) sp.getFloat("moneyStatus", -1);
+        armyMood = (double) sp.getFloat("armyMood", -1);
+        foodStatus = (double) sp.getFloat("foodStatus", -1);
+        numberOfWeek = sp.getInt("numberOfWeek", -1);
+        isWeekDone = sp.getBoolean("isWeekDone", false);
+        news = sp.getString("news", "ERROR");
     }
 }
