@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,9 @@ public class MapActivity extends AppCompatActivity {
     public Thread curtainAnimation;
     public Thread numberOfWeekAnimation;
     public TextView signature;
+    public TextView textViewAdd;
+    public Button buttonLeft;
+    public Button buttonRight;
 
     public boolean isWorkCurtain;
     public boolean isWorkNumber;
@@ -75,6 +79,21 @@ public class MapActivity extends AppCompatActivity {
                                 }
                             });
                             curtain.setVisibility(View.INVISIBLE);
+
+                            if (game.relationship){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        textViewAdd.setText(game.getTextOfRelationship());
+                                        buttonLeft.setText(game.getLeftRelationshipAnswer());
+                                        buttonRight.setText(game.getRightRelationshipAnswer());
+                                        textViewAdd.setVisibility(View.VISIBLE);
+                                        buttonRight.setVisibility(View.VISIBLE);
+                                        buttonLeft.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+
                             continuade = true;
                             isWorkCurtain = false;
                         } catch (InterruptedException e) {
@@ -129,6 +148,9 @@ public class MapActivity extends AppCompatActivity {
         map = findViewById(R.id.imageViewMap);
         view = findViewById(R.id.screen);
         signature= findViewById(R.id.textViewTask);
+        textViewAdd = findViewById(R.id.textViewAdd);
+        buttonLeft = findViewById(R.id.buttonLeft);
+        buttonRight = findViewById(R.id.buttonRight);
 
         Bundle args = getIntent().getExtras();
 

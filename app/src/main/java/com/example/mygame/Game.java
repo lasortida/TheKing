@@ -21,6 +21,9 @@ public class Game implements Serializable {
     private static int numberOfWeek = 0;
     private boolean isWeekDone;
 
+    public boolean relationship;
+    private Relationship relationshipOfCountry;
+
     private String news;
 
     public Game(Storage storage){
@@ -43,6 +46,32 @@ public class Game implements Serializable {
 
         setRandomSimpleNews();
 
+        if (numberOfWeek >= 3){
+            setRelationShip();
+        }
+    }
+
+    public void setRelationShip(){
+        double value = Math.random();
+        if (value > 0.1){
+            relationship = true;
+            relationshipOfCountry = storage.getRandomRelationship();
+        }
+        else{
+            relationship = false;
+        }
+    }
+
+    public String getTextOfRelationship(){
+        return relationshipOfCountry.getText();
+    }
+
+    public String getLeftRelationshipAnswer(){
+        return relationshipOfCountry.answers[0];
+    }
+
+    public String getRightRelationshipAnswer(){
+        return relationshipOfCountry.answers[1];
     }
 
     public String getEndOfGame(){

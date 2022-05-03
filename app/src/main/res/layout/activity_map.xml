@@ -34,6 +34,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <ImageView
         android:id="@+id/curtain"
         android:layout_width="2000dp"
@@ -42,9 +43,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewMap"
         app:layout_constraintEnd_toEndOf="@+id/imageViewMap"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="@+id/imageViewMap"
-        app:layout_constraintTop_toTopOf="@+id/imageViewMap"/>
-
+        app:layout_constraintTop_toTopOf="@+id/imageViewMap"
+        app:layout_constraintVertical_bias="0.509" />
 
     <TextView
         android:id="@+id/textViewNumberOfWeek"
@@ -78,20 +80,63 @@
 
     <TextView
         android:id="@+id/textViewText"
-        android:layout_width="348dp"
-        android:layout_height="463dp"
-        android:text="None"
+        android:layout_width="370dp"
+        android:layout_height="215dp"
         android:fontFamily="serif-monospace"
-        android:textColor="@color/black"
         android:gravity="center_horizontal"
+        android:text="None"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="@+id/imageViewMap"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-        app:layout_constraintVertical_bias="0.724" />
+        app:layout_constraintVertical_bias="0.211" />
+
+    <TextView
+        android:id="@+id/textViewAdd"
+        android:layout_width="370dp"
+        android:layout_height="215dp"
+        android:text=""
+        android:gravity="center_horizontal"
+        android:fontFamily="serif-monospace"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewMap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewText"
+        app:layout_constraintVertical_bias="0.139" />
+
+    <Button
+        android:id="@+id/buttonLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible"
+        android:fontFamily="monospace"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdd" />
+
+    <Button
+        android:id="@+id/buttonRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible"
+        android:fontFamily="monospace"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewTask"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdd" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

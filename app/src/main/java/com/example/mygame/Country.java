@@ -7,6 +7,7 @@ public class Country implements Serializable {
     boolean isInterWar;
     boolean isCivilWar;
     int populationMood;
+    int relationshipValue;
 
     public Country(String name){
         this.name = name;
