@@ -98,7 +98,7 @@
     <TextView
         android:id="@+id/textViewAdd"
         android:layout_width="370dp"
-        android:layout_height="215dp"
+        android:layout_height="wrap_content"
         android:text=""
         android:gravity="center_horizontal"
         android:fontFamily="serif-monospace"

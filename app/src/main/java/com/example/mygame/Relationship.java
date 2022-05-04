@@ -3,6 +3,7 @@ package com.example.mygame;
 import java.io.Serializable;
 
 public class Relationship implements Serializable {
+    int countryId;
     String text;
     String[] answers;
     double impact1;
@@ -10,7 +11,8 @@ public class Relationship implements Serializable {
     double influence;
     String nameOfState;
 
-    public Relationship(String text, String[] answers, double impact1, double impact2){
+    public Relationship(int countryId, String text, String[] answers, double impact1, double impact2){
+        this.countryId = countryId;
         this.text = text;
         this.answers = answers;
         this.impact1 = impact1;
@@ -32,5 +34,9 @@ public class Relationship implements Serializable {
 
     public String[] getAnswers(){
         return answers;
+    }
+
+    public int getIdOfCountry(){
+        return countryId;
     }
 }

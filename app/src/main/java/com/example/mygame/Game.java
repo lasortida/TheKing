@@ -18,7 +18,7 @@ public class Game implements Serializable {
     public Storage storage;
 
     private Week week;
-    private static int numberOfWeek = 0;
+    private static int numberOfWeek;
     private boolean isWeekDone;
 
     public boolean relationship;
@@ -29,6 +29,7 @@ public class Game implements Serializable {
     public Game(Storage storage){
         this.storage = storage;
         this.listOfCountries = storage.listOfCountries;
+        numberOfWeek = 0;
     }
 
     public void takeChanges(Effect effect) {
@@ -39,6 +40,14 @@ public class Game implements Serializable {
         foodStatus += effect.getFoodStatusChange();
     }
 
+    public Relationship getRelationshipOfCountry(){
+        return relationshipOfCountry;
+    }
+
+    public void setRelationshipChanging(int idOfCountry, int value){
+        listOfCountries[idOfCountry].setRelationshipValueChanging(value);
+    }
+
     public void setWeek(){
         week = new Week(storage);
         numberOfWeek++;
@@ -46,14 +55,14 @@ public class Game implements Serializable {
 
         setRandomSimpleNews();
 
-        if (numberOfWeek >= 3){
+        if (numberOfWeek >= 3){   // поменять!!!
             setRelationShip();
         }
     }
 
     public void setRelationShip(){
         double value = Math.random();
-        if (value > 0.1){
+        if (value > 0.1){  // поменять!!!
             relationship = true;
             relationshipOfCountry = storage.getRandomRelationship();
         }

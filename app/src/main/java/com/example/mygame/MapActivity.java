@@ -93,8 +93,9 @@ public class MapActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
-                            continuade = true;
+                            else {
+                                continuade = true;
+                            }
                             isWorkCurtain = false;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -152,6 +153,26 @@ public class MapActivity extends AppCompatActivity {
         buttonLeft = findViewById(R.id.buttonLeft);
         buttonRight = findViewById(R.id.buttonRight);
 
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Relationship relationship = game.getRelationshipOfCountry();
+                int countryId = relationship.getIdOfCountry();
+                game.setRelationshipChanging(countryId, (int)(relationship.impact1 * 100));
+                readyToGo();
+            }
+        });
+
+        buttonRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Relationship relationship = game.getRelationshipOfCountry();
+                int countryId = relationship.getIdOfCountry();
+                game.setRelationshipChanging(countryId, (int)(relationship.impact2 * 100));
+                readyToGo();
+            }
+        });
+
         Bundle args = getIntent().getExtras();
 
         int value;
@@ -202,6 +223,13 @@ public class MapActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void readyToGo(){
+        buttonLeft.setVisibility(View.INVISIBLE);
+        buttonRight.setVisibility(View.INVISIBLE);
+        textViewAdd.setText("ГОТОВО!");
+        continuade = true;
     }
 
 

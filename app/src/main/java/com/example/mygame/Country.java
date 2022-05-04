@@ -22,6 +22,10 @@ public class Country implements Serializable {
         if (random == 1) populationMood += 5;
     }
 
+    public void setRelationshipValueChanging(int value){
+        relationshipValue += value;
+    }
+
     public void setInterWar(){
         isInterWar = true;
     }
