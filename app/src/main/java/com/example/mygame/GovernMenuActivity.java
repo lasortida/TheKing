@@ -17,6 +17,8 @@ public class GovernMenuActivity extends AppCompatActivity {
     View curtain;
     TextView warning;
     ImageView done;
+    TextView textViewWeek;
+    Button relationshipButton;
 
     ImageWithParams coinView;
     ImageWithParams bombView;
@@ -34,6 +36,8 @@ public class GovernMenuActivity extends AppCompatActivity {
         curtain = findViewById(R.id.curtain);
         jobButton = findViewById(R.id.buttonTasks);
         done = findViewById(R.id.imageViewDone);
+        textViewWeek = findViewById(R.id.textViewWeek);
+        relationshipButton = findViewById(R.id.buttonRelationshipMenu);
 
         coinView = new ImageWithParams(findViewById(R.id.imageViewCoin), 0);
         bombView = new ImageWithParams(findViewById(R.id.imageViewBomb), 1);
@@ -43,6 +47,8 @@ public class GovernMenuActivity extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         Game game = (Game) arguments.getSerializable("GAME");
+
+        textViewWeek.setText(" Неделя: " + game.getNumberOfWeek());
 
         setImagesWithGame(game);
 
@@ -68,6 +74,7 @@ public class GovernMenuActivity extends AppCompatActivity {
                     mapButton.setEnabled(false);
                     jobButton.setEnabled(false);
                     nextButton.setEnabled(false);
+                    relationshipButton.setEnabled(false);
                     new Thread(){
                         @Override
                         public void run() {
@@ -99,6 +106,13 @@ public class GovernMenuActivity extends AppCompatActivity {
                 else{
                     warning.setText("Вы больше не можете рассматривать обращения. Вы это уже сделали!");
                 }
+            }
+        });
+
+        relationshipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GovernMenuActivity.this, RelationshipActivity.class).putExtra("GAME", game));
             }
         });
     }
