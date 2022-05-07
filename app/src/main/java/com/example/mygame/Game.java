@@ -23,6 +23,8 @@ public class Game implements Serializable {
 
     public boolean relationship;
     private Relationship relationshipOfCountry;
+    public static boolean isImproveNeed;
+    public static int countryIdImprovement;
 
     private String news;
 
@@ -49,7 +51,7 @@ public class Game implements Serializable {
     }
 
     public void setRelationshipChanging(int idOfCountry, int value){
-        listOfCountries[idOfCountry].setRelationshipValueChanging(value);
+        listOfCountries[idOfCountry + 1].setRelationshipValueChanging(value);
     }
 
     public void setWeek(){
@@ -61,6 +63,14 @@ public class Game implements Serializable {
 
         if (numberOfWeek >= 3){   // поменять!!!
             setRelationShip();
+        }
+
+        if (isImproveNeed){
+            double value = Math.random();
+            if (value >= 0.35){
+                listOfCountries[countryIdImprovement].setRelationshipValueChanging(20);
+            }
+            isImproveNeed = false;
         }
     }
 
