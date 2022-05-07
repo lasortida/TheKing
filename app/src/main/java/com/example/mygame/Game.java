@@ -32,6 +32,10 @@ public class Game implements Serializable {
         numberOfWeek = 0;
     }
 
+    public Country[] getCountries(){
+        return listOfCountries;
+    }
+
     public void takeChanges(Effect effect) {
         bourgeoisMood += effect.getBourgeoisMoodChange();
         workersMood += effect.getWorkersMoodChange();

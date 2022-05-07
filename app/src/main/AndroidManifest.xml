@@ -13,9 +13,6 @@
             android:name=".RelationshipActivity"
             android:exported="false" />
         <activity
-            android:name=".HeroesActivity"
-            android:exported="false" />
-        <activity
             android:name=".GovernMenuActivity"
             android:exported="false" />
         <activity

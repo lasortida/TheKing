@@ -14,6 +14,7 @@ public class Country implements Serializable {
         isInterWar = false;
         isCivilWar = false;
         populationMood = 60;
+        relationshipValue = 50;
     }
 
     public void newWeek(){
