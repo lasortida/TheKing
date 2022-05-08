@@ -30,6 +30,7 @@ public class ImproveFragmentDialog extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Game.isImproveNeed = true;
                 Game.countryIdImprovement = countryId;
+                Game.moneyStatus -= 0.17;
             }
         });
         builder.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {

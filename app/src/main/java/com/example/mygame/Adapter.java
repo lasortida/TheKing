@@ -69,8 +69,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ElementHolder> {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ImproveFragmentDialog dialog = new ImproveFragmentDialog(position + 1);
-                    dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
+                    if (!Game.isImproveNeed && Game.moneyStatus > 0.17){
+                        ImproveFragmentDialog dialog = new ImproveFragmentDialog(position + 1);
+                        dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
+                    }
                 }
             });
         }

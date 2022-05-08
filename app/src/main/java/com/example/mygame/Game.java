@@ -9,7 +9,7 @@ public class Game implements Serializable {
 
     private double bourgeoisMood = 0.5;
     private double workersMood = 0.5;
-    private double moneyStatus = 0.5;
+    public static double moneyStatus = 0.5;
     private double armyMood = 0.5;
     private double foodStatus = 0.5;
 

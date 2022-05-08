@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class RelationshipActivity extends AppCompatActivity {
 
     Button back;
+    TextView appeal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class RelationshipActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         back = findViewById(R.id.buttonBack);
+        appeal = findViewById(R.id.textViewAppeal);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -37,5 +40,21 @@ public class RelationshipActivity extends AppCompatActivity {
                 startActivity(new Intent(RelationshipActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
             }
         });
+        thread.start();
     }
+
+    Thread thread = new Thread(){
+        @Override
+        public void run() {
+            while(true){
+                if (Game.isImproveNeed){
+                    appeal.setText("Я уже занимаюсь делом которое вы мне поручили!");
+                }
+                else if(Game.moneyStatus <= 0.17){
+                    appeal.setText("У вас не хватает денег!");
+                }
+            }
+        }
+    };
+
 }
