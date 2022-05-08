@@ -2,7 +2,6 @@ package com.example.mygame;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,15 +31,15 @@ public class AllianceAdapter extends RecyclerView.Adapter<AllianceAdapter.Elemen
 
     @Override
     public void onBindViewHolder(@NonNull ElementHolder holder, int position) {
-        String nameOfAlliance = game.alliances.get(position).name;
-        String owner = game.alliances.get(position).owner.name;
-        int id = game.alliances.get(position).idOfAvatar;
+        String nameOfAlliance = game.activeAlliances.get(position).name;
+        String owner = game.activeAlliances.get(position).owner.name;
+        int id = game.activeAlliances.get(position).idOfAvatar;
         holder.bind(nameOfAlliance, owner, id);
     }
 
     @Override
     public int getItemCount() {
-        return game.alliances.size();
+        return game.activeAlliances.size();
     }
 
     public class ElementHolder extends RecyclerView.ViewHolder {
@@ -59,7 +58,7 @@ public class AllianceAdapter extends RecyclerView.Adapter<AllianceAdapter.Elemen
             element.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlliancesMenuActivity.topic.setText("Альянс");
+                    AlliancesMenuActivity.showAlliance(game.activeAlliances.get(getAdapterPosition()));
                 }
             });
         }

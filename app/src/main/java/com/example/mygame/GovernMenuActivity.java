@@ -58,7 +58,7 @@ public class GovernMenuActivity extends AppCompatActivity {
             done.setVisibility(View.VISIBLE);
         }
 
-        if (game.alliances.size() != 0){
+        if (game.getNumberOfWeek() >= 5){
             allianceMenu.setVisibility(View.VISIBLE);
         }
 
@@ -87,6 +87,7 @@ public class GovernMenuActivity extends AppCompatActivity {
                     mapButton.setEnabled(false);
                     jobButton.setEnabled(false);
                     nextButton.setEnabled(false);
+                    allianceMenu.setEnabled(false);
                     relationshipButton.setEnabled(false);
                     new Thread(){
                         @Override

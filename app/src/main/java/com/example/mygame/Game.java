@@ -1,7 +1,6 @@
 package com.example.mygame;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +17,8 @@ public class Game implements Serializable {
 
     public Storage storage;
 
-    public ArrayList<Alliance> alliances = new ArrayList<>();
+    public ArrayList<Alliance> activeAlliances = new ArrayList<>();
+    public ArrayList<Alliance> newAlliances = new ArrayList<>();
 
     private Week week;
     private static int numberOfWeek;
@@ -35,7 +35,7 @@ public class Game implements Serializable {
     public Game(Storage storage){
         this.storage = storage;
         this.listOfCountries = storage.listOfCountries;
-        numberOfWeek = 0;
+        numberOfWeek = 4;
     }
 
     public Country[] getCountries(){
@@ -57,7 +57,6 @@ public class Game implements Serializable {
     public void setRelationshipChanging(int idOfCountry, int value){
         listOfCountries[idOfCountry + 1].setRelationshipValueChanging(value);
         if (isStoryRelationship){
-
             if (value > 0){
 
             }
@@ -96,11 +95,13 @@ public class Game implements Serializable {
         if (numberOfWeek == 4){
             news += storage.storyNews[0];
         }
+
+        checkNewAlliances();
     }
 
     public void setRelationShip(){
         double value = Math.random();
-        if (value > 0.1){  // поменять!!!
+        if (value >= 0.5){  // поменять!!!
             relationship = true;
             relationshipOfCountry = storage.getRandomRelationship();
         }
@@ -113,7 +114,17 @@ public class Game implements Serializable {
         relationship = true;
         relationshipOfCountry = storage.storyRelationhips[id];
         isStoryRelationship = true;
-        alliances.add(new Alliance(listOfCountries[relationshipOfCountry.countryId + 1], "Альянс Догсленда"));
+        newAlliances.add(new Alliance(listOfCountries[relationshipOfCountry.countryId + 1], "Альянс Догсленда"));
+    }
+
+    public void checkNewAlliances(){
+        for (int i = 0; i < newAlliances.size(); ++i){
+            Alliance a = newAlliances.get(i);
+            if (a.countries.size() != 0){
+                activeAlliances.add(a);
+                newAlliances.remove(i);
+            }
+        }
     }
 
     public String getTextOfRelationship(){
