@@ -19,6 +19,7 @@ public class GovernMenuActivity extends AppCompatActivity {
     ImageView done;
     TextView textViewWeek;
     Button relationshipButton;
+    Button allianceMenu;
 
     ImageWithParams coinView;
     ImageWithParams bombView;
@@ -38,6 +39,7 @@ public class GovernMenuActivity extends AppCompatActivity {
         done = findViewById(R.id.imageViewDone);
         textViewWeek = findViewById(R.id.textViewWeek);
         relationshipButton = findViewById(R.id.buttonRelationshipMenu);
+        allianceMenu = findViewById(R.id.buttonAllianceMenu);
 
         coinView = new ImageWithParams(findViewById(R.id.imageViewCoin), 0);
         bombView = new ImageWithParams(findViewById(R.id.imageViewBomb), 1);
@@ -55,6 +57,17 @@ public class GovernMenuActivity extends AppCompatActivity {
         if (game.isWeekDone()){
             done.setVisibility(View.VISIBLE);
         }
+
+        if (game.alliances.size() != 0){
+            allianceMenu.setVisibility(View.VISIBLE);
+        }
+
+        allianceMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GovernMenuActivity.this, AlliancesMenuActivity.class).putExtra("GAME", game));
+            }
+        });
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override

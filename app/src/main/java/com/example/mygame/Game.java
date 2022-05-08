@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Game implements Serializable {
 
@@ -17,11 +18,14 @@ public class Game implements Serializable {
 
     public Storage storage;
 
+    public ArrayList<Alliance> alliances = new ArrayList<>();
+
     private Week week;
     private static int numberOfWeek;
     private boolean isWeekDone;
 
     public boolean relationship;
+    public boolean isStoryRelationship;
     private Relationship relationshipOfCountry;
     public static boolean isImproveNeed;
     public static int countryIdImprovement;
@@ -52,25 +56,45 @@ public class Game implements Serializable {
 
     public void setRelationshipChanging(int idOfCountry, int value){
         listOfCountries[idOfCountry + 1].setRelationshipValueChanging(value);
+        if (isStoryRelationship){
+
+            if (value > 0){
+
+            }
+        }
     }
 
     public void setWeek(){
+        news = "";
         week = new Week(storage);
         numberOfWeek++;
         isWeekDone = false;
 
-        setRandomSimpleNews();
-
         if (numberOfWeek >= 3){   // поменять!!!
-            setRelationShip();
+            if (numberOfWeek == 5){
+                setStoryRelationship(0);
+            }
+            else {
+                setRelationShip();
+            }
         }
 
         if (isImproveNeed){
             double value = Math.random();
             if (value >= 0.35){
                 listOfCountries[countryIdImprovement].setRelationshipValueChanging(20);
+                news = "У МИДа получилось договориться! Уровень взаимоотношений вырос на 20%";
+            }
+            else {
+                news = "К сожалению, у МИДа не получилось договориться и уровень взаимоотношений остался на прежнем уровне!";
             }
             isImproveNeed = false;
+        }
+        else if(numberOfWeek != 4){
+            setRandomSimpleNews();
+        }
+        if (numberOfWeek == 4){
+            news += storage.storyNews[0];
         }
     }
 
@@ -83,6 +107,13 @@ public class Game implements Serializable {
         else{
             relationship = false;
         }
+    }
+
+    public void setStoryRelationship(int id){
+        relationship = true;
+        relationshipOfCountry = storage.storyRelationhips[id];
+        isStoryRelationship = true;
+        alliances.add(new Alliance(listOfCountries[relationshipOfCountry.countryId + 1], "Альянс Догсленда"));
     }
 
     public String getTextOfRelationship(){

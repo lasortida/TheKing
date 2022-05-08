@@ -214,8 +214,49 @@ public class Storage implements Serializable {
             new Act("Люди всё меньше и меньше доверяют правительству! Я думаю во всём виновато телевидение! Усилить цензуру и контроль?", new Answer[]{
                     new Answer("Да", new Effect(-0.17, 0, 0, 0, 0)),
                     new Answer("Нет", new Effect(+0.17, 0, -0.17, 0, 0))
-            })
-//            new Act("", new Answer[]{
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+            new Act("TEST", new Answer[]{
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
+                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
+            }),
+
+            //            new Act("", new Answer[]{
 //                    new Answer("", new Effect()),
 //                    new Answer("", new Effect())
 //            }),
@@ -239,6 +280,10 @@ public class Storage implements Serializable {
             new Hero("Эйвон", posts[4]),
             new Hero("Мария", posts[5]),
             new Hero("Элиат", posts[6])
+    };
+
+    public static int[] imagesAvatar = {
+            R.drawable.pink_flag, R.drawable.green_flag, R.drawable.sword, R.drawable.earth
     };
 
     public String[] simpleNews = { // 19
@@ -267,8 +312,7 @@ public class Storage implements Serializable {
             new Relationship[]{
                     new Relationship(0, "Гоуленд запросил у нашей страны провиант в качестве гуманитарной помощи. Это поможет сблизить наши отношения!", new String[]{"Отправить помощь", "Отказать"}, 0.2, -0.2),
                     new Relationship(0, "Правительство Гоуленда отправило всемирное послание и предложило запретить жвачки по всему миру! Нам придётся потратить денег на разработку нового закона!", new String[]{"Принять закон", "Отказаться"}, 0.2, -0.2),
-                    new Relationship(0, "Гоуленд хочет закупить ваше военное вооружение! Учтите, что в дальнейшем они могут использовать его против нас!", new String[]{"Продать", "Не продавать"}, 0.2, 0),
-                    new Relationship(0, "Правителство Догсленда создало международный документ о признании островного государства Гоуленд зависимым от Догсленда! Вы будете подписывать этот документ?", new String[]{"Не подписывать", "Подписать"}, 0.2, -0.2)
+                    new Relationship(0, "Гоуленд хочет закупить ваше военное вооружение! Учтите, что в дальнейшем они могут использовать его против нас!", new String[]{"Продать", "Не продавать"}, 0.2, 0)
             },
             new Relationship[]{
                     new Relationship(1, "Догсленд просит вас поддержки в их внешней политики! Это может улучшить наши взаимоотношения", new String[]{"Поддержать", "Отказаться"}, 0.2, -0.2),
@@ -300,6 +344,14 @@ public class Storage implements Serializable {
                     new Relationship(5, "Алмазная страна решила провести военные испытания рядом с границей Гринленда! Был составлен международный акт с требованием отвести войска от границы!", new String[]{"Не подписывать акт", "Подписать акт"}, 0.2, -0.2),
                     new Relationship(5, "Правительство Алмазной страны отправило вам символический подарок!", new String[]{"Также отправить подарок", "Не отпарвлять подарка"}, 0.2, -0.2)
             }
+    };
+
+    public Relationship[] storyRelationhips = {
+            new Relationship(0, "Правителство Догсленда создало международный документ о признании островного государства Гоуленд зависимым от Догсленда! Вы будете подписывать этот документ?", new String[]{"Не подписывать", "Подписать"}, 0.2, -0.2)
+    };
+
+    public String[] storyNews = {
+            "Гоуленд ввёл визы для граждан вашей страны! Что-то намечается..."
     };
 
     public Relationship getRandomRelationship(){

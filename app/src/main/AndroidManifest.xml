@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyGame">
         <activity
+            android:name=".AlliancesMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".RelationshipActivity"
             android:exported="false" />
         <activity

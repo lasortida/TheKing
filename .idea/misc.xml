@@ -15,6 +15,7 @@
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/drawable/style_top_panel.xml" value="0.259" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/drawable/styles.xml" value="0.277" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/drawable/textview.xml" value="0.1925" />
+        <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_alliances_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_govern_menu.xml" value="0.30121177149451817" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_govern_menu_start.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_heroes.xml" value="0.25" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_map.xml" value="0.27116883116883117" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_relationship.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/activity_start_of_new_game.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/alliance.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/MyGame/app/src/main/res/layout/element.xml" value="0.36666666666666664" />
       </map>
     </option>
