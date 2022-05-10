@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class CreateAllianceFragment extends Fragment {
 
@@ -16,6 +17,11 @@ public class CreateAllianceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Game game;
+
+    public CreateAllianceFragment(Game game){
+        this.game = game;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,8 @@ public class CreateAllianceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_alliance, container, false);
+        ListView listView = view.findViewById(R.id.listview);
+        String[] countries =
         return view;
     }
 }

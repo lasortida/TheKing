@@ -117,6 +117,13 @@ public class Game implements Serializable {
         newAlliances.add(new Alliance(listOfCountries[relationshipOfCountry.countryId + 1], "Альянс Догсленда"));
     }
 
+    public String[] getListOfCountries(){
+        String[] result = new String[listOfCountries.length - 1];
+        for (Country c: listOfCountries) {
+
+        }
+    }
+
     public void checkNewAlliances(){
         for (int i = 0; i < newAlliances.size(); ++i){
             Alliance a = newAlliances.get(i);
