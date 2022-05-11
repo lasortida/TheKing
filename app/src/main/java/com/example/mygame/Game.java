@@ -13,12 +13,13 @@ public class Game implements Serializable {
     private double armyMood = 0.5;
     private double foodStatus = 0.5;
 
-    private Country[] listOfCountries;
+    public Country[] listOfCountries;
 
     public Storage storage;
 
     public ArrayList<Alliance> activeAlliances = new ArrayList<>();
     public ArrayList<Alliance> newAlliances = new ArrayList<>();
+    public Alliance userAlliance;
 
     private Week week;
     private static int numberOfWeek;
@@ -36,6 +37,10 @@ public class Game implements Serializable {
         this.storage = storage;
         this.listOfCountries = storage.listOfCountries;
         numberOfWeek = 4;
+    }
+
+    public void setUserAlliance(Alliance alliance){
+        userAlliance = alliance;
     }
 
     public Country[] getCountries(){
@@ -119,9 +124,10 @@ public class Game implements Serializable {
 
     public String[] getListOfCountries(){
         String[] result = new String[listOfCountries.length - 1];
-        for (Country c: listOfCountries) {
-
+        for (int i = 0; i < result.length; ++i) {
+            result[i] = listOfCountries[i + 1].name;
         }
+        return result;
     }
 
     public void checkNewAlliances(){

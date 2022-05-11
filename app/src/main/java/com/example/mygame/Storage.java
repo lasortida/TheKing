@@ -380,6 +380,11 @@ public class Storage implements Serializable {
         return result;
     }
 
+    public static int getRandomIdOfImage(){
+        int value = (int)(Math.random() * imagesAvatar.length);
+        return imagesAvatar[value];
+    }
+
     public void setNewsNull(int id){
         simpleNews[id] = null;
     }
