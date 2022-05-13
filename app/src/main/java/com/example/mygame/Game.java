@@ -13,13 +13,12 @@ public class Game implements Serializable {
     private double armyMood = 0.5;
     private double foodStatus = 0.5;
 
-    public Country[] listOfCountries;
+    public static Country[] listOfCountries;
 
     public Storage storage;
 
-    public ArrayList<Alliance> activeAlliances = new ArrayList<>();
+    public static ArrayList<Alliance> activeAlliances = new ArrayList<>();
     public ArrayList<Alliance> newAlliances = new ArrayList<>();
-    public Alliance userAlliance;
 
     private Week week;
     private static int numberOfWeek;
@@ -37,10 +36,6 @@ public class Game implements Serializable {
         this.storage = storage;
         this.listOfCountries = storage.listOfCountries;
         numberOfWeek = 4;
-    }
-
-    public void setUserAlliance(Alliance alliance){
-        userAlliance = alliance;
     }
 
     public Country[] getCountries(){
@@ -102,6 +97,7 @@ public class Game implements Serializable {
         }
 
         checkNewAlliances();
+        checkAlliances();
     }
 
     public void setRelationShip(){
@@ -120,6 +116,23 @@ public class Game implements Serializable {
         relationshipOfCountry = storage.storyRelationhips[id];
         isStoryRelationship = true;
         newAlliances.add(new Alliance(listOfCountries[relationshipOfCountry.countryId + 1], "Альянс Догсленда"));
+    }
+
+    public void checkAlliances(){
+        for (int i = 0; i < activeAlliances.size(); ++i){
+            Alliance alliance = activeAlliances.get(i);
+            if (numberOfWeek == alliance.dayOfInviteDeath){
+                alliance.isInviteSend = false;
+            }
+            activeAlliances.set(i, alliance);
+        }
+    }
+
+    public static void sendInvite(int index){
+        Alliance alliance = activeAlliances.get(index);
+        alliance.isInviteSend = true;
+        alliance.dayOfInviteDeath = numberOfWeek + 5;
+        activeAlliances.set(index, alliance);
     }
 
     public String[] getListOfCountries(){

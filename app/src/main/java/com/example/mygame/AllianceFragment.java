@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,9 +21,12 @@ public class AllianceFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    private int index;
     private Alliance alliance;
+    private Button buttonRequest;
 
-    public AllianceFragment(Alliance alliance) {
+    public AllianceFragment(Alliance alliance, int index) {
+        this.index = index;
         this.alliance = alliance;
     }
 
@@ -47,6 +51,7 @@ public class AllianceFragment extends Fragment {
         TextView textName = view.findViewById(R.id.textViewName);
         TextView textViewOwner = view.findViewById(R.id.textViewOwner);
         TextView textViewWar = view.findViewById(R.id.textViewWar);
+        ImageView imageViewDone = view.findViewById(R.id.imageViewDone);
         if (alliance.isActiveWar){
             textViewWar.setText("Сражения: АКТИВНО");
         }
@@ -56,6 +61,19 @@ public class AllianceFragment extends Fragment {
         textViewOwner.setText("Страна-основатель: " + alliance.owner.name);
         textName.setText(alliance.name);
         imageView.setImageResource(alliance.idOfAvatar);
+        buttonRequest = view.findViewById(R.id.buttonRequest);
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Game.sendInvite(index);
+                buttonRequest.setEnabled(false);
+                imageViewDone.setVisibility(View.VISIBLE);
+            }
+        });
+        if (alliance.isInviteSend || alliance.countryContains(Game.listOfCountries[0])) {
+            imageViewDone.setVisibility(View.VISIBLE);
+            buttonRequest.setEnabled(false);
+        }
         return view;
     }
 }

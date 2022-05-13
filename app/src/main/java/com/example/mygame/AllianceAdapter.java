@@ -32,37 +32,15 @@ public class AllianceAdapter extends RecyclerView.Adapter<AllianceAdapter.Elemen
 
     @Override
     public void onBindViewHolder(@NonNull ElementHolder holder, int position) {
-        String nameOfAlliance = "";
-        String owner = "";
-        int id = 0;
-        if (game.userAlliance == null) {
-            nameOfAlliance = game.activeAlliances.get(position).name;
-            owner = game.activeAlliances.get(position).owner.name;
-            id = game.activeAlliances.get(position).idOfAvatar;
-        }
-        else{
-            if (position == 0){
-                nameOfAlliance = game.userAlliance.name;
-                owner = game.userAlliance.owner.name;
-                id = game.userAlliance.idOfAvatar;
-            }
-            else{
-                nameOfAlliance = game.activeAlliances.get(position - 1).name;
-                owner = game.activeAlliances.get(position - 1).owner.name;
-                id = game.activeAlliances.get(position - 1).idOfAvatar;
-            }
-        }
+        String nameOfAlliance = game.activeAlliances.get(position).name;
+        String owner = game.activeAlliances.get(position).owner.name;
+        int id = game.activeAlliances.get(position).idOfAvatar;
         holder.bind(nameOfAlliance, owner, id);
     }
 
     @Override
     public int getItemCount() {
-        if (game.userAlliance == null){
-            return game.activeAlliances.size();
-        }
-        else {
-            return game.activeAlliances.size() + 1;
-        }
+        return game.activeAlliances.size();
     }
 
     public class ElementHolder extends RecyclerView.ViewHolder {
@@ -81,17 +59,7 @@ public class AllianceAdapter extends RecyclerView.Adapter<AllianceAdapter.Elemen
             element.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (game.userAlliance == null) {
-                        AlliancesMenuActivity.showAlliance(game.activeAlliances.get(getAdapterPosition()));
-                    }
-                    else {
-                        if (getAdapterPosition() == 0){
-                            // включаем вкладку Мой Альянс!
-                        }
-                        else{
-                            AlliancesMenuActivity.showAlliance(game.activeAlliances.get(getAdapterPosition() - 1));
-                        }
-                    }
+                    AlliancesMenuActivity.showAlliance(game.activeAlliances.get(getAdapterPosition()), getAdapterPosition());
                 }
             });
         }

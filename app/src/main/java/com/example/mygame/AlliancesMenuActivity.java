@@ -19,14 +19,10 @@ public class AlliancesMenuActivity extends AppCompatActivity {
     static FragmentManager fragmentManager;
 
     Button back;
-    Button create;
-    Button myAlliance;
 
     static boolean isFragmentAllianceLoaded = false;
     static boolean isCreateFragmentLoaded = false;
-    static boolean isMyFragmentLoaded = false;
     static AllianceFragment fragment;
-    static CreateAllianceFragment createFragment;
 
     static RecyclerView recyclerView;
 
@@ -40,17 +36,8 @@ public class AlliancesMenuActivity extends AppCompatActivity {
 
         textBrief = findViewById(R.id.textViewBrief);
         back = findViewById(R.id.buttonBack);
-        create = findViewById(R.id.buttonCreate);
-        myAlliance = findViewById(R.id.buttonMyAllaince);
         recyclerView = findViewById(R.id.recycler);
         topic = findViewById(R.id.textViewTopic);
-
-        if (game.userAlliance != null) {
-            create.setEnabled(false);
-        }
-        else {
-            myAlliance.setEnabled(false);
-        }
 
         if (game.activeAlliances.size() != 0){
             textBrief.setVisibility(View.INVISIBLE);
@@ -72,52 +59,17 @@ public class AlliancesMenuActivity extends AppCompatActivity {
                     topic.setText("Список Альянсов");
                     isFragmentAllianceLoaded = false;
                 }
-                else if (isCreateFragmentLoaded) {
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.hide(createFragment);
-                    transaction.commit();
-                    recyclerView.setVisibility(View.VISIBLE);
-                    topic.setText("Список Альянсов");
-                    isCreateFragmentLoaded = false;
-                }
                 else {
                     startActivity(new Intent(AlliancesMenuActivity.this, GovernMenuActivity.class).putExtra("GAME", game));
                 }
             }
         });
-
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textBrief.setVisibility(View.INVISIBLE);
-                topic.setText("Создать Альянс");
-                recyclerView.setVisibility(View.INVISIBLE);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                createFragment = new CreateAllianceFragment(game);
-                transaction.add(R.id.frame, createFragment);
-                transaction.commit();
-                isCreateFragmentLoaded = true;
-            }
-        });
-
-        myAlliance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textBrief.setVisibility(View.INVISIBLE);
-                topic.setText("Мой Альянс");
-                recyclerView.setVisibility(View.INVISIBLE);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.frame, );
-                transaction.commit();
-                isMyFragmentLoaded = true;
-            }
-        });
     }
 
-    public static void showAlliance(Alliance alliance){
+    public static void showAlliance(Alliance alliance, int index){
         recyclerView.setVisibility(View.INVISIBLE);
         topic.setText("Альянс:");
-        fragment = new AllianceFragment(alliance);
+        fragment = new AllianceFragment(alliance, index);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.frame, fragment);
         transaction.commit();

@@ -9,24 +9,24 @@ public class Alliance implements Serializable {
     Country owner;
     int idOfAvatar;
     boolean isActiveWar;
-    ArrayList<Invitation> invitations;
+    int dayOfInviteDeath;
+    boolean isInviteSend;
 
     public Alliance(Country owner, String name){
         this.owner = owner;
         this.name = name;
         countries = new ArrayList<>();
-        invitations = new ArrayList<>();
         int value = (int)(Math.random() * Storage.imagesAvatar.length);
         idOfAvatar = Storage.imagesAvatar[value];
         countries.add(new Country("TEST"));
     }
 
-    public void setIdOfAvatar(int id){
-        idOfAvatar = id;
+    public boolean countryContains(Country country){
+        return countries.contains(country);
     }
 
-    public void addInvitation(Invitation invitation) {
-        invitations.add(invitation);
+    public void setIdOfAvatar(int id){
+        idOfAvatar = id;
     }
 
     public void addCountry(Country country){
