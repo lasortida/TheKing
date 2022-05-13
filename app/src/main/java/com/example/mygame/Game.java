@@ -73,6 +73,10 @@ public class Game implements Serializable {
             if (numberOfWeek == 5){
                 setStoryRelationship(0);
             }
+            else if (numberOfWeek == 6) {
+                relationship = true;
+                relationshipOfCountry = storage.storyRelationhips[1];
+            }
             else {
                 setRelationShip();
             }
@@ -131,6 +135,18 @@ public class Game implements Serializable {
     public static void sendInvite(int index){
         Alliance alliance = activeAlliances.get(index);
         alliance.isInviteSend = true;
+        if (alliance.owner.relationshipValue >= 60) {
+            double value = 0.2;
+            if (alliance.owner.relationshipValue == 100){
+                value = 0.5;
+            }
+            if (alliance.owner.relationshipValue == 80){
+                value = 0.3;
+            }
+            if (Math.random() > value){
+                alliance.addCountry(listOfCountries[0]);
+            }
+        }
         alliance.dayOfInviteDeath = numberOfWeek + 5;
         activeAlliances.set(index, alliance);
     }
