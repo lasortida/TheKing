@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mygame.OnlineMode.Activities.MainActivityOnline;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         learnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, LearningActivity.class));
+                startActivity(new Intent(MainActivity.this, MainActivityOnline.class));
             }
         });
         newGameButton.setOnClickListener(new View.OnClickListener() {

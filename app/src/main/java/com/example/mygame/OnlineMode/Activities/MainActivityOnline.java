@@ -2,11 +2,13 @@ package com.example.mygame.OnlineMode.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mygame.MainActivity;
 import com.example.mygame.R;
 
 public class MainActivityOnline extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class MainActivityOnline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String personName = String.valueOf(personNameEditText.getText());
+                startActivity(new Intent(MainActivityOnline.this, LoadingActivity.class).putExtra("userName", personName));
             }
         });
     }
