@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OnlineMode.Fragments.TradeFragment">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="monospace"
+        android:text="Обменять"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewFirst"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="monospace"
+        android:text="На"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFirst" />
+
+    <ImageView
+        android:id="@+id/imageViewSecond"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        tools:src="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/buttonAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Готово"
+        android:layout_marginTop="30dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSecond" />
+
+    <ImageView
+        android:id="@+id/imageViewUpNext"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/tradebut"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFirst"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFirst"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFirst"
+        app:layout_constraintVertical_bias="0.411" />
+
+    <ImageView
+        android:id="@+id/imageViewUpPrev"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:rotation="180"
+        android:src="@drawable/tradebut"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFirst"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewFirst"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFirst" />
+
+    <ImageView
+        android:id="@+id/imageViewDownNext"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/tradebut"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewSecond"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSecond"
+        app:layout_constraintTop_toTopOf="@+id/imageViewSecond" />
+
+    <ImageView
+        android:id="@+id/imageViewDownPrev"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:rotation="180"
+        android:src="@drawable/tradebut"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewSecond"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSecond"
+        app:layout_constraintTop_toTopOf="@+id/imageViewSecond" />
+</androidx.constraintlayout.widget.ConstraintLayout>

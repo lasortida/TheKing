@@ -165,7 +165,7 @@ public class MapActivityOnline extends AppCompatActivity {
                     if (continuade){
                         numberOfWeekAnimation.interrupt();
                         curtainAnimation.interrupt();
-                        startActivity(new Intent(MapActivityOnline.this, GovernMenuActivity.class).putExtra("GAME", game));
+                        startActivity(new Intent(MapActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
                     }
                 }
             });

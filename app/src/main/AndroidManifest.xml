@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MyGame"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OnlineMode.Activities.JobActivityOnline"
+            android:exported="false" />
+        <activity
+            android:name=".OnlineMode.Activities.GovernMenuActivityOnline"
+            android:exported="false" />
+        <activity
             android:name=".OnlineMode.Activities.MapActivityOnline"
             android:exported="false" />
         <activity
@@ -20,6 +26,9 @@
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.MainActivityOnline"
+            android:exported="false" />
+        <activity
+            android:name=".OnlineMode.Activities.RelationshipActivityOnline"
             android:exported="false" />
         <activity
             android:name=".AlliancesMenuActivity"

@@ -214,47 +214,7 @@ public class Storage implements Serializable {
             new Act("Люди всё меньше и меньше доверяют правительству! Я думаю во всём виновато телевидение! Усилить цензуру и контроль?", new Answer[]{
                     new Answer("Да", new Effect(-0.17, 0, 0, 0, 0)),
                     new Answer("Нет", new Effect(+0.17, 0, -0.17, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
-            new Act("TEST", new Answer[]{
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0)),
-                    new Answer("TEST", new Effect(0, 0, 0, 0, 0))
-            }),
+            })
 
             //            new Act("", new Answer[]{
 //                    new Answer("", new Effect()),
