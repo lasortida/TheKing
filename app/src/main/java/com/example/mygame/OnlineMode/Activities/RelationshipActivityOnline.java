@@ -50,7 +50,7 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new AdapterRelationshipOnline(game.getListOfForeignCountries()));
+        recyclerView.setAdapter(new AdapterRelationshipOnline(game.getListOfForeignCountries(), game.countries[game.yourCountryId]));
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

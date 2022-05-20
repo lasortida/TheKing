@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +23,10 @@ public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelat
 
     CountryOnline[] countries;
     Context context;
+    CountryOnline me;
 
-    public AdapterRelationshipOnline(CountryOnline[] countries){
+    public AdapterRelationshipOnline(CountryOnline[] countries, CountryOnline me){
+        this.me = me;
         this.countries = countries;
     }
 
@@ -70,8 +73,14 @@ public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelat
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id);
-                    dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
+                    if (!me.wasTrade && me.ifCanTrade()) {
+                        TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id);
+                        dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
+                    }
+                    else{
+                        Toast toast = Toast.makeText(context, "Вы уже устроили один обмен или у вас недостаточно ресурсов!", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             });
         }

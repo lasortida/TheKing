@@ -62,4 +62,16 @@ public class CountryOnline implements Serializable {
                 break;
         }
     }
+
+    public boolean ifCanTrade(){
+        double[] array = {
+                moneyStatus, armyStatus, businessStatus, workerStatus, foodStatus
+        };
+        for (int i = 0; i < array.length; ++i){
+            if (array[i] <= 0.17 || array[i] >= 0.85){
+                return false;
+            }
+        }
+        return true;
+    }
 }

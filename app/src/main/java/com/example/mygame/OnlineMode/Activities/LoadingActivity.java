@@ -14,6 +14,9 @@ import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
 import com.example.mygame.R;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,8 +45,15 @@ public class LoadingActivity extends AppCompatActivity {
         view = findViewById(R.id.textViewTitle);
         view.setText("Поиск сервера");
 
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .build();
+
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.94:5555/")
+                .baseUrl("http://912939-cf66069.tmweb.ru:5555/")
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -142,7 +152,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 }
                                 else{
                                     try {
-                                        Thread.sleep(500);
+                                        Thread.sleep(2000);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -186,6 +196,8 @@ public class LoadingActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Format> call, Throwable t) {
+                            Log.d("idk", "fail");
+                            Log.d("idk", t.getMessage());
                             block = false;
                         }
                     });
