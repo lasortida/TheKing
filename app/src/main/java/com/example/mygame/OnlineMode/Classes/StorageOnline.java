@@ -179,6 +179,14 @@ public class StorageOnline implements Serializable {
 //            }),
     };
 
+    public int[] imagesAvatar = {
+            R.drawable.pink_flag, R.drawable.green_flag, R.drawable.sword, R.drawable.earth
+    };
+
+    public int getResImageAvatar(int index){
+        return imagesAvatar[index];
+    }
+
     public Act getRandomAct(){
         int value = (int)(Math.random() * acts.length);
         while(acts[value] == null){

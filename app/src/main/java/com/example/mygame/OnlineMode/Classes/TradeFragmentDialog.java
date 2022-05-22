@@ -15,9 +15,11 @@ import com.example.mygame.OnlineMode.Activities.RelationshipActivityOnline;
 public class TradeFragmentDialog extends DialogFragment {
 
     int indexOfTrader;
+    int userCodeTrader;
 
-    public TradeFragmentDialog(int indexOfTrader){
+    public TradeFragmentDialog(int indexOfTrader, int userCodeTrader){
         this.indexOfTrader = indexOfTrader;
+        this.userCodeTrader = userCodeTrader;
     }
 
     @NonNull
@@ -30,7 +32,7 @@ public class TradeFragmentDialog extends DialogFragment {
         builder.setPositiveButton("Поручить!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                RelationshipActivityOnline.setAddView(indexOfTrader);
+                RelationshipActivityOnline.setAddView(indexOfTrader, userCodeTrader);
             }
         });
         builder.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {

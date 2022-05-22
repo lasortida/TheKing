@@ -31,6 +31,7 @@ public class Format {
     public GameOnline getInitialGameOnline(){
         StorageOnline storage = new StorageOnline();
         GameOnline game = new GameOnline();
+        game.idOfRoom = id;
         game.numberOfWeek = numberOfWeek;
         game.countries = storage.countries;
         game.storage = storage;

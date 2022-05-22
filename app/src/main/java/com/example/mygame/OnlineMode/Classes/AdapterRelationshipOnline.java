@@ -19,15 +19,19 @@ import com.example.mygame.Game;
 import com.example.mygame.ImproveFragmentDialog;
 import com.example.mygame.R;
 
+import java.util.ArrayList;
+
 public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelationshipOnline.ElementHolder> {
 
     CountryOnline[] countries;
     Context context;
     CountryOnline me;
+    ArrayList<UserOnline> users;
 
-    public AdapterRelationshipOnline(CountryOnline[] countries, CountryOnline me){
+    public AdapterRelationshipOnline(CountryOnline[] countries, CountryOnline me, ArrayList<UserOnline> users){
         this.me = me;
         this.countries = countries;
+        this.users = users;
     }
 
     @NonNull
@@ -74,7 +78,15 @@ public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelat
                 @Override
                 public void onClick(View view) {
                     if (!me.wasTrade && me.ifCanTrade()) {
-                        TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id);
+                        int idOfCountry = countries[getAdapterPosition()].id;
+                        int indexOfUser = -1;
+                        for (int i = 0; i < users.size(); ++i){
+                            if (users.get(i).country.id == idOfCountry){
+                                indexOfUser = i;
+                                break;
+                            }
+                        }
+                        TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id, indexOfUser);
                         dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
                     }
                     else{

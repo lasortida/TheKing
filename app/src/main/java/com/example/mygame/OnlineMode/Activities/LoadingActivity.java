@@ -46,13 +46,13 @@ public class LoadingActivity extends AppCompatActivity {
         view.setText("Поиск сервера");
 
         OkHttpClient client = new OkHttpClient().newBuilder()
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
-                .writeTimeout(120, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://912939-cf66069.tmweb.ru:5555/")
+                .baseUrl(GameService.address)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -181,7 +181,7 @@ public class LoadingActivity extends AppCompatActivity {
                         public void onResponse(Call<Format> call, Response<Format> response) {
                             Format format = response.body();
                             if (!format.error){
-                                view.setText("Игра началась!");
+                                view.setText(R.string.game_start);
                                 flag = 5;
                                 GameOnline game = format.getInitialGameOnline();
                                 game.numberOfWeek = 1;

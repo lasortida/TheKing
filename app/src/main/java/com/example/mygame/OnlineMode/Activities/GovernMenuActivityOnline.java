@@ -105,7 +105,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         allianceMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(GovernMenuActivityOnline.this, AlliancesMenuActivity.class).putExtra("GAME", game));
+                startActivity(new Intent(GovernMenuActivityOnline.this, AllianceMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
 
@@ -139,7 +139,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
-                            //startActivity(new Intent(GovernMenuActivityOnline.this, ).putExtra("GAME", game));
+                            startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game).putExtra("RANGE", 1));
                         }
                     }.start();
                 }

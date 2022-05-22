@@ -20,7 +20,7 @@ public class CountryOnline implements Serializable {
     public int indexOfTradeStatus;
     public boolean wasTrade;
     public HashMap<Integer, Integer> foreignTrade;
-    Alliance alliance;
+    public AllianceOnline alliance;
 
     public CountryOnline(String name, int id, int idOfImage){
         this.name = name;

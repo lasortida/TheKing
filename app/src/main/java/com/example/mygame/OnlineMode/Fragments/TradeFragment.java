@@ -55,12 +55,14 @@ public class TradeFragment extends Fragment {
     CountryOnline trader;
     int indexOfTrader;
     GameOnline game;
+    int userCodeTrader;
 
-    public TradeFragment(GameOnline game, int indexOfTrader) {
+    public TradeFragment(GameOnline game, int indexOfTrader, int userCodeTrader) {
         this.game = game;
         this.me = game.countries[game.yourCountryId];
         this.trader = game.countries[indexOfTrader];
         this.indexOfTrader = indexOfTrader;
+        this.userCodeTrader = userCodeTrader;
         result = getMyStateIds(me);
     }
 
@@ -153,6 +155,10 @@ public class TradeFragment extends Fragment {
         ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                game.post.tradeWith = trader.id;
+                game.post.stateUp = indexUp;
+                game.post.stateDown = indexDown;
+
                 me.wasTrade = true;
                 trader.foreignTrade.put(indexDown, indexUp);
                 me.indexOfTradeStatus = indexUp;
