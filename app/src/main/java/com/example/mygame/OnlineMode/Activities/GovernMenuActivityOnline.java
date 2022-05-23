@@ -112,7 +112,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1));
+                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1).putExtra("RESOURCES", game.countries[game.yourCountryId].idOfMarker));
             }
         });
         nextButton.setOnClickListener(new View.OnClickListener() {

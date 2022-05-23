@@ -9,14 +9,14 @@ import java.io.Serializable;
 
 public class StorageOnline implements Serializable {
     CountryOnline[] countries = {
-            new CountryOnline("Гоуленд", 0, R.drawable.goland),
-            new CountryOnline("Догсленд", 1, R.drawable.dogsland),
-            new CountryOnline("Грандерберг", 2, R.drawable.granderberg),
-            new CountryOnline("Золотая страна", 3, R.drawable.goldland),
-            new CountryOnline("Камения", 4, R.drawable.stoneland),
-            new CountryOnline("Эйрленд", 5, R.drawable.airland),
-            new CountryOnline("Алмазная страна", 6, R.drawable.diamondland),
-            new CountryOnline("Гринленд", 7, R.drawable.greenland)
+            new CountryOnline("Гоуленд", 0, R.drawable.goland, R.drawable.you_goland),
+            new CountryOnline("Догсленд", 1, R.drawable.dogsland, R.drawable.you_dogsland),
+            new CountryOnline("Грандерберг", 2, R.drawable.granderberg, R.drawable.you_granderberg),
+            new CountryOnline("Золотая страна", 3, R.drawable.goldland, R.drawable.you_goldland),
+            new CountryOnline("Камения", 4, R.drawable.stoneland, R.drawable.you_stoneland),
+            new CountryOnline("Эйрленд", 5, R.drawable.airland, R.drawable.you_airland),
+            new CountryOnline("Алмазная страна", 6, R.drawable.diamondland, R.drawable.you_diamondland),
+            new CountryOnline("Гринленд", 7, R.drawable.greenland, R.drawable.you_greenland)
     };
 
     public Act[] acts = new Act[]{

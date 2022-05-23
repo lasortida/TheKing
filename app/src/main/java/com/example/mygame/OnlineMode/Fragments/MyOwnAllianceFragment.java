@@ -28,7 +28,7 @@ public class MyOwnAllianceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    GameOnline game;
+    static GameOnline game;
     AllianceOnline alliance;
 
     public MyOwnAllianceFragment(GameOnline game) {
@@ -65,14 +65,20 @@ public class MyOwnAllianceFragment extends Fragment {
         textName.setText(alliance.name);
         imageView.setImageResource(alliance.idOfAvatar);
         Button sender = view.findViewById(R.id.buttonSendInvite);
+        SenderDialog dialog = new SenderDialog(game);
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SenderDialog dialog = new SenderDialog(game);
-                dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
-
+                if (game.post.myAllianceInvitation < 0){
+                    dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
+                }
             }
         });
         return view;
+    }
+
+    public static void setGame(GameOnline gameOnline){
+        game = gameOnline;
+        Log.d("sender", String.valueOf(game.post.myAllianceInvitation));
     }
 }

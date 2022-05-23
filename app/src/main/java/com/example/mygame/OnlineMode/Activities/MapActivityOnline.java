@@ -17,6 +17,7 @@ public class MapActivityOnline extends AppCompatActivity {
     public ImageView curtain;
     public View view;
     public ImageView map;
+    public ImageView marker;
     public TextView title;
     public TextView newsText;
     public TextView numberOfWeek;
@@ -65,6 +66,7 @@ public class MapActivityOnline extends AppCompatActivity {
                                 Thread.sleep(6);
                             }
                             map.setVisibility(View.INVISIBLE);
+                            marker.setVisibility(View.INVISIBLE);
                             runOnUiThread(new Thread(){
                                 @Override
                                 public void run() {
@@ -128,6 +130,7 @@ public class MapActivityOnline extends AppCompatActivity {
         newsText = findViewById(R.id.textViewText);
         numberOfWeek = findViewById(R.id.textViewNumberOfWeek);
         map = findViewById(R.id.imageViewMap);
+        marker = findViewById(R.id.marker);
         view = findViewById(R.id.screen);
         signature= findViewById(R.id.textViewTask);
 
@@ -144,6 +147,8 @@ public class MapActivityOnline extends AppCompatActivity {
         numberOfWeekAnimation.start();
         curtainAnimation.start();
         if (value == 1){
+            int markerId = args.getInt("RESOURCES");
+            marker.setImageResource(markerId);
             showOnlyMap();
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,6 +160,7 @@ public class MapActivityOnline extends AppCompatActivity {
         else{
             game = (GameOnline) args.getSerializable("GAME");
             int number = game.numberOfWeek;
+            marker.setImageResource(game.countries[game.yourCountryId].idOfMarker);
             showStart(number);
 
             newsText.setText(game.news);

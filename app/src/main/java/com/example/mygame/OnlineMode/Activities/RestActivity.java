@@ -10,6 +10,8 @@ import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
 import com.example.mygame.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +32,7 @@ public class RestActivity extends AppCompatActivity {
     int flag = 0;
     boolean block;
     GameOnline game;
+    String jsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class RestActivity extends AppCompatActivity {
         game.post.workerStatus = game.countries[game.yourCountryId].workerStatus;
         game.post.foodStatus = game.countries[game.yourCountryId].foodStatus;
 
+        Gson gson = new Gson();
+        jsonString = gson.toJson(game.post);
+
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
@@ -79,7 +85,7 @@ public class RestActivity extends AppCompatActivity {
         public void run() {
             while (true){
                 if (flag == 0 && !block){
-                    Call<Format> call = service.sendData(game.idOfRoom, game.yourUserCode, null);
+                    Call<Format> call = service.sendData(game.idOfRoom, game.yourUserCode, jsonString);
                     call.enqueue(new Callback<Format>() {
                         @Override
                         public void onResponse(Call<Format> call, Response<Format> response) {
@@ -94,6 +100,20 @@ public class RestActivity extends AppCompatActivity {
                         public void onFailure(Call<Format> call, Throwable t) {
                             Log.d("sendData", "fail");
                             block = false;
+                        }
+                    });
+                }
+                if (flag == 1 && !block){
+                    Call<Format> call = service.getInitialStatus(game.idOfRoom, game.yourUserCode);
+                    call.enqueue(new Callback<Format>() {
+                        @Override
+                        public void onResponse(Call<Format> call, Response<Format> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Format> call, Throwable t) {
+
                         }
                     });
                 }

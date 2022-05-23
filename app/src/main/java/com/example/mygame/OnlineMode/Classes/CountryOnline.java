@@ -10,6 +10,7 @@ public class CountryOnline implements Serializable {
     public String name;
     public int id;
     public int idOfImage;
+    public int idOfMarker;
     public int relationshipValue;
     public boolean occupied;
     public double moneyStatus;
@@ -22,11 +23,12 @@ public class CountryOnline implements Serializable {
     public HashMap<Integer, Integer> foreignTrade;
     public AllianceOnline alliance;
 
-    public CountryOnline(String name, int id, int idOfImage){
+    public CountryOnline(String name, int id, int idOfImage, int idOfMarker){
         this.name = name;
         this.id = id;
         wasTrade = false;
         this.idOfImage = idOfImage;
+        this.idOfMarker = idOfMarker;
         occupied = false;
         moneyStatus = 0.5;
         armyStatus = 0.5;

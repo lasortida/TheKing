@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.mygame.OnlineMode.Fragments.MyOwnAllianceFragment;
+
 import java.util.ArrayList;
 
 public class SenderDialog extends DialogFragment {
 
-    GameOnline game;
+    public GameOnline game;
     ArrayList<CountryOnline> array;
     String[] names;
     public boolean isSended = false;
@@ -39,6 +41,8 @@ public class SenderDialog extends DialogFragment {
                     int idOfCountry = array.get(i).id;
                     game.post.myAllianceInvitation = idOfCountry;
                     isSended = true;
+                    MyOwnAllianceFragment.setGame(game);
+                    dismiss();
                 }
             }
         });

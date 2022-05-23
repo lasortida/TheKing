@@ -87,6 +87,9 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isFragmentAllianceLoaded){
+                    if (fragment.isSended){
+                        game = fragment.game;
+                    }
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.hide(fragment);
                     transaction.commit();

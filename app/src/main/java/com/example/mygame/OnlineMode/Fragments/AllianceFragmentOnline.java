@@ -26,8 +26,9 @@ public class AllianceFragmentOnline extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    GameOnline game;
+    public GameOnline game;
     AllianceOnline alliance;
+    public boolean isSended;
 
     public AllianceFragmentOnline(GameOnline game, AllianceOnline alliance) {
         this.game = game;
@@ -71,9 +72,11 @@ public class AllianceFragmentOnline extends Fragment {
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Game.sendInvite(index);
-//                buttonRequest.setEnabled(false);
-//                imageViewDone.setVisibility(View.VISIBLE);
+                if (game.users.get(game.yourUserCode).country.alliance == null && !isSended){
+                    game.post.nameOfAnotherAlliance = alliance.name;
+                    imageViewDone.setVisibility(View.VISIBLE);
+                    isSended = true;
+                }
             }
         });
         return view;

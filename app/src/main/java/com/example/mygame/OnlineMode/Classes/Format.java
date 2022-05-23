@@ -45,13 +45,16 @@ public class Format {
         }
         StringBuilder builder = new StringBuilder();
         builder.append("Добро пожаловать! \n")
-                .append("Список игроков! \n");
+                .append("Список игроков! \n\n");
         for (UserOnline u: game.users){
             builder.append(u.name);
             builder.append(" - страна: ");
             builder.append(u.country.name);
             builder.append("\n");
         }
+        builder.append("Заботьтесь о процветании вашей страны и её жителей! Отстаивайте свои интересы, объединяйтесь в Альянсы с другими странами и поддерживайте друг друга! \n\n");
+        builder.append("Весь процесс игры разделён на игровые недели! Одна игровая неделя - 1 минута и 30 секунд реального времени!\n\n");
+        builder.append("На карте мира можно рассмотреть свою страну, а также обстановку в целом!");
         game.news = builder.toString();
         game.yourUserCode = userCode;
         game.yourCountryId = countryId;
