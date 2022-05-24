@@ -10,7 +10,7 @@ public class Post implements Serializable {
     public double foodStatus;
 
     public String nameOfOwnAlliance; // имя альянса, который вы создали
-    public String nameOfAnotherAlliance; // имя альянса, в который вы хотите вступить
+    public int idOfOwnerAnotherCountry = -1; // id страны, основателя Альянса, в который вы хотите вступить
     public int myAllianceInvitation = -1; // какой стране вы отправили приглашение?
     public boolean isAllianceAccepted; // приняли ли вы приглашение в Альянс?
 

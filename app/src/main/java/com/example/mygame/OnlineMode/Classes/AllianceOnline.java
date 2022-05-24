@@ -10,6 +10,7 @@ public class AllianceOnline implements Serializable {
     public int idOfOwner;
     public int idOfAvatar;
     public boolean isActiveWar;
+    public int[] allianceRequest;
 
     public AllianceOnline(int idOfOwner, int idOfAvatar, String name, String description){
         this.idOfOwner = idOfOwner;

@@ -34,4 +34,7 @@ public interface GameService {
     @FormUrlEncoded
     @POST("theking/data")
     Call<Format> sendData(@Query("id") String idOfRoom, @Query("user-code") int userCode, @Field("json") String json);
+
+    @GET("theking/next")
+    Call<Format> getContinue(@Query("id") String idOfRoom, @Query("user-code") int userCode);
 }

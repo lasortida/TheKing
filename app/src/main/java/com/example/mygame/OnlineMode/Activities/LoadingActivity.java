@@ -185,6 +185,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 flag = 5;
                                 GameOnline game = format.getInitialGameOnline();
                                 game.numberOfWeek = 1;
+                                game.yourUserCode = userCode;
                                 startActivity(new Intent(LoadingActivity.this, MapActivityOnline.class).putExtra("GAME", game));
                             }
                             else{

@@ -73,7 +73,7 @@ public class AllianceFragmentOnline extends Fragment {
             @Override
             public void onClick(View view) {
                 if (game.users.get(game.yourUserCode).country.alliance == null && !isSended){
-                    game.post.nameOfAnotherAlliance = alliance.name;
+                    game.post.idOfOwnerAnotherCountry = alliance.idOfOwner;
                     imageViewDone.setVisibility(View.VISIBLE);
                     isSended = true;
                 }

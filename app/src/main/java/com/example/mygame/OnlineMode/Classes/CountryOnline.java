@@ -22,6 +22,10 @@ public class CountryOnline implements Serializable {
     public boolean wasTrade;
     public HashMap<Integer, Integer> foreignTrade;
     public AllianceOnline alliance;
+    public int[] invitationsToAlliance;
+    public int[] traderId;
+    public int[] tradeAway;
+    public int[] tradeToMe;
 
     public CountryOnline(String name, int id, int idOfImage, int idOfMarker){
         this.name = name;

@@ -16,17 +16,12 @@ public class Format {
     public double workerStatus;
     public double foodStatus;
 
-    public GameOnline castToGameOnline(GameOnline game){
-        game.numberOfWeek = numberOfWeek;
-        game.countries[game.yourCountryId].moneyStatus = moneyStatus;
-        game.countries[game.yourCountryId].armyStatus = armyStatus;
-        game.countries[game.yourCountryId].businessStatus = businessStatus;
-        game.countries[game.yourCountryId].workerStatus = workerStatus;
-        game.countries[game.yourCountryId].foodStatus = foodStatus;
-        game.setWeek();
-        game.time = 90000;
-        return game;
-    }
+    public boolean next;
+    public int[] tradeAway; // список элементов, которые вы можете отдать
+    public int[] tradeToMe; // список элементов, которые я могу получить
+    public int[] traderId; // список стран, которые предложили вам обмен
+    public int[] invitationsToAlliance; // список стран, которые приглашают вас вступить в их альянсы
+    public int[] allianceRequest; // список стран, которые хотят вступить в ваш альянс
 
     public GameOnline getInitialGameOnline(){
         StorageOnline storage = new StorageOnline();

@@ -30,6 +30,38 @@ public class GameOnline implements Serializable {
         post = new Post();
     }
 
+    public void getDataFromFormat(Format format){
+        UserOnline user = users.get(yourUserCode);
+        user.country.invitationsToAlliance = format.invitationsToAlliance;
+        user.country.traderId = format.traderId;
+        user.country.tradeAway = format.tradeAway;
+        user.country.tradeToMe = format.tradeToMe;
+        numberOfWeek = format.numberOfWeek;
+        user.country.moneyStatus = format.moneyStatus;
+        user.country.armyStatus = format.armyStatus;
+        user.country.businessStatus = format.businessStatus;
+        user.country.workerStatus = format.workerStatus;
+        user.country.foodStatus = format.foodStatus;
+
+        if (user.country.alliance != null){
+            user.country.alliance.allianceRequest = format.allianceRequest;
+        }
+
+        StringBuilder newsMaker = new StringBuilder();
+        newsMaker.append(storage.getRandomNews());
+        newsMaker.append("\n\n");
+        if (user.country.traderId.length != 0){
+            newsMaker.append("Кто-то предложил вам выгодную сделку! Обязательно посмотрите!\n\n");
+        }
+        if (user.country.invitationsToAlliance.length != 0){
+            newsMaker.append("Кажется кто-то пригласил вас в свой альянс! Не забудьте ответить!\n\n");
+        }
+        if (user.country.alliance != null && user.country.alliance.allianceRequest.length != 0){
+            newsMaker.append("Кто-то хочет вступить в ваш альянс! Надо проверить!\n\n");
+        }
+        news = newsMaker.toString();
+    }
+
     public void takeChanges(Effect effect){
         countries[yourCountryId].moneyStatus += effect.getMoneyStatusChange();
         countries[yourCountryId].armyStatus += effect.getArmyMoodChange();

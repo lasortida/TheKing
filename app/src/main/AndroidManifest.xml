@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyGame"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OnlineMode.Activities.InvitationActivity"
+            android:exported="false" />
+        <activity
             android:name=".OnlineMode.Activities.RestActivity"
             android:exported="false" />
         <activity

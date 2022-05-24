@@ -2,10 +2,12 @@ package com.example.mygame.OnlineMode.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.mygame.MapActivity;
 import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
@@ -85,6 +87,7 @@ public class RestActivity extends AppCompatActivity {
         public void run() {
             while (true){
                 if (flag == 0 && !block){
+                    block = true;
                     Call<Format> call = service.sendData(game.idOfRoom, game.yourUserCode, jsonString);
                     call.enqueue(new Callback<Format>() {
                         @Override
@@ -104,16 +107,29 @@ public class RestActivity extends AppCompatActivity {
                     });
                 }
                 if (flag == 1 && !block){
-                    Call<Format> call = service.getInitialStatus(game.idOfRoom, game.yourUserCode);
+                    block = true;
+                    Call<Format> call = service.getContinue(game.idOfRoom, game.yourUserCode);
                     call.enqueue(new Callback<Format>() {
                         @Override
                         public void onResponse(Call<Format> call, Response<Format> response) {
-
+                            Format format = response.body();
+                            if (format.next){
+                                flag++;
+                                game.getDataFromFormat(format);
+                                startActivity(new Intent(RestActivity.this, MapActivityOnline.class).putExtra("GAME", game));
+                            }
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            block = false;
                         }
 
                         @Override
                         public void onFailure(Call<Format> call, Throwable t) {
-
+                            Log.d("continue", "no");
+                            block = false;
                         }
                     });
                 }
