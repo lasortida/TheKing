@@ -5,7 +5,9 @@ import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.mygame.MapActivity;
@@ -35,6 +37,9 @@ public class LoadingActivity extends AppCompatActivity {
     Retrofit retrofit;
     GameService service;
     TextView view;
+    TextView timer;
+
+    CountDownTimer downTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class LoadingActivity extends AppCompatActivity {
         Bundle args = getIntent().getExtras();
         personName = (String) args.get("userName");
         view = findViewById(R.id.textViewTitle);
+        timer = findViewById(R.id.textViewTimer);
         view.setText("Поиск сервера");
 
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -147,12 +153,17 @@ public class LoadingActivity extends AppCompatActivity {
                         public void onResponse(Call<Format> call, Response<Format> response) {
                             Format format = response.body();
                             if (!format.error){
+                                if (format.timerStart){
+                                    timer.setVisibility(View.VISIBLE);
+                                    int reminder = format.timerReminder;
+                                    timer.setText("Осталось: " + reminder);
+                                }
                                 if(format.start){
                                     flag = 4;
                                 }
                                 else{
                                     try {
-                                        Thread.sleep(2000);
+                                        Thread.sleep(1000);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }

@@ -33,7 +33,7 @@ public class MyOwnAllianceFragment extends Fragment {
 
     public MyOwnAllianceFragment(GameOnline game) {
         this.game = game;
-        alliance = game.users.get(game.yourUserCode).country.alliance;
+        alliance = game.alliances.get(game.countries[game.yourCountryId].idOfAlliance);
     }
 
     @Override
@@ -69,9 +69,7 @@ public class MyOwnAllianceFragment extends Fragment {
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (game.post.myAllianceInvitation < 0){
-                    dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
-                }
+                //
             }
         });
         return view;
@@ -79,6 +77,5 @@ public class MyOwnAllianceFragment extends Fragment {
 
     public static void setGame(GameOnline gameOnline){
         game = gameOnline;
-        Log.d("sender", String.valueOf(game.post.myAllianceInvitation));
     }
 }

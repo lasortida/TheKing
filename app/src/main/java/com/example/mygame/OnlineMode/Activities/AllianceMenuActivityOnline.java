@@ -13,12 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.mygame.Alliance;
-import com.example.mygame.AllianceAdapter;
-import com.example.mygame.AllianceFragment;
-import com.example.mygame.AlliancesMenuActivity;
-import com.example.mygame.Game;
-import com.example.mygame.GovernMenuActivity;
 import com.example.mygame.OnlineMode.Classes.AllianceAdapterOnline;
 import com.example.mygame.OnlineMode.Classes.AllianceOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -127,7 +121,7 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (game.users.get(game.yourUserCode).country.alliance == null){
+                if (game.alliances.get(game.countries[game.yourCountryId].idOfAlliance) == null){
                     textBrief.setVisibility(View.INVISIBLE);
                     recyclerView.setVisibility(View.INVISIBLE);
                     fragmentCreate = new MyAllianceFragment(game);

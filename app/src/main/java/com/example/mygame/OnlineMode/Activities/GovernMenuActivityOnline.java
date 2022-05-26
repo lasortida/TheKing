@@ -10,22 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mygame.AlliancesMenuActivity;
-import com.example.mygame.Game;
-import com.example.mygame.GovernMenuActivity;
 import com.example.mygame.ImageWithParams;
-import com.example.mygame.JobActivity;
-import com.example.mygame.MapActivity;
+import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.R;
-import com.example.mygame.RelationshipActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimerTask;
 
 public class GovernMenuActivityOnline extends AppCompatActivity {
 
@@ -38,7 +27,9 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
     TextView textViewWeek;
     Button relationshipButton;
     Button allianceMenu;
+    Button offers;
     TextView counter;
+    TextView countOfOffers;
 
     ImageWithParams coinView;
     ImageWithParams bombView;
@@ -63,6 +54,9 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         relationshipButton = findViewById(R.id.buttonRelationshipMenu);
         allianceMenu = findViewById(R.id.buttonAllianceMenu);
         counter = findViewById(R.id.textViewCounter);
+        offers = findViewById(R.id.buttonInvite);
+        countOfOffers = findViewById(R.id.countOfNotice);
+
 
         Bundle arguments = getIntent().getExtras();
         game = (GameOnline) arguments.getSerializable("GAME");
@@ -96,6 +90,9 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
         textViewWeek.setText(" Неделя: " + game.numberOfWeek);
 
+        AdapterToInvitations adapter = new AdapterToInvitations(game);
+        countOfOffers.setText(String.valueOf(adapter.getItemCount()));
+
         setImagesWithGame(game.countries[game.yourCountryId]);
 
         if (game.isJobDone){
@@ -125,6 +122,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
                     jobButton.setEnabled(false);
                     nextButton.setEnabled(false);
                     allianceMenu.setEnabled(false);
+                    offers.setEnabled(false);
                     relationshipButton.setEnabled(false);
                     new Thread(){
                         @Override
@@ -163,6 +161,12 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(GovernMenuActivityOnline.this, RelationshipActivityOnline.class).putExtra("GAME", game));
+            }
+        });
+        offers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GovernMenuActivityOnline.this, InvitationActivity.class).putExtra("GAME", game).putExtra("ADAPTER", adapter));
             }
         });
     }

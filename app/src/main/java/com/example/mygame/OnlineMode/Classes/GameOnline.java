@@ -13,7 +13,6 @@ public class GameOnline implements Serializable {
     public int numberOfWeek;
     public String news;
     public CountryOnline[] countries;
-    public ArrayList<UserOnline> users;
     public int yourUserCode;
     public int yourCountryId;
     public ArrayList<AllianceOnline> alliances;
@@ -22,44 +21,16 @@ public class GameOnline implements Serializable {
     public Week week;
     public StorageOnline storage;
     public long time;
+
     public Post post;
 
+    public int[] tradeWith;
+    public int[] tradeAway;
+    public int[] tradeToMe;
+
     public GameOnline(){
-        users = new ArrayList<>();
         alliances = new ArrayList<>();
         post = new Post();
-    }
-
-    public void getDataFromFormat(Format format){
-        UserOnline user = users.get(yourUserCode);
-        user.country.invitationsToAlliance = format.invitationsToAlliance;
-        user.country.traderId = format.traderId;
-        user.country.tradeAway = format.tradeAway;
-        user.country.tradeToMe = format.tradeToMe;
-        numberOfWeek = format.numberOfWeek;
-        user.country.moneyStatus = format.moneyStatus;
-        user.country.armyStatus = format.armyStatus;
-        user.country.businessStatus = format.businessStatus;
-        user.country.workerStatus = format.workerStatus;
-        user.country.foodStatus = format.foodStatus;
-
-        if (user.country.alliance != null){
-            user.country.alliance.allianceRequest = format.allianceRequest;
-        }
-
-        StringBuilder newsMaker = new StringBuilder();
-        newsMaker.append(storage.getRandomNews());
-        newsMaker.append("\n\n");
-        if (user.country.traderId.length != 0){
-            newsMaker.append("Кто-то предложил вам выгодную сделку! Обязательно посмотрите!\n\n");
-        }
-        if (user.country.invitationsToAlliance.length != 0){
-            newsMaker.append("Кажется кто-то пригласил вас в свой альянс! Не забудьте ответить!\n\n");
-        }
-        if (user.country.alliance != null && user.country.alliance.allianceRequest.length != 0){
-            newsMaker.append("Кто-то хочет вступить в ваш альянс! Надо проверить!\n\n");
-        }
-        news = newsMaker.toString();
     }
 
     public void takeChanges(Effect effect){
@@ -93,9 +64,81 @@ public class GameOnline implements Serializable {
         return result;
     }
 
+    public void getDataFromFormat(Format format){
+        news = storage.getRandomNews() + "\n\n";
+        isJobDone = false;
+        numberOfWeek = format.numberOfWeek;
+        countries[yourCountryId].moneyStatus = format.moneyStatus;
+        countries[yourCountryId].armyStatus = format.armyStatus;
+        countries[yourCountryId].businessStatus = format.businessStatus;
+        countries[yourCountryId].workerStatus = format.workerStatus;
+        countries[yourCountryId].foodStatus = format.foodStatus;
+        if (numberOfWeek == countries[yourCountryId].weekOfOffer){
+            if (format.isTradeAccepted){
+                news += "Сделка, которую вы недавно предложили состоялась! +";
+                countries[yourCountryId].weekOfOffer = 0;
+                countries[yourCountryId].safe = -1;
+                int state = countries[yourCountryId].treasure;
+                switch (state){
+                    case 0:
+                        countries[yourCountryId].moneyStatus += 0.17;
+                        news += "Деньги";
+                        break;
+                    case 1:
+                        countries[yourCountryId].armyStatus += 0.17;
+                        news += "Армия";
+                        break;
+                    case 2:
+                        countries[yourCountryId].businessStatus += 0.17;
+                        news += "Экономика";
+                        break;
+                    case 3:
+                        countries[yourCountryId].workerStatus += 0.17;
+                        news += "Промышленность";
+                        break;
+                    case 4:
+                        countries[yourCountryId].foodStatus += 0.17;
+                        news += "Еда";
+                        break;
+                }
+                news += "\n\n";
+                countries[yourCountryId].treasure = -1;
+            }
+            else{
+                news += "Сделка, которую вы недавно предложили не состоялась!\n\n";
+                countries[yourCountryId].weekOfOffer = 0;
+                countries[yourCountryId].treasure = -1;
+                int state = countries[yourCountryId].safe;
+                switch (state){
+                    case 0:
+                        countries[yourCountryId].moneyStatus -= 0.17;
+                        break;
+                    case 1:
+                        countries[yourCountryId].armyStatus -= 0.17;
+                        break;
+                    case 2:
+                        countries[yourCountryId].businessStatus -= 0.17;
+                        break;
+                    case 3:
+                        countries[yourCountryId].workerStatus -= 0.17;
+                        break;
+                    case 4:
+                        countries[yourCountryId].foodStatus -= 0.17;
+                        break;
+                }
+                countries[yourCountryId].safe = -1;
+            }
+        }
+        if (format.tradeWith != null && format.tradeWith.length != 0){
+            tradeWith = format.tradeWith;
+            tradeAway = format.tradeAway;
+            tradeToMe = format.tradeToMe;
+        }
+    }
+
     public ArrayList<CountryOnline> getBlankCountries(){
         ArrayList<CountryOnline> result = new ArrayList<>();
-        AllianceOnline allianceOnline = users.get(yourUserCode).country.alliance;
+        AllianceOnline allianceOnline = alliances.get(countries[yourCountryId].idOfAlliance);
         if (allianceOnline.countries.size() == 0){
             int except = yourCountryId;
             for (int i = 0; i < countries.length; ++i){
@@ -106,8 +149,8 @@ public class GameOnline implements Serializable {
         }
         else{
             ArrayList<Integer> except = new ArrayList<>();
-            for (int i = 0; i < users.get(yourUserCode).country.alliance.countries.size(); ++i){
-                except.add(users.get(yourUserCode).country.alliance.countries.get(i).id);
+            for (int i = 0; i < alliances.get(countries[yourCountryId].idOfAlliance).countries.size(); ++i){
+                except.add(alliances.get(countries[yourCountryId].idOfAlliance).countries.get(i).id);
             }
             for (int i = 0; i < countries.length; ++i){
                 if (!except.contains(countries[i].id)){

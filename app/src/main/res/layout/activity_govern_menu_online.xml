@@ -247,7 +247,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
+    <TextView
+        android:id="@+id/countOfNotice"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:fontFamily="monospace"
+        android:background="@drawable/notice"
+        android:text="0"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonInvite"
+        app:layout_constraintTop_toTopOf="@+id/buttonInvite"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonInvite" />
 
     <ImageView
         android:id="@+id/imageViewDone"
@@ -255,8 +268,8 @@
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonTasks"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toTopOf="@+id/buttonTasks"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonTasks"
         app:layout_constraintVertical_bias="0.25"
         app:srcCompat="@drawable/done"
         android:visibility="invisible" />

@@ -64,7 +64,7 @@ public class AllianceFragmentOnline extends Fragment {
         else{
             textViewWar.setText("Сражения: НЕТ АКТИВНОГО");
         }
-        textViewOwner.setText("Страна-основатель: " + game.users.get(alliance.idOfOwner).country.name);
+        textViewOwner.setText("Страна-основатель: " + game.countries[alliance.idOfOwner]);
         desc.setText(alliance.description);
         textName.setText(alliance.name);
         imageView.setImageResource(alliance.idOfAvatar);
@@ -72,8 +72,7 @@ public class AllianceFragmentOnline extends Fragment {
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (game.users.get(game.yourUserCode).country.alliance == null && !isSended){
-                    game.post.idOfOwnerAnotherCountry = alliance.idOfOwner;
+                if (game.countries[game.yourCountryId].idOfAlliance == -1 && !isSended){
                     imageViewDone.setVisibility(View.VISIBLE);
                     isSended = true;
                 }

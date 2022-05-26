@@ -9,14 +9,10 @@ public class Post implements Serializable {
     public double workerStatus;
     public double foodStatus;
 
-    public String nameOfOwnAlliance; // имя альянса, который вы создали
-    public int idOfOwnerAnotherCountry = -1; // id страны, основателя Альянса, в который вы хотите вступить
-    public int myAllianceInvitation = -1; // какой стране вы отправили приглашение?
-    public boolean isAllianceAccepted; // приняли ли вы приглашение в Альянс?
+    public int tradeWith;
+    public int tradeAway;
+    public int tradeToMe;
 
-    public int tradeWith = -1; // id пользователя, которому вы отправили trade
-    public int tradeInvitation; // id пользователя, который отправил trade  !!!!!!!!!!!!!!
-    public boolean isTradeAccepted; // приняли ли вы предложение на обмен    !!!!!!!!!!!!!!!
-    public int stateUp; // то, что вы отдаёте
-    public int stateDown; //то, что вы получаете;
+    public boolean isTradeAccepted;
+    public int confirmation;
 }

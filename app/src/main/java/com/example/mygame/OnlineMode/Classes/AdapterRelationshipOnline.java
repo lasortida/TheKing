@@ -26,12 +26,10 @@ public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelat
     CountryOnline[] countries;
     Context context;
     CountryOnline me;
-    ArrayList<UserOnline> users;
 
-    public AdapterRelationshipOnline(CountryOnline[] countries, CountryOnline me, ArrayList<UserOnline> users){
+    public AdapterRelationshipOnline(CountryOnline[] countries, CountryOnline me){
         this.me = me;
         this.countries = countries;
-        this.users = users;
     }
 
     @NonNull
@@ -78,15 +76,7 @@ public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelat
                 @Override
                 public void onClick(View view) {
                     if (!me.wasTrade && me.ifCanTrade()) {
-                        int idOfCountry = countries[getAdapterPosition()].id;
-                        int indexOfUser = -1;
-                        for (int i = 0; i < users.size(); ++i){
-                            if (users.get(i).country.id == idOfCountry){
-                                indexOfUser = i;
-                                break;
-                            }
-                        }
-                        TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id, indexOfUser);
+                        TradeFragmentDialog dialog = new TradeFragmentDialog(countries[getAdapterPosition()].id);
                         dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "Fragment");
                     }
                     else{

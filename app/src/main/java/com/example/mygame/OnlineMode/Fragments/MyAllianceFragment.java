@@ -12,11 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.mygame.AlliancesMenuActivity;
 import com.example.mygame.OnlineMode.Activities.AllianceMenuActivityOnline;
 import com.example.mygame.OnlineMode.Classes.AllianceOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
-import com.example.mygame.OnlineMode.Classes.UserOnline;
 import com.example.mygame.R;
 
 public class MyAllianceFragment extends Fragment {
@@ -82,12 +80,9 @@ public class MyAllianceFragment extends Fragment {
                     if (desc.equals("")){
                         desc = "Описание отсутствует!";
                     }
-                    AllianceOnline alliance = new AllianceOnline(game.yourUserCode, game.storage.getResImageAvatar(indexOfAvatar), title, desc);
+                    AllianceOnline alliance = new AllianceOnline(game.alliances.size(), game.yourUserCode, game.storage.getResImageAvatar(indexOfAvatar), title, desc);
                     game.alliances.add(alliance);
-                    UserOnline user = game.users.get(game.yourUserCode);
-                    user.country.alliance = alliance;
-                    game.users.set(game.yourUserCode, user);
-                    game.post.nameOfOwnAlliance = title;
+                    game.countries[game.yourCountryId].idOfAlliance = alliance.id;
                     AllianceMenuActivityOnline.isFragmentCreateAllianceLoaded = false;
                     startActivity(new Intent(getActivity(), AllianceMenuActivityOnline.class).putExtra("GAME", game));
                 }

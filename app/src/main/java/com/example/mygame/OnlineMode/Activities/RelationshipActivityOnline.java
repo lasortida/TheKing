@@ -50,7 +50,7 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new AdapterRelationshipOnline(game.getListOfForeignCountries(), game.countries[game.yourCountryId], game.users));
+        recyclerView.setAdapter(new AdapterRelationshipOnline(game.getListOfForeignCountries(), game.countries[game.yourCountryId]));
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +74,10 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         }.start();
     }
 
-    public static void setAddView(int indexOfTrader, int userCodeTrader){
+    public static void setAddView(int indexOfTrader){
         recyclerView.setVisibility(View.INVISIBLE);
         FragmentTransaction transaction = manager.beginTransaction();
-        TradeFragment tradeFragment = new TradeFragment(game, indexOfTrader, userCodeTrader);
+        TradeFragment tradeFragment = new TradeFragment(game, indexOfTrader);
         transaction.add(R.id.frame, tradeFragment);
         transaction.commit();
     }

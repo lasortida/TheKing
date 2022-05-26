@@ -18,19 +18,20 @@ public class CountryOnline implements Serializable {
     public double businessStatus;
     public double workerStatus;
     public double foodStatus;
-    public int indexOfTradeStatus;
+    public int idOfAlliance;
     public boolean wasTrade;
+    public int safe;
+    public int treasure;
+    public int weekOfOffer;
     public HashMap<Integer, Integer> foreignTrade;
-    public AllianceOnline alliance;
-    public int[] invitationsToAlliance;
-    public int[] traderId;
-    public int[] tradeAway;
-    public int[] tradeToMe;
+//    public int[] invitationsToAlliance;
+//    public int[] traderId;
+//    public int[] tradeAway;
+//    public int[] tradeToMe;
 
     public CountryOnline(String name, int id, int idOfImage, int idOfMarker){
         this.name = name;
         this.id = id;
-        wasTrade = false;
         this.idOfImage = idOfImage;
         this.idOfMarker = idOfMarker;
         occupied = false;
@@ -40,6 +41,8 @@ public class CountryOnline implements Serializable {
         workerStatus = 0.5;
         foodStatus = 0.5;
         relationshipValue = 50;
+        wasTrade = false;
+        idOfAlliance = -1;
         foreignTrade = new HashMap<>();
     }
 
@@ -50,6 +53,7 @@ public class CountryOnline implements Serializable {
         return array[number];
     }
     public void removeOneStateOfStatus(int number){
+        safe = number;
         switch (number){
             case 0:
                 moneyStatus -= 0.17;

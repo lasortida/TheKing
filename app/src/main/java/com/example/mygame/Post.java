@@ -3,6 +3,7 @@ package com.example.mygame;
 import java.io.Serializable;
 
 public class Post implements Serializable {
+
     private String text;
 
     public Post(String text){

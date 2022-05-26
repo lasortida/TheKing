@@ -52,17 +52,13 @@ public class TradeFragment extends Fragment {
     };
     int indexUp = 0;
     int indexDown = 0;
-    CountryOnline trader;
     int indexOfTrader;
     GameOnline game;
-    int userCodeTrader;
 
-    public TradeFragment(GameOnline game, int indexOfTrader, int userCodeTrader) {
+    public TradeFragment(GameOnline game, int indexOfTrader) {
         this.game = game;
         this.me = game.countries[game.yourCountryId];
-        this.trader = game.countries[indexOfTrader];
         this.indexOfTrader = indexOfTrader;
-        this.userCodeTrader = userCodeTrader;
         result = getMyStateIds(me);
     }
 
@@ -155,16 +151,17 @@ public class TradeFragment extends Fragment {
         ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.post.tradeWith = trader.id;
-                game.post.stateUp = indexUp;
-                game.post.stateDown = indexDown;
-
                 me.wasTrade = true;
-                trader.foreignTrade.put(indexDown, indexUp);
-                me.indexOfTradeStatus = indexUp;
+
+                game.post.tradeWith = indexOfTrader;
+                game.post.tradeAway = indexUp;
+                game.post.tradeToMe = indexDown;
+
+                game.countries[indexOfTrader].foreignTrade.put(indexDown, indexUp);
+                me.weekOfOffer = game.numberOfWeek + 2;
+                me.treasure = indexDown;
                 me.removeOneStateOfStatus(indexUp);
                 game.countries[game.yourCountryId] = me;
-                game.countries[indexOfTrader] = trader;
                 startActivity(new Intent(getActivity(), GovernMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
