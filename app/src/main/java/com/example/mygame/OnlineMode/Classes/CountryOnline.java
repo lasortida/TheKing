@@ -77,11 +77,17 @@ public class CountryOnline implements Serializable {
         double[] array = {
                 moneyStatus, armyStatus, businessStatus, workerStatus, foodStatus
         };
+        int count = 0;
         for (int i = 0; i < array.length; ++i){
-            if (array[i] <= 0.17 || array[i] >= 0.85){
-                return false;
+            if (array[i] <= 0.17){
+                count++;
             }
         }
-        return true;
+        if (count == array.length){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.example.mygame.OnlineMode.Activities.InvitationActivity;
 import com.example.mygame.R;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitations.ElementHolder> implements Serializable {
@@ -21,15 +22,9 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
     GameOnline game;
     ArrayList<Note> notes;
 
-    public AdapterToInvitations(GameOnline game){
+    public AdapterToInvitations(GameOnline game, ArrayList<Note> notes){
         this.game = game;
-        notes = new ArrayList<>();
-        if (game.tradeWith != null && game.tradeWith.length != 0){
-            for (int i = 0; i < game.tradeWith.length; ++i){
-                Note note = new Note(game.tradeWith[i], 0, game.tradeAway[i], game.tradeToMe[i]);
-                notes.add(note);
-            }
-        }
+        this.notes = notes;
     }
 
     @NonNull
@@ -75,7 +70,10 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                 @Override
                 public void onClick(View view) {
                     if (note.type == 0){
+                        game.isHandle[getAdapterPosition()] = true;
                         notes.remove(note);
+                        game.post.isTradeAccepted = false;
+                        InvitationActivity.setGame(game, notes);
                     }
                 }
             });
@@ -121,7 +119,9 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                                 game.countries[game.yourCountryId].foodStatus += 0.17;
                                 break;
                         }
-                        InvitationActivity.setGame(game);
+                        game.isHandle[getAdapterPosition()] = true;
+                        notes.remove(note);
+                        InvitationActivity.setGame(game, notes);
                         yes.setEnabled(false);
                         no.setEnabled(false);
                     }

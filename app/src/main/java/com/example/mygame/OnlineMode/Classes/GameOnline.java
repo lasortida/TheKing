@@ -27,6 +27,7 @@ public class GameOnline implements Serializable {
     public int[] tradeWith;
     public int[] tradeAway;
     public int[] tradeToMe;
+    public boolean[] isHandle;
 
     public GameOnline(){
         alliances = new ArrayList<>();
@@ -52,6 +53,19 @@ public class GameOnline implements Serializable {
         }
     }
 
+    public ArrayList<Note> getNotes(){
+        ArrayList<Note> notes = new ArrayList<>();
+        if (tradeWith != null && tradeWith.length != 0){
+            for (int i = 0; i < tradeWith.length; ++i){
+                if (!isHandle[i]){
+                    Note note = new Note(tradeWith[i], 0, tradeAway[i], tradeToMe[i]);
+                    notes.add(note);
+                }
+            }
+        }
+        return notes;
+    }
+
     public CountryOnline[] getListOfForeignCountries(){
         CountryOnline[] result = new CountryOnline[countries.length - 1];
         int j = 0;
@@ -65,8 +79,14 @@ public class GameOnline implements Serializable {
     }
 
     public void getDataFromFormat(Format format){
+        time = 90000;
+        post = new Post();
+        tradeWith = null;
+        tradeAway = null;
+        tradeToMe = null;
         news = storage.getRandomNews() + "\n\n";
         isJobDone = false;
+        countries[yourCountryId].wasTrade = false;
         numberOfWeek = format.numberOfWeek;
         countries[yourCountryId].moneyStatus = format.moneyStatus;
         countries[yourCountryId].armyStatus = format.armyStatus;
@@ -133,6 +153,7 @@ public class GameOnline implements Serializable {
             tradeWith = format.tradeWith;
             tradeAway = format.tradeAway;
             tradeToMe = format.tradeToMe;
+            isHandle = new boolean[tradeWith.length];
         }
     }
 

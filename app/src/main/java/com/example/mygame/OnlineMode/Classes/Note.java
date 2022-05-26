@@ -5,11 +5,12 @@ import java.io.Serializable;
 public class Note implements Serializable {
     public int idOfCountry;
     public int type;
-    public String text;
+    public String text = "";
     public int stateAway;
     public int stateToMe;
 
     public Note(int idOfCountry, int type, int stateAway, int stateToMe){
+        this.idOfCountry = idOfCountry;
         this.type = type;
         if (type == 0){
             this.stateAway = stateAway;

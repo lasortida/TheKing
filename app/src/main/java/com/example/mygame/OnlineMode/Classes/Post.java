@@ -9,9 +9,9 @@ public class Post implements Serializable {
     public double workerStatus;
     public double foodStatus;
 
-    public int tradeWith;
-    public int tradeAway;
-    public int tradeToMe;
+    public int tradeWith = -1;
+    public int tradeAway = -1;
+    public int tradeToMe = -1;
 
     public boolean isTradeAccepted;
     public int confirmation;

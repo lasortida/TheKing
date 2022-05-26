@@ -12,12 +12,16 @@ import android.widget.TextView;
 
 import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.OnlineMode.Classes.Note;
 import com.example.mygame.R;
+
+import java.util.ArrayList;
 
 public class InvitationActivity extends AppCompatActivity {
 
-    RecyclerView recycler;
+    static RecyclerView recycler;
     static GameOnline game;
+    static AdapterToInvitations adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class InvitationActivity extends AppCompatActivity {
         Bundle args = getIntent().getExtras();
 
         game = (GameOnline) args.getSerializable("GAME");
-        AdapterToInvitations adapter = (AdapterToInvitations) args.getSerializable("ADAPTER");
+        adapter = (AdapterToInvitations) args.getSerializable("ADAPTER");
         TextView dialog = findViewById(R.id.textViewDialog);
         recycler = findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -43,8 +47,10 @@ public class InvitationActivity extends AppCompatActivity {
         });
     }
 
-    public static void setGame(GameOnline game1){
+    public static void setGame(GameOnline game1, ArrayList<Note> notes){
         game = game1;
+        adapter = new AdapterToInvitations(game, notes);
+        recycler.setAdapter(adapter);
     }
 
 }

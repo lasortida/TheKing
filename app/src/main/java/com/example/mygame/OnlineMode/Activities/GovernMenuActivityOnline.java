@@ -90,7 +90,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
         textViewWeek.setText(" Неделя: " + game.numberOfWeek);
 
-        AdapterToInvitations adapter = new AdapterToInvitations(game);
+        AdapterToInvitations adapter = new AdapterToInvitations(game, game.getNotes());
         countOfOffers.setText(String.valueOf(adapter.getItemCount()));
 
         setImagesWithGame(game.countries[game.yourCountryId]);
