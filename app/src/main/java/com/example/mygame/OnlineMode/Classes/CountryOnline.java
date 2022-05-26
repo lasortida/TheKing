@@ -1,9 +1,6 @@
 package com.example.mygame.OnlineMode.Classes;
 
-import com.example.mygame.Alliance;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CountryOnline implements Serializable {
@@ -44,6 +41,30 @@ public class CountryOnline implements Serializable {
         wasTrade = false;
         idOfAlliance = -1;
         foreignTrade = new HashMap<>();
+    }
+
+    public int getFullState(){
+        double[] array = {
+                moneyStatus, armyStatus, businessStatus, workerStatus, foodStatus
+        };
+        for (int i = 0; i < array.length; ++i){
+            if (array[i] >= 0.85){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public boolean isGameLow(){
+        double[] array = {
+                moneyStatus, armyStatus, businessStatus, workerStatus, foodStatus
+        };
+        for (int i = 0; i < array.length; ++i){
+            if (array[i] <= 0){
+                return true;
+            }
+        }
+        return false;
     }
 
     public double getOneStatus(int number){

@@ -1,16 +1,15 @@
 package com.example.mygame.OnlineMode.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.mygame.MapActivity;
 import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
@@ -46,6 +45,7 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
         Bundle args = getIntent().getExtras();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         personName = (String) args.get("userName");
         view = findViewById(R.id.textViewTitle);
         timer = findViewById(R.id.textViewTimer);

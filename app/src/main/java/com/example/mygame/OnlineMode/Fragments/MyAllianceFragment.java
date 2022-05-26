@@ -75,14 +75,14 @@ public class MyAllianceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String title = String.valueOf(nameOfAlliance.getText());
-                if (!title.equals("")){
-                    String desc = String.valueOf(description.getText());
-                    if (desc.equals("")){
-                        desc = "Описание отсутствует!";
-                    }
-                    AllianceOnline alliance = new AllianceOnline(game.alliances.size(), game.yourUserCode, game.storage.getResImageAvatar(indexOfAvatar), title, desc);
+                String desc = String.valueOf(description.getText());
+                if (!title.equals("") && !desc.equals("")){
+                    AllianceOnline alliance = new AllianceOnline(game.alliances.size(), game.yourCountryId, game.storage.getResImageAvatar(indexOfAvatar), title, desc);
                     game.alliances.add(alliance);
                     game.countries[game.yourCountryId].idOfAlliance = alliance.id;
+                    game.post.nameOfNewAlliance = alliance.name;
+                    game.post.description = alliance.description;
+                    game.post.avatar = alliance.idOfAvatar;
                     AllianceMenuActivityOnline.isFragmentCreateAllianceLoaded = false;
                     startActivity(new Intent(getActivity(), AllianceMenuActivityOnline.class).putExtra("GAME", game));
                 }

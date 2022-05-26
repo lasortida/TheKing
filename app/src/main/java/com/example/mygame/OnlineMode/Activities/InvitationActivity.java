@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,15 +30,28 @@ public class InvitationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitation);
         Bundle args = getIntent().getExtras();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         game = (GameOnline) args.getSerializable("GAME");
         adapter = (AdapterToInvitations) args.getSerializable("ADAPTER");
-        TextView dialog = findViewById(R.id.textViewDialog);
         recycler = findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler.setLayoutManager(manager);
         recycler.setHasFixedSize(true);
         recycler.setAdapter(adapter);
+
+        new CountDownTimer(game.time, 1000){
+
+            @Override
+            public void onTick(long l) {
+                game.time = l;
+            }
+
+            @Override
+            public void onFinish() {
+                startActivity(new Intent(InvitationActivity.this, RestActivity.class));
+            }
+        }.start();
 
         Button back = findViewById(R.id.buttonBack);
         back.setOnClickListener(new View.OnClickListener() {
@@ -47,9 +62,9 @@ public class InvitationActivity extends AppCompatActivity {
         });
     }
 
-    public static void setGame(GameOnline game1, ArrayList<Note> notes){
+    public static void setGame(GameOnline game1, ArrayList<Note> notes, ArrayList<Note> offerNotes){
         game = game1;
-        adapter = new AdapterToInvitations(game, notes);
+        adapter = new AdapterToInvitations(game, notes, offerNotes);
         recycler.setAdapter(adapter);
     }
 

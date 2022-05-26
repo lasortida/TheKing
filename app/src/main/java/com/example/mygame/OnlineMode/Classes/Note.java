@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Note implements Serializable {
     public int idOfCountry;
+    public int idOfAlliance;
     public int type;
     public String text = "";
     public int stateAway;

@@ -50,7 +50,11 @@ public class MyOwnAllianceFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_own_alliance, container, false);
         ListView listView = view.findViewById(R.id.listView);
-        String[] array = alliance.getNameOfCountries();
+        int[] ids = alliance.getIdOfCountries();
+        String[] array = new String[ids.length];
+        for (int i = 0; i < ids.length; ++i){
+            array[i] = game.countries[ids[i]].name;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, array);
         listView.setAdapter(adapter);
         ImageView imageView = view.findViewById(R.id.imageViewAvatar);
@@ -69,7 +73,7 @@ public class MyOwnAllianceFragment extends Fragment {
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+                dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
             }
         });
         return view;

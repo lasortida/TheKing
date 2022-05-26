@@ -21,10 +21,12 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
 
     GameOnline game;
     ArrayList<Note> notes;
+    ArrayList<Note> offerNotes;
 
-    public AdapterToInvitations(GameOnline game, ArrayList<Note> notes){
+    public AdapterToInvitations(GameOnline game, ArrayList<Note> notes, ArrayList<Note> offerNotes){
         this.game = game;
         this.notes = notes;
+        this.offerNotes = offerNotes;
     }
 
     @NonNull
@@ -40,17 +42,28 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
 
     @Override
     public void onBindViewHolder(@NonNull ElementHolder holder, int position) {
-        Note note = notes.get(position);
+        Note note;
+        if (position >= notes.size()){
+            note = offerNotes.get(position - notes.size());
+        }
+        else{
+            note = notes.get(position);
+        }
         if (note.type == 0){
             holder.note = note;
             String row = "Страна " + game.countries[note.idOfCountry].name + " предложила сделку! " + note.text;
+            holder.bind(row);
+        }
+        if (note.type == 1){
+            holder.note = note;
+            String row = "Альянс " + game.alliances.get(note.idOfAlliance).name + " (" + game.countries[note.idOfCountry].name + ") приглашает вас присоединиться к альянсу!";
             holder.bind(row);
         }
     }
 
     @Override
     public int getItemCount() {
-        return notes.size();
+        return notes.size() + offerNotes.size();
     }
 
     class ElementHolder extends RecyclerView.ViewHolder {
@@ -70,10 +83,20 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                 @Override
                 public void onClick(View view) {
                     if (note.type == 0){
-                        game.isHandle[getAdapterPosition()] = true;
+                        game.isHandle[game.postIndex] = true;
                         notes.remove(note);
-                        game.post.isTradeAccepted = false;
-                        InvitationActivity.setGame(game, notes);
+                        game.post.isTradeAccepted[game.postIndex] = false;
+                        game.post.confirmation[game.postIndex] = note.idOfCountry;
+                        game.postIndex++;
+                        InvitationActivity.setGame(game, notes, offerNotes);
+                    }
+                    if (note.type == 1){
+                        game.isHandleOffer[game.postIndexOffer] = true;
+                        offerNotes.remove(note);
+                        game.post.isOfferAccepted[game.postIndexOffer] = false;
+                        game.post.allianceIdConfirmation[game.postIndexOffer] = note.idOfAlliance;
+                        game.postIndexOffer++;
+                        InvitationActivity.setGame(game, notes, offerNotes);
                     }
                 }
             });
@@ -81,8 +104,8 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                 @Override
                 public void onClick(View view) {
                     if (note.type == 0){
-                        game.post.isTradeAccepted = true;
-                        game.post.confirmation = note.idOfCountry;
+                        game.post.isTradeAccepted[game.postIndex] = true;
+                        game.post.confirmation[game.postIndex] = note.idOfCountry;
                         int stateAway = note.stateAway;
                         switch (stateAway){
                             case 0:
@@ -119,11 +142,18 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                                 game.countries[game.yourCountryId].foodStatus += 0.17;
                                 break;
                         }
-                        game.isHandle[getAdapterPosition()] = true;
+                        game.isHandle[game.postIndex] = true;
                         notes.remove(note);
-                        InvitationActivity.setGame(game, notes);
-                        yes.setEnabled(false);
-                        no.setEnabled(false);
+                        game.postIndex++;
+                        InvitationActivity.setGame(game, notes, offerNotes);
+                    }
+                    if (note.type == 1){
+                        game.post.isOfferAccepted[game.postIndexOffer] = true;
+                        game.post.allianceIdConfirmation[game.postIndexOffer] = note.idOfAlliance;
+                        game.isHandleOffer[game.postIndexOffer] = true;
+                        offerNotes.remove(note);
+                        game.postIndexOffer++;
+                        InvitationActivity.setGame(game, notes, offerNotes);
                     }
                 }
             });

@@ -3,6 +3,7 @@ package com.example.mygame.OnlineMode.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
@@ -10,10 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mygame.Game;
-import com.example.mygame.GovernMenuActivity;
 import com.example.mygame.ImageWithParams;
-import com.example.mygame.JobActivity;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.R;
@@ -35,6 +33,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         textViewTask = findViewById(R.id.textViewTask);
         textViewTask.setVisibility(View.VISIBLE);
@@ -54,7 +53,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
 
             @Override
             public void onFinish() {
-
+                startActivity(new Intent(JobActivityOnline.this, RestActivity.class));
             }
         }.start();
 
@@ -110,7 +109,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
                     game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(1).getEffect());
                     flag = true;
                 }
-                if (numberOfActInADay == 3 || game.isGameOver){
+                if (numberOfActInADay == 3 || game.isGameFull || game.isGameLow){
                     textViewTask.setText("Приём окончен!");
                     textViewLeft.setText("Далее");
                     textViewRight.setText("Далее");

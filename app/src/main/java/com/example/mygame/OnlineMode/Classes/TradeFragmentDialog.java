@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.mygame.Game;
 import com.example.mygame.OnlineMode.Activities.RelationshipActivityOnline;
 
 public class TradeFragmentDialog extends DialogFragment {

@@ -3,6 +3,7 @@ package com.example.mygame.OnlineMode.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,14 +21,14 @@ public class MainActivityOnline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        personNameEditText = findViewById(R.id.editTextPersonName);
         buttonJoin = findViewById(R.id.buttonStart);
 
         buttonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String personName = String.valueOf(personNameEditText.getText());
+                String personName = "none";
                 startActivity(new Intent(MainActivityOnline.this, LoadingActivity.class).putExtra("userName", personName));
             }
         });

@@ -21,7 +21,18 @@ public class Format {
     public int[] tradeAway;
     public int[] tradeToMe;
 
+    public String[] newAllianceNames;
+    public int[] newAllianceIds;
+    public int[] newAllianceIdsOfOwner;
+    public int[] newAllianceAvatars;
+    public String[] newAllianceDescription;
+
+    public int[] offersFromAlliances;
+    public int[] newIdsOfCountry;
+    public int[] newIdsOfAlliance;
+
     public boolean next;
+    public boolean win;
 
     public GameOnline getInitialGameOnline(){
         StorageOnline storage = new StorageOnline();

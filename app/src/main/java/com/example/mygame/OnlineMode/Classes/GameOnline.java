@@ -1,8 +1,6 @@
 package com.example.mygame.OnlineMode.Classes;
 
-import com.example.mygame.Country;
 import com.example.mygame.Effect;
-import com.example.mygame.Storage;
 import com.example.mygame.Week;
 
 import java.io.Serializable;
@@ -17,10 +15,15 @@ public class GameOnline implements Serializable {
     public int yourCountryId;
     public ArrayList<AllianceOnline> alliances;
     public boolean isJobDone;
-    public boolean isGameOver;
+    public boolean isGameFull;
+    public boolean isGameLow;
     public Week week;
     public StorageOnline storage;
     public long time;
+    public int warStart;
+    public boolean isWar;
+    public boolean end;
+
 
     public Post post;
 
@@ -28,6 +31,11 @@ public class GameOnline implements Serializable {
     public int[] tradeAway;
     public int[] tradeToMe;
     public boolean[] isHandle;
+    public int postIndex = 0;
+
+    public int[] offersFromAlliances;
+    public boolean[] isHandleOffer;
+    public int postIndexOffer = 0;
 
     public GameOnline(){
         alliances = new ArrayList<>();
@@ -46,9 +54,11 @@ public class GameOnline implements Serializable {
                 country.moneyStatus, country.armyStatus, country.businessStatus, country.workerStatus, country.foodStatus
         };
         for(int i = 0; i < chars.length; ++i){
-            if (chars[i] <= 0 || chars[i] >= 0.85){
-                isGameOver = true;
-                break;
+            if (chars[i] <= 0){
+                isGameLow = true;
+            }
+            if (chars[i] >= 0.85){
+                isGameFull = true;
             }
         }
     }
@@ -59,6 +69,21 @@ public class GameOnline implements Serializable {
             for (int i = 0; i < tradeWith.length; ++i){
                 if (!isHandle[i]){
                     Note note = new Note(tradeWith[i], 0, tradeAway[i], tradeToMe[i]);
+                    notes.add(note);
+                }
+            }
+        }
+        return notes;
+    }
+
+    public ArrayList<Note> getOfferNote(){
+        ArrayList<Note> notes = new ArrayList<>();
+        if (offersFromAlliances != null){
+            for (int i = 0; i < offersFromAlliances.length; ++i){
+                if (!isHandleOffer[i]){
+                    AllianceOnline alliance = alliances.get(offersFromAlliances[i]);
+                    Note note = new Note(alliance.idOfOwner, 1, 0, 0);
+                    note.idOfAlliance = offersFromAlliances[i];
                     notes.add(note);
                 }
             }
@@ -78,82 +103,149 @@ public class GameOnline implements Serializable {
         return result;
     }
 
+    public void check(){
+        CountryOnline country = countries[yourCountryId];
+        isGameLow = country.isGameLow();
+    }
+
     public void getDataFromFormat(Format format){
+        check();
         time = 90000;
         post = new Post();
+        postIndex = 0;
         tradeWith = null;
         tradeAway = null;
         tradeToMe = null;
-        news = storage.getRandomNews() + "\n\n";
-        isJobDone = false;
-        countries[yourCountryId].wasTrade = false;
+        news = "";
         numberOfWeek = format.numberOfWeek;
-        countries[yourCountryId].moneyStatus = format.moneyStatus;
-        countries[yourCountryId].armyStatus = format.armyStatus;
-        countries[yourCountryId].businessStatus = format.businessStatus;
-        countries[yourCountryId].workerStatus = format.workerStatus;
-        countries[yourCountryId].foodStatus = format.foodStatus;
-        if (numberOfWeek == countries[yourCountryId].weekOfOffer){
-            if (format.isTradeAccepted){
-                news += "Сделка, которую вы недавно предложили состоялась! +";
-                countries[yourCountryId].weekOfOffer = 0;
-                countries[yourCountryId].safe = -1;
-                int state = countries[yourCountryId].treasure;
-                switch (state){
-                    case 0:
-                        countries[yourCountryId].moneyStatus += 0.17;
-                        news += "Деньги";
-                        break;
-                    case 1:
-                        countries[yourCountryId].armyStatus += 0.17;
-                        news += "Армия";
-                        break;
-                    case 2:
-                        countries[yourCountryId].businessStatus += 0.17;
-                        news += "Экономика";
-                        break;
-                    case 3:
-                        countries[yourCountryId].workerStatus += 0.17;
-                        news += "Промышленность";
-                        break;
-                    case 4:
-                        countries[yourCountryId].foodStatus += 0.17;
-                        news += "Еда";
-                        break;
-                }
+        if (format.win){
+            end = true;
+            news = "Ура, вы выиграли!";
+        }
+        else{
+            if (isGameFull){
+                news += storage.getRandomGameOver(countries[yourCountryId].getFullState());
                 news += "\n\n";
-                countries[yourCountryId].treasure = -1;
+                news += "Конец игры!";
+                end = true;
+            }
+            else if (isGameLow && !isWar){
+                isWar = true;
+                warStart = numberOfWeek;
+                news += "В стране начались смутные времена! У вас есть 3 недели, чтобы это исправить!\n\n";
+                news += "Временно вы не можете рассматривать обращения!\n\n";
+                isJobDone = true;
+            }
+            else if (isGameLow && isWar){
+                news += "Состояние такое же плохое!";
+                if (warStart == numberOfWeek - 3){
+                    news += "К сожалению! Вы не справились со своими обязанностями! Конец игры!";
+                    end = true;
+                }
+            }
+            else if (!isGameLow && isWar){
+                news += "Поздравляю! Вы справились! Тяжёлые врмена прошли!";
+                isJobDone = false;
             }
             else{
-                news += "Сделка, которую вы недавно предложили не состоялась!\n\n";
-                countries[yourCountryId].weekOfOffer = 0;
-                countries[yourCountryId].treasure = -1;
-                int state = countries[yourCountryId].safe;
-                switch (state){
-                    case 0:
-                        countries[yourCountryId].moneyStatus -= 0.17;
-                        break;
-                    case 1:
-                        countries[yourCountryId].armyStatus -= 0.17;
-                        break;
-                    case 2:
-                        countries[yourCountryId].businessStatus -= 0.17;
-                        break;
-                    case 3:
-                        countries[yourCountryId].workerStatus -= 0.17;
-                        break;
-                    case 4:
-                        countries[yourCountryId].foodStatus -= 0.17;
-                        break;
-                }
-                countries[yourCountryId].safe = -1;
+                news = storage.getRandomNews() + "\n\n";
+                isJobDone = false;
             }
-        }
-        if (format.tradeWith != null && format.tradeWith.length != 0){
-            tradeWith = format.tradeWith;
-            tradeAway = format.tradeAway;
-            tradeToMe = format.tradeToMe;
-            isHandle = new boolean[tradeWith.length];
+            countries[yourCountryId].wasTrade = false;
+            numberOfWeek = format.numberOfWeek;
+            countries[yourCountryId].moneyStatus = format.moneyStatus;
+            countries[yourCountryId].armyStatus = format.armyStatus;
+            countries[yourCountryId].businessStatus = format.businessStatus;
+            countries[yourCountryId].workerStatus = format.workerStatus;
+            countries[yourCountryId].foodStatus = format.foodStatus;
+            if (numberOfWeek == countries[yourCountryId].weekOfOffer){
+                if (format.isTradeAccepted){
+                    news += "Сделка, которую вы недавно предложили состоялась! +";
+                    countries[yourCountryId].weekOfOffer = 0;
+                    countries[yourCountryId].safe = -1;
+                    int state = countries[yourCountryId].treasure;
+                    switch (state){
+                        case 0:
+                            countries[yourCountryId].moneyStatus += 0.17;
+                            news += "Деньги";
+                            break;
+                        case 1:
+                            countries[yourCountryId].armyStatus += 0.17;
+                            news += "Армия";
+                            break;
+                        case 2:
+                            countries[yourCountryId].businessStatus += 0.17;
+                            news += "Экономика";
+                            break;
+                        case 3:
+                            countries[yourCountryId].workerStatus += 0.17;
+                            news += "Промышленность";
+                            break;
+                        case 4:
+                            countries[yourCountryId].foodStatus += 0.17;
+                            news += "Еда";
+                            break;
+                    }
+                    news += "\n\n";
+                    countries[yourCountryId].treasure = -1;
+                }
+                else{
+                    news += "Сделка, которую вы недавно предложили не состоялась!\n\n";
+                    countries[yourCountryId].weekOfOffer = 0;
+                    countries[yourCountryId].treasure = -1;
+                    int state = countries[yourCountryId].safe;
+                    switch (state){
+                        case 0:
+                            countries[yourCountryId].moneyStatus -= 0.17;
+                            break;
+                        case 1:
+                            countries[yourCountryId].armyStatus -= 0.17;
+                            break;
+                        case 2:
+                            countries[yourCountryId].businessStatus -= 0.17;
+                            break;
+                        case 3:
+                            countries[yourCountryId].workerStatus -= 0.17;
+                            break;
+                        case 4:
+                            countries[yourCountryId].foodStatus -= 0.17;
+                            break;
+                    }
+                    countries[yourCountryId].safe = -1;
+                }
+            }
+            if (format.tradeWith != null && format.tradeWith.length != 0){
+                tradeWith = format.tradeWith;
+                tradeAway = format.tradeAway;
+                tradeToMe = format.tradeToMe;
+                isHandle = new boolean[tradeWith.length];
+            }
+            if (format.newAllianceNames != null && format.newAllianceNames.length != 0){
+                for (int i = 0; i < format.newAllianceNames.length; ++i){
+                    String name = format.newAllianceNames[i];
+                    String description = format.newAllianceDescription[i];
+                    int id = format.newAllianceIds[i];
+                    int idOfOwner = format.newAllianceIdsOfOwner[i];
+                    int avatar = format.newAllianceAvatars[i];
+                    AllianceOnline alliance = new AllianceOnline(id, idOfOwner, avatar, name, description);
+                    try{
+                        alliances.set(id, alliance);
+                    } catch (Exception e){
+                        alliances.add(alliance);
+                    }
+                }
+            }
+            if (format.offersFromAlliances != null && format.offersFromAlliances.length != 0){
+                this.offersFromAlliances = format.offersFromAlliances;
+                isHandleOffer = new boolean[offersFromAlliances.length];
+            }
+            if (format.newIdsOfAlliance != null && format.newIdsOfAlliance.length != 0){
+                for (int i = 0; i < format.newIdsOfAlliance.length; ++i){
+                    AllianceOnline alliance = alliances.get(format.newIdsOfAlliance[i]);
+                    alliance.countries.add(format.newIdsOfCountry[i]);
+                    alliances.set(format.newIdsOfAlliance[i], alliance);
+                }
+            }
         }
     }
 
@@ -171,7 +263,7 @@ public class GameOnline implements Serializable {
         else{
             ArrayList<Integer> except = new ArrayList<>();
             for (int i = 0; i < alliances.get(countries[yourCountryId].idOfAlliance).countries.size(); ++i){
-                except.add(alliances.get(countries[yourCountryId].idOfAlliance).countries.get(i).id);
+                except.add(alliances.get(countries[yourCountryId].idOfAlliance).countries.get(i));
             }
             for (int i = 0; i < countries.length; ++i){
                 if (!except.contains(countries[i].id)){

@@ -3,12 +3,13 @@ package com.example.mygame.OnlineMode.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mygame.GovernMenuActivity;
+import com.example.mygame.MainActivity;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.R;
 
@@ -36,6 +37,7 @@ public class MapActivityOnline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         curtainAnimation = new Thread(){
             //false - скрыть шторку
@@ -169,9 +171,14 @@ public class MapActivityOnline extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (continuade){
-                        numberOfWeekAnimation.interrupt();
-                        curtainAnimation.interrupt();
-                        startActivity(new Intent(MapActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
+                        if (game.end){
+                            startActivity(new Intent(MapActivityOnline.this, MainActivity.class));
+                        }
+                        else{
+                            numberOfWeekAnimation.interrupt();
+                            curtainAnimation.interrupt();
+                            startActivity(new Intent(MapActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
+                        }
                     }
                 }
             });

@@ -14,48 +14,43 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".OnlineMode.Activities.InvitationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.RestActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.AllianceMenuActivityOnline"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.JobActivityOnline"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.GovernMenuActivityOnline"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.MapActivityOnline"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.LoadingActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.MainActivityOnline"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnlineMode.Activities.RelationshipActivityOnline"
-            android:exported="false" />
-        <activity
-            android:name=".AlliancesMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RelationshipActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GovernMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StartMainProcessActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StartOfNewGameActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,12 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".JobActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

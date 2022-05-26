@@ -39,6 +39,7 @@ public class SenderDialog extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!isSended){
                     int idOfCountry = array.get(i).id;
+                    game.post.idOfCountryOffer = idOfCountry;
                     isSended = true;
                     MyOwnAllianceFragment.setGame(game);
                     dismiss();

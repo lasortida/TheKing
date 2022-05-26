@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -44,6 +45,7 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alliances_menu_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Bundle args = getIntent().getExtras();
         game = (GameOnline) args.getSerializable("GAME");
@@ -58,7 +60,7 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                startActivity(new Intent(AllianceMenuActivityOnline.this, RestActivity.class));
             }
         }.start();
 
@@ -81,9 +83,6 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isFragmentAllianceLoaded){
-                    if (fragment.isSended){
-                        game = fragment.game;
-                    }
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.hide(fragment);
                     transaction.commit();
@@ -121,7 +120,7 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (game.alliances.get(game.countries[game.yourCountryId].idOfAlliance) == null){
+                if (game.countries[game.yourCountryId].idOfAlliance == -1){
                     textBrief.setVisibility(View.INVISIBLE);
                     recyclerView.setVisibility(View.INVISIBLE);
                     fragmentCreate = new MyAllianceFragment(game);
@@ -137,7 +136,7 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
     public static void showAlliance(AllianceOnline alliance){
         recyclerView.setVisibility(View.INVISIBLE);
         topic.setText("Альянс:");
-        if (alliance.idOfOwner != game.yourUserCode){
+        if (alliance.idOfOwner != game.yourCountryId){
             fragment = new AllianceFragmentOnline(game, alliance);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.frame, fragment);

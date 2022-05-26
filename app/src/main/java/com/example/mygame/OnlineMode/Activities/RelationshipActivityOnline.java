@@ -1,6 +1,7 @@
 package com.example.mygame.OnlineMode.Activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -13,8 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mygame.Country;
-import com.example.mygame.Game;
 import com.example.mygame.OnlineMode.Classes.AdapterRelationshipOnline;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -35,6 +34,7 @@ public class RelationshipActivityOnline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relationship_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Bundle args = getIntent().getExtras();
         game = (GameOnline) args.getSerializable("GAME");
@@ -58,8 +58,6 @@ public class RelationshipActivityOnline extends AppCompatActivity {
                 startActivity(new Intent(RelationshipActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
-        thread.start();
-
         new CountDownTimer(game.time, 1000){
 
             @Override
@@ -69,7 +67,7 @@ public class RelationshipActivityOnline extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                startActivity(new Intent(RelationshipActivityOnline.this, RestActivity.class));
             }
         }.start();
     }
@@ -81,18 +79,4 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         transaction.add(R.id.frame, tradeFragment);
         transaction.commit();
     }
-
-    Thread thread = new Thread(){
-        @Override
-        public void run() {
-            while(true){
-                if (Game.isImproveNeed){
-                    appeal.setText("Я уже занимаюсь делом которое вы мне поручили!");
-                }
-                else if(Game.moneyStatus <= 0.17){
-                    appeal.setText("У вас не хватает денег!");
-                }
-            }
-        }
-    };
 }

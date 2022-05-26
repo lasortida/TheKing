@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.mygame.Game;
 import com.example.mygame.OnlineMode.Classes.AllianceOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.R;
@@ -28,7 +26,6 @@ public class AllianceFragmentOnline extends Fragment {
 
     public GameOnline game;
     AllianceOnline alliance;
-    public boolean isSended;
 
     public AllianceFragmentOnline(GameOnline game, AllianceOnline alliance) {
         this.game = game;
@@ -49,7 +46,11 @@ public class AllianceFragmentOnline extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alliance_online, container, false);
         ListView listView = view.findViewById(R.id.listView);
-        String[] array = alliance.getNameOfCountries();
+        int[] ids = alliance.getIdOfCountries();
+        String[] array = new String[ids.length];
+        for (int i = 0; i < ids.length; ++i){
+            array[i] = game.countries[ids[i]].name;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, array);
         listView.setAdapter(adapter);
         ImageView imageView = view.findViewById(R.id.imageViewAvatar);
@@ -57,27 +58,16 @@ public class AllianceFragmentOnline extends Fragment {
         TextView textViewOwner = view.findViewById(R.id.textViewOwner);
         TextView textViewWar = view.findViewById(R.id.textViewWar);
         TextView desc = view.findViewById(R.id.textViewDescription);
-        ImageView imageViewDone = view.findViewById(R.id.imageViewDone);
         if (alliance.isActiveWar){
             textViewWar.setText("Сражения: АКТИВНО");
         }
         else{
             textViewWar.setText("Сражения: НЕТ АКТИВНОГО");
         }
-        textViewOwner.setText("Страна-основатель: " + game.countries[alliance.idOfOwner]);
+        textViewOwner.setText("Страна-основатель: " + game.countries[alliance.idOfOwner].name);
         desc.setText(alliance.description);
         textName.setText(alliance.name);
         imageView.setImageResource(alliance.idOfAvatar);
-        Button buttonRequest = view.findViewById(R.id.buttonRequest);
-        buttonRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (game.countries[game.yourCountryId].idOfAlliance == -1 && !isSended){
-                    imageViewDone.setVisibility(View.VISIBLE);
-                    isSended = true;
-                }
-            }
-        });
         return view;
     }
 }

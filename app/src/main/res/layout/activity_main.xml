@@ -28,6 +28,8 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:srcCompat="@drawable/coin_background" />
 
     <ImageView
@@ -38,21 +40,10 @@
         android:layout_marginBottom="6dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ingot" />
-
-    <Button
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:id="@+id/but_new_game"
-        android:layout_width="201dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="50dp"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:text="Новая игра"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
@@ -67,26 +58,15 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:id="@+id/but_continue_game"
-        android:layout_width="201dp"
-        android:layout_height="55dp"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:text="Продолжить игру"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/but_new_game" />
-
-    <Button
-        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/but_nothing"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="201dp"
         android:layout_height="55dp"
+        android:text="Online-Mode"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:text="Online-Mode"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/but_continue_game" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

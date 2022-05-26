@@ -3,6 +3,7 @@ package com.example.mygame.OnlineMode.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -14,7 +15,10 @@ import com.example.mygame.ImageWithParams;
 import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.OnlineMode.Classes.Note;
 import com.example.mygame.R;
+
+import java.util.ArrayList;
 
 public class GovernMenuActivityOnline extends AppCompatActivity {
 
@@ -43,6 +47,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_govern_menu_online);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mapButton = findViewById(R.id.map_button);
         nextButton = findViewById(R.id.next_button);
@@ -78,7 +83,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class));
             }
         }.start();
 
@@ -90,7 +95,17 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
         textViewWeek.setText(" Неделя: " + game.numberOfWeek);
 
-        AdapterToInvitations adapter = new AdapterToInvitations(game, game.getNotes());
+        ArrayList<Note> notes = game.getNotes();
+        ArrayList<Note> offerNotes = game.getOfferNote();
+        AdapterToInvitations adapter = new AdapterToInvitations(game, notes, offerNotes);
+        if (game.post.isTradeAccepted == null){
+            game.post.isTradeAccepted = new boolean[notes.size()];
+            game.post.confirmation = new int[notes.size()];
+        }
+        if (game.post.isOfferAccepted == null){
+            game.post.isOfferAccepted = new boolean[offerNotes.size()];
+            game.post.allianceIdConfirmation = new int[offerNotes.size()];
+        }
         countOfOffers.setText(String.valueOf(adapter.getItemCount()));
 
         setImagesWithGame(game.countries[game.yourCountryId]);

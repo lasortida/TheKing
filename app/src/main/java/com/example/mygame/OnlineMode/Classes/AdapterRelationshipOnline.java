@@ -13,13 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mygame.Adapter;
-import com.example.mygame.Country;
-import com.example.mygame.Game;
-import com.example.mygame.ImproveFragmentDialog;
 import com.example.mygame.R;
-
-import java.util.ArrayList;
 
 public class AdapterRelationshipOnline extends RecyclerView.Adapter<AdapterRelationshipOnline.ElementHolder> {
 

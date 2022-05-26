@@ -22,7 +22,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="412dp"
+        android:layout_width="match_parent"
         android:layout_height="130dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +38,8 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAnvilUnderwrite"
             app:layout_constraintTop_toBottomOf="@+id/imageViewBread"
             app:srcCompat="@drawable/underwrite" />
 
@@ -48,6 +50,8 @@
             android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewBread"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTie"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/anvil_third" />
 
@@ -57,6 +61,8 @@
             android:layout_height="65dp"
             android:layout_marginStart="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewBomb"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/coin_third" />
@@ -67,6 +73,8 @@
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewTie"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageViewCoin"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bomb_third" />
@@ -78,6 +86,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewAnvil"
 
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageViewBomb"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/tie_third" />
@@ -89,6 +98,8 @@
             android:layout_marginEnd="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAnvil"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bread_third" />
 
@@ -99,6 +110,8 @@
             android:layout_marginStart="10dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewTieUnderwrite"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageViewCoinUnderwrite"
             app:layout_constraintTop_toBottomOf="@+id/imageViewBomb"
             app:layout_constraintVertical_bias="0.0"
@@ -111,6 +124,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewAnvilUnderwrite"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageViewBombUnderwrite"
             app:layout_constraintTop_toBottomOf="@+id/imageViewTie"
             app:srcCompat="@drawable/underwrite" />
@@ -123,6 +137,8 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewBreadUnderwrite"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTieUnderwrite"
             app:layout_constraintTop_toBottomOf="@+id/imageViewAnvil"
             app:srcCompat="@drawable/underwrite" />
 
@@ -133,6 +149,8 @@
             android:layout_marginStart="25dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewBombUnderwrite"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewCoin"
             app:srcCompat="@drawable/underwrite" />
@@ -148,12 +166,12 @@
 
         <TextView
             android:id="@+id/textLeft"
-            android:layout_width="120dp"
-            android:layout_height="68dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:text=""
             android:textAlignment="center"
-            android:textSize="15dp"
+            android:textSize="17sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textRight"
@@ -164,12 +182,12 @@
 
         <TextView
             android:id="@+id/textRight"
-            android:layout_width="120dp"
-            android:layout_height="68dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="52dp"
             android:text=""
             android:textAlignment="center"
-            android:textSize="15dp"
+            android:textSize="17sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

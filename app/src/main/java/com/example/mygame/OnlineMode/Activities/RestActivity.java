@@ -1,21 +1,18 @@
 package com.example.mygame.OnlineMode.Activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.mygame.MapActivity;
 import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
 import com.example.mygame.R;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +39,7 @@ public class RestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         title = findViewById(R.id.textViewTitle);
         action = findViewById(R.id.textViewAction);
@@ -62,6 +60,13 @@ public class RestActivity extends AppCompatActivity {
         game.post.businessStatus = game.countries[game.yourCountryId].businessStatus;
         game.post.workerStatus = game.countries[game.yourCountryId].workerStatus;
         game.post.foodStatus = game.countries[game.yourCountryId].foodStatus;
+
+        if (game.numberOfWeek - 2 == game.numberOfWeek && game.isGameLow){
+            game.post.end = true;
+        }
+        if (game.isGameFull){
+            game.post.end = true;
+        }
 
         Gson gson = new Gson();
         jsonString = gson.toJson(game.post);

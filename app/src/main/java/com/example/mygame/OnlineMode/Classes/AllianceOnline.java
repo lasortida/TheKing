@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class AllianceOnline implements Serializable {
     public String name;
     public String description;
-    public ArrayList<CountryOnline> countries;
+    public ArrayList<Integer> countries;
     public int idOfOwner;
     public int idOfAvatar;
     public boolean isActiveWar;
@@ -21,10 +21,10 @@ public class AllianceOnline implements Serializable {
         countries = new ArrayList<>();
     }
 
-    public String[] getNameOfCountries(){
-        String[] result = new String[countries.size()];
+    public int[] getIdOfCountries(){
+        int[] result = new int[countries.size()];
         for (int i = 0; i < countries.size(); ++i){
-            result[i] = countries.get(i).name;
+            result[i] = countries.get(i);
         }
         return result;
     }
