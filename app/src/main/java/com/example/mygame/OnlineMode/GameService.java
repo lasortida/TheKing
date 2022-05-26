@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface GameService {
 
-    final String address = "http://192.168.1.94/";
+    final String address = "http://912939-cf66069.tmweb.ru/";
 
     @GET("theking")
     Call<Format> getIDOfRoom();
