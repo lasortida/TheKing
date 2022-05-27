@@ -7,7 +7,8 @@
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF"
     android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:keepScreenOn="true">
 
     <ImageView
         android:id="@+id/imageView"
@@ -59,10 +60,11 @@
 
     <Button
         android:id="@+id/but_nothing"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/start_button"
         android:layout_width="201dp"
         android:layout_height="55dp"
-        android:text="ИГРА"
+        android:text="ИГРАТЬ"
+        android:fontFamily="monospace"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnlineMode.Activities.RestActivity">
+    tools:context=".OnlineMode.Activities.RestActivity"
+    android:keepScreenOn="true">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -40,7 +41,7 @@
         android:gravity="center"
         android:fontFamily="monospace"
         android:visibility="invisible"
-        android:text="Возможно, какие-то неполадки на сервере! Вы можете вернуться в гланое меню!"
+        android:text="Возможно, какие-то неполадки на сервере! Вы можете вернуться в главное меню!"
         app:layout_constraintBottom_toTopOf="@+id/buttonError"
         app:layout_constraintEnd_toEndOf="@+id/buttonError"
         app:layout_constraintStart_toStartOf="@+id/buttonError" />

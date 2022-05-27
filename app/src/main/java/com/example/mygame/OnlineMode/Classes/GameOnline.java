@@ -48,18 +48,7 @@ public class GameOnline implements Serializable {
         countries[yourCountryId].workerStatus += effect.getWorkersMoodChange();
         countries[yourCountryId].foodStatus += effect.getFoodStatusChange();
 
-        CountryOnline country = countries[yourCountryId];
-        double[] chars = {
-                country.moneyStatus, country.armyStatus, country.businessStatus, country.workerStatus, country.foodStatus
-        };
-        for(int i = 0; i < chars.length; ++i){
-            if (chars[i] <= 0){
-                isGameOver = true;
-            }
-            if (chars[i] >= 0.85){
-                isGameOver = true;
-            }
-        }
+        check();
     }
 
     public ArrayList<Note> getNotes(){
@@ -103,6 +92,7 @@ public class GameOnline implements Serializable {
     }
 
     public void getDataFromFormat(Format format){
+        check();
         time = 90000;
         post = new Post();
         postIndex = 0;
@@ -116,7 +106,7 @@ public class GameOnline implements Serializable {
         numberOfWeek = format.numberOfWeek;
         setWeek();
         if (isGameOver){
-            news += storage.getRandomGameOver(countries[yourCountryId].getFullState());
+            news += "К сожалению ваше правления оказалось неудачным для страны! Вы проиграли!";
             news += "\n\n";
             news += "Конец игры!";
             end = true;
@@ -250,6 +240,21 @@ public class GameOnline implements Serializable {
             }
         }
         return result;
+    }
+
+    public void check(){
+        CountryOnline country = countries[yourCountryId];
+        double[] chars = {
+                country.moneyStatus, country.armyStatus, country.businessStatus, country.workerStatus, country.foodStatus
+        };
+        for(int i = 0; i < chars.length; ++i){
+            if (chars[i] <= 0){
+                isGameOver = true;
+            }
+            if (chars[i] >= 0.85){
+                isGameOver = true;
+            }
+        }
     }
 
     public void setWeek(){

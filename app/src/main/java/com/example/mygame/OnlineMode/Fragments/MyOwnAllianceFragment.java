@@ -74,11 +74,17 @@ public class MyOwnAllianceFragment extends Fragment {
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!(alliance.startWeek == game.numberOfWeek)){
-                    dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
+                if (!dialog.isSended){
+                    if (!(alliance.startWeek == game.numberOfWeek)){
+                        dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getContext(), "Подождите, пока альянс утвердится", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
                 else{
-                    Toast toast = Toast.makeText(getContext(), "Подождите, пока альянс утвердится", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "Вы уже отправили 1 приглашение! Больше нельзя!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }

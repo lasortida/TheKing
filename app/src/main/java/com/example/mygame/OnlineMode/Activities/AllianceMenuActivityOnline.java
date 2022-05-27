@@ -44,13 +44,14 @@ public class AllianceMenuActivityOnline extends AppCompatActivity {
     static GameOnline game;
 
     CountDownTimer timer;
-    boolean timerStop = false;
+    public static boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alliances_menu_online);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        timerStop = false;
 
         Bundle args = getIntent().getExtras();
         game = (GameOnline) args.getSerializable("GAME");

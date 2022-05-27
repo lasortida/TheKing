@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.mygame.OnlineMode.Activities.AllianceMenuActivityOnline;
 import com.example.mygame.OnlineMode.Classes.AllianceOnline;
@@ -84,7 +85,12 @@ public class MyAllianceFragment extends Fragment {
                     game.post.description = alliance.description;
                     game.post.avatar = alliance.idOfAvatar;
                     AllianceMenuActivityOnline.isFragmentCreateAllianceLoaded = false;
+                    AllianceMenuActivityOnline.timerStop = true;
                     startActivity(new Intent(getActivity(), AllianceMenuActivityOnline.class).putExtra("GAME", game));
+                }
+                else {
+                    Toast toast = Toast.makeText(getContext(), "Поля Имя и Описание не должны быть пустыми!", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });

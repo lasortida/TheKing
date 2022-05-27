@@ -32,13 +32,14 @@ public class RelationshipActivityOnline extends AppCompatActivity {
     static RecyclerView recyclerView;
     static GameOnline game;
     CountDownTimer timer;
-    boolean timerStop = false;
+    public static boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relationship_online);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        timerStop = false;
 
         Bundle args = getIntent().getExtras();
         game = (GameOnline) args.getSerializable("GAME");
@@ -60,7 +61,6 @@ public class RelationshipActivityOnline extends AppCompatActivity {
 
             @Override
             public void onTick(long l) {
-                Log.d("time", String.valueOf(l));
                 game.time = l;
                 if (timerStop){
                     cancel();

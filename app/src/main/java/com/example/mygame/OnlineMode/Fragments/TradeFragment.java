@@ -114,9 +114,6 @@ public class TradeFragment extends Fragment {
                 else{
                     indexUp--;
                 }
-                while ((getPositionOfValue(me.getOneStatus(indexUp)) < 2 || getPositionOfValue(me.getOneStatus(indexUp)) >= 6)){
-                    indexUp--;
-                }
                 up.setImageResource(result[indexUp]);
             }
         });
@@ -162,6 +159,7 @@ public class TradeFragment extends Fragment {
                 me.treasure = indexDown;
                 me.removeOneStateOfStatus(indexUp);
                 game.countries[game.yourCountryId] = me;
+                RelationshipActivityOnline.timerStop = true;
                 startActivity(new Intent(getActivity(), GovernMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
