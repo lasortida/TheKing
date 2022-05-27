@@ -211,7 +211,9 @@ public class GameOnline implements Serializable {
                     AllianceOnline alliance = alliances.get(format.newIdsOfAlliance[i]);
                     alliance.countries.add(format.newIdsOfCountry[i]);
                     alliances.set(format.newIdsOfAlliance[i], alliance);
-                    news += "\n К вашему альянсу присоединилась страна " + countries[format.newIdsOfCountry[i]].name;
+                    if (countries[yourCountryId].idOfAlliance == format.newIdsOfAlliance[i]){
+                        news += "\n К вашему альянсу присоединилась страна " + countries[format.newIdsOfCountry[i]].name;
+                    }
                 }
             }
         }

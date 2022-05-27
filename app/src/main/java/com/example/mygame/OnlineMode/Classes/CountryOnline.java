@@ -15,7 +15,7 @@ public class CountryOnline implements Serializable {
     public double businessStatus;
     public double workerStatus;
     public double foodStatus;
-    public int idOfAlliance;
+    public int idOfAlliance = -1;
     public boolean wasTrade;
     public int safe;
     public int treasure;

@@ -87,11 +87,12 @@ public class RestActivity extends AppCompatActivity {
         game.post.moneyStatus = game.countries[game.yourCountryId].moneyStatus;
         game.post.armyStatus = game.countries[game.yourCountryId].armyStatus;
         game.post.businessStatus = game.countries[game.yourCountryId].businessStatus;
-        game.post.workerStatus = game.countries[game.yourCountryId].workerStatus - 0.17;
+        game.post.workerStatus = game.countries[game.yourCountryId].workerStatus;
         game.post.foodStatus = game.countries[game.yourCountryId].foodStatus;
 
         if (game.isGameOver){
             game.post.end = true;
+            game.post.workerStatus -= 0.17;
         }
 
         Gson gson = new Gson();
