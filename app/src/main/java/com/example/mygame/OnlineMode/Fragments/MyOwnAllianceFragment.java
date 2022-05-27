@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.OnlineMode.Classes.AllianceOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -73,7 +74,13 @@ public class MyOwnAllianceFragment extends Fragment {
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
+                if (!(alliance.startWeek == game.numberOfWeek)){
+                    dialog.show(getActivity().getSupportFragmentManager(), "Fragment");
+                }
+                else{
+                    Toast toast = Toast.makeText(getContext(), "Подождите, пока альянс утвердится", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
         return view;

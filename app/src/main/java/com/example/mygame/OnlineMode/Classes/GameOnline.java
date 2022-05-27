@@ -15,8 +15,7 @@ public class GameOnline implements Serializable {
     public int yourCountryId;
     public ArrayList<AllianceOnline> alliances;
     public boolean isJobDone;
-    public boolean isGameFull;
-    public boolean isGameLow;
+    public boolean isGameOver;
     public Week week;
     public StorageOnline storage;
     public long time;
@@ -55,10 +54,10 @@ public class GameOnline implements Serializable {
         };
         for(int i = 0; i < chars.length; ++i){
             if (chars[i] <= 0){
-                isGameLow = true;
+                isGameOver = true;
             }
             if (chars[i] >= 0.85){
-                isGameFull = true;
+                isGameOver = true;
             }
         }
     }
@@ -103,54 +102,32 @@ public class GameOnline implements Serializable {
         return result;
     }
 
-    public void check(){
-        CountryOnline country = countries[yourCountryId];
-        isGameLow = country.isGameLow();
-    }
-
     public void getDataFromFormat(Format format){
-        check();
         time = 90000;
         post = new Post();
         postIndex = 0;
         tradeWith = null;
         tradeAway = null;
         tradeToMe = null;
+        isHandleOffer = null;
+        isHandle = null;
+        offersFromAlliances = null;
         news = "";
         numberOfWeek = format.numberOfWeek;
-        if (format.win){
+        setWeek();
+        if (isGameOver){
+            news += storage.getRandomGameOver(countries[yourCountryId].getFullState());
+            news += "\n\n";
+            news += "Конец игры!";
+            end = true;
+        }
+        else if (format.win){
             end = true;
             news = "Ура, вы выиграли!";
         }
         else{
-            if (isGameFull){
-                news += storage.getRandomGameOver(countries[yourCountryId].getFullState());
-                news += "\n\n";
-                news += "Конец игры!";
-                end = true;
-            }
-            else if (isGameLow && !isWar){
-                isWar = true;
-                warStart = numberOfWeek;
-                news += "В стране начались смутные времена! У вас есть 3 недели, чтобы это исправить!\n\n";
-                news += "Временно вы не можете рассматривать обращения!\n\n";
-                isJobDone = true;
-            }
-            else if (isGameLow && isWar){
-                news += "Состояние такое же плохое!";
-                if (warStart == numberOfWeek - 3){
-                    news += "К сожалению! Вы не справились со своими обязанностями! Конец игры!";
-                    end = true;
-                }
-            }
-            else if (!isGameLow && isWar){
-                news += "Поздравляю! Вы справились! Тяжёлые врмена прошли!";
-                isJobDone = false;
-            }
-            else{
-                news = storage.getRandomNews() + "\n\n";
-                isJobDone = false;
-            }
+            news = storage.getRandomNews() + "\n\n";
+            isJobDone = false;
             countries[yourCountryId].wasTrade = false;
             numberOfWeek = format.numberOfWeek;
             countries[yourCountryId].moneyStatus = format.moneyStatus;
@@ -227,7 +204,7 @@ public class GameOnline implements Serializable {
                     int id = format.newAllianceIds[i];
                     int idOfOwner = format.newAllianceIdsOfOwner[i];
                     int avatar = format.newAllianceAvatars[i];
-                    AllianceOnline alliance = new AllianceOnline(id, idOfOwner, avatar, name, description);
+                    AllianceOnline alliance = new AllianceOnline(id, idOfOwner, avatar, name, description, 0);
                     try{
                         alliances.set(id, alliance);
                     } catch (Exception e){
@@ -244,6 +221,7 @@ public class GameOnline implements Serializable {
                     AllianceOnline alliance = alliances.get(format.newIdsOfAlliance[i]);
                     alliance.countries.add(format.newIdsOfCountry[i]);
                     alliances.set(format.newIdsOfAlliance[i], alliance);
+                    news += "\n К вашему альянсу присоединилась страна " + countries[format.newIdsOfCountry[i]].name;
                 }
             }
         }

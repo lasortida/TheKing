@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -24,6 +26,8 @@ public class InvitationActivity extends AppCompatActivity {
     static RecyclerView recycler;
     static GameOnline game;
     static AdapterToInvitations adapter;
+    CountDownTimer timer;
+    boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +44,31 @@ public class InvitationActivity extends AppCompatActivity {
         recycler.setHasFixedSize(true);
         recycler.setAdapter(adapter);
 
-        new CountDownTimer(game.time, 1000){
+        timer = new CountDownTimer(game.time, 1000){
 
             @Override
             public void onTick(long l) {
                 game.time = l;
+                if (timerStop){
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(InvitationActivity.this, RestActivity.class));
+               if (!timerStop){
+                   Log.d("timer", "invitation");
+                   startActivity(new Intent(InvitationActivity.this, RestActivity.class).putExtra("GAME", game));
+               }
             }
-        }.start();
+        };
+        timer.start();
 
         Button back = findViewById(R.id.buttonBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timerStop = true;
                 startActivity(new Intent(InvitationActivity.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
@@ -66,6 +78,12 @@ public class InvitationActivity extends AppCompatActivity {
         game = game1;
         adapter = new AdapterToInvitations(game, notes, offerNotes);
         recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Нажмите кнопку назад!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 }

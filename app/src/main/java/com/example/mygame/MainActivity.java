@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.mygame.OnlineMode.Activities.MainActivityOnline;
+import com.example.mygame.OnlineMode.Activities.LoadingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         learnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainActivityOnline.class));
+                startActivity(new Intent(MainActivity.this, LoadingActivity.class).putExtra("userName", "none"));
             }
         });
     }

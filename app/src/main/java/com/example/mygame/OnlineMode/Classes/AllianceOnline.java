@@ -11,13 +11,15 @@ public class AllianceOnline implements Serializable {
     public int idOfAvatar;
     public boolean isActiveWar;
     public int id;
+    public int startWeek;
 
-    public AllianceOnline(int id, int idOfOwner, int idOfAvatar, String name, String description){
+    public AllianceOnline(int id, int idOfOwner, int idOfAvatar, String name, String description,int startWeek){
         this.id = id;
         this.idOfOwner = idOfOwner;
         this.idOfAvatar = idOfAvatar;
         this.name = name;
         this.description = description;
+        this.startWeek = startWeek;
         countries = new ArrayList<>();
     }
 

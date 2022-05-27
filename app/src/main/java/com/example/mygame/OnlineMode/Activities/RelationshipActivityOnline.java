@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +31,8 @@ public class RelationshipActivityOnline extends AppCompatActivity {
     static CountryOnline me;
     static RecyclerView recyclerView;
     static GameOnline game;
+    CountDownTimer timer;
+    boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +56,34 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(new AdapterRelationshipOnline(game.getListOfForeignCountries(), game.countries[game.yourCountryId]));
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RelationshipActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
-            }
-        });
-        new CountDownTimer(game.time, 1000){
+        timer = new CountDownTimer(game.time, 1000){
 
             @Override
             public void onTick(long l) {
+                Log.d("time", String.valueOf(l));
                 game.time = l;
+                if (timerStop){
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(RelationshipActivityOnline.this, RestActivity.class));
+                if (!timerStop){
+                    Log.d("timer", "relationship");
+                    startActivity(new Intent(RelationshipActivityOnline.this, RestActivity.class).putExtra("GAME", game));
+                }
             }
-        }.start();
+        };
+        timer.start();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timerStop = true;
+                startActivity(new Intent(RelationshipActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
+            }
+        });
     }
 
     public static void setAddView(int indexOfTrader){
@@ -78,5 +92,11 @@ public class RelationshipActivityOnline extends AppCompatActivity {
         TradeFragment tradeFragment = new TradeFragment(game, indexOfTrader);
         transaction.add(R.id.frame, tradeFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Нажмите кнопку назад!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

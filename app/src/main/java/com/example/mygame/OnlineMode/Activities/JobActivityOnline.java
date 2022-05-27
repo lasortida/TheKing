@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.ImageWithParams;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
@@ -29,6 +31,9 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
     private ImageView coinUnder, bombUnder, tieUnder, anvilUnder, breadUnder;
     private double prevCoin = 0.6, prevBomb = 0.6, prevTie = 0.6, prevAnvil = 0.6, prevBread = 0.6;
 
+    CountDownTimer timer;
+    boolean timerStop = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,19 +49,25 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
         game = (GameOnline) arguments.getSerializable("GAME");
         week = game.week;
 
-        new CountDownTimer(game.time, 1000){
+        timer = new CountDownTimer(game.time, 1000){
 
             @Override
             public void onTick(long l) {
                 game.time = l;
+                if (timerStop){
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(JobActivityOnline.this, RestActivity.class));
+                if (!timerStop){
+                    Log.d("timer", "job");
+                    startActivity(new Intent(JobActivityOnline.this, RestActivity.class).putExtra("GAME", game));
+                }
             }
-        }.start();
-
+        };
+        timer.start();
         mainView = findViewById(R.id.fullscreen);
         textViewLeft = findViewById(R.id.textLeft);
         textViewRight = findViewById(R.id.textRight);
@@ -98,8 +109,8 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
                 if (end){
                     v.setX(0);
                     game.isJobDone = true;
+                    timerStop = true;
                     startActivity(new Intent(JobActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
-                    finish();
                 }
                 if (v.getX() < 0  - mainView.getWidth() / 3 && numberOfActInADay != 0){
                     game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(0).getEffect());
@@ -109,7 +120,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
                     game.takeChanges(week.getActs()[numberOfActInADay - 1].getAnswer(1).getEffect());
                     flag = true;
                 }
-                if (numberOfActInADay == 3 || game.isGameFull || game.isGameLow){
+                if (numberOfActInADay == 3 || game.isGameOver){
                     textViewTask.setText("Приём окончен!");
                     textViewLeft.setText("Далее");
                     textViewRight.setText("Далее");
@@ -321,4 +332,11 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
         anvilImage.setNewImage(country.workerStatus);
         breadImage.setNewImage(country.foodStatus);
     }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Для выхода завершите рассматривать обращения!", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
 }

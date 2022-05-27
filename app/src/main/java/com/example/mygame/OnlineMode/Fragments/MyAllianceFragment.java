@@ -77,7 +77,7 @@ public class MyAllianceFragment extends Fragment {
                 String title = String.valueOf(nameOfAlliance.getText());
                 String desc = String.valueOf(description.getText());
                 if (!title.equals("") && !desc.equals("")){
-                    AllianceOnline alliance = new AllianceOnline(game.alliances.size(), game.yourCountryId, game.storage.getResImageAvatar(indexOfAvatar), title, desc);
+                    AllianceOnline alliance = new AllianceOnline(game.alliances.size(), game.yourCountryId, game.storage.getResImageAvatar(indexOfAvatar), title, desc, game.numberOfWeek);
                     game.alliances.add(alliance);
                     game.countries[game.yourCountryId].idOfAlliance = alliance.id;
                     game.post.nameOfNewAlliance = alliance.name;

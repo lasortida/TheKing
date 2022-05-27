@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitations.ElementHolder> implements Serializable {
+public class  AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitations.ElementHolder> implements Serializable {
 
     GameOnline game;
     ArrayList<Note> notes;
@@ -106,6 +106,7 @@ public class AdapterToInvitations extends RecyclerView.Adapter<AdapterToInvitati
                     if (note.type == 0){
                         game.post.isTradeAccepted[game.postIndex] = true;
                         game.post.confirmation[game.postIndex] = note.idOfCountry;
+                        game.countries[note.idOfCountry].relationshipValue += 20;
                         int stateAway = note.stateAway;
                         switch (stateAway){
                             case 0:

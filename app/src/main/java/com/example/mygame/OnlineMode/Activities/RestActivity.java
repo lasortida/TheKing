@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mygame.MainActivity;
 import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
@@ -34,6 +39,7 @@ public class RestActivity extends AppCompatActivity {
     boolean block;
     GameOnline game;
     String jsonString;
+    CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +61,34 @@ public class RestActivity extends AppCompatActivity {
             title.setText("Неделя закончилась!");
         }
 
+        TextView error = findViewById(R.id.textViewError);
+        Button errorBut = findViewById(R.id.buttonError);
+        timer = new CountDownTimer(55000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                errorBut.setVisibility(View.VISIBLE);
+                error.setVisibility(View.VISIBLE);
+                errorBut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(RestActivity.this, MainActivity.class));
+                    }
+                });
+            }
+        }.start();
+
         game.post.moneyStatus = game.countries[game.yourCountryId].moneyStatus;
         game.post.armyStatus = game.countries[game.yourCountryId].armyStatus;
         game.post.businessStatus = game.countries[game.yourCountryId].businessStatus;
         game.post.workerStatus = game.countries[game.yourCountryId].workerStatus;
         game.post.foodStatus = game.countries[game.yourCountryId].foodStatus;
 
-        if (game.numberOfWeek - 2 == game.numberOfWeek && game.isGameLow){
-            game.post.end = true;
-        }
-        if (game.isGameFull){
+        if (game.isGameOver){
             game.post.end = true;
         }
 
@@ -143,4 +167,10 @@ public class RestActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Назад идти некуда!", Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }

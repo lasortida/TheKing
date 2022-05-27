@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.MainActivity;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -30,6 +33,10 @@ public class MapActivityOnline extends AppCompatActivity {
     public boolean isWorkNumber;
     public boolean directionOfNumber;
     public boolean continuade;
+    public CountDownTimer timer;
+    boolean timerStop = false;
+
+    int value;
 
     GameOnline game;
 
@@ -78,6 +85,8 @@ public class MapActivityOnline extends AppCompatActivity {
                                 }
                             });
                             curtain.setVisibility(View.INVISIBLE);
+
+                            timer.start();
 
 
                             continuade = true;
@@ -138,8 +147,6 @@ public class MapActivityOnline extends AppCompatActivity {
 
         Bundle args = getIntent().getExtras();
 
-        int value;
-
         try{
             value = args.getInt("INTERMEDIATE");
         } catch (NullPointerException e){
@@ -155,14 +162,33 @@ public class MapActivityOnline extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    startActivity(new Intent(MapActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
                     finish();
                 }
             });
         }
         else{
+
             game = (GameOnline) args.getSerializable("GAME");
             int number = game.numberOfWeek;
             marker.setImageResource(game.countries[game.yourCountryId].idOfMarker);
+            timer = new CountDownTimer(game.time, 1000) {
+                @Override
+                public void onTick(long l) {
+                    game.time = l;
+                    if (timerStop){
+                        cancel();
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    if (!timerStop){
+                        Log.d("timer", "mapActivity");
+                        startActivity(new Intent(MapActivityOnline.this, RestActivity.class).putExtra("GAME", game));
+                    }
+                }
+            };
             showStart(number);
 
             newsText.setText(game.news);
@@ -172,11 +198,13 @@ public class MapActivityOnline extends AppCompatActivity {
                 public void onClick(View view) {
                     if (continuade){
                         if (game.end){
+                            timerStop = true;
                             startActivity(new Intent(MapActivityOnline.this, MainActivity.class));
                         }
                         else{
                             numberOfWeekAnimation.interrupt();
                             curtainAnimation.interrupt();
+                            timerStop = true;
                             startActivity(new Intent(MapActivityOnline.this, GovernMenuActivityOnline.class).putExtra("GAME", game));
                         }
                     }
@@ -198,5 +226,17 @@ public class MapActivityOnline extends AppCompatActivity {
     public void showOnlyMap(){
         curtain.setVisibility(View.INVISIBLE);
         signature.setText("Нажмите, чтобы свернуть...");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (value == 0){
+            Toast toast = Toast.makeText(this, "Нажмите на экран, чтобы вернуться назад!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else{
+            Toast toast = Toast.makeText(this, "Назад идти некуда!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

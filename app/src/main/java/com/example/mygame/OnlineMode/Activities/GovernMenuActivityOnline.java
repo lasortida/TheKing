@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.ImageWithParams;
 import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
@@ -19,6 +21,7 @@ import com.example.mygame.OnlineMode.Classes.Note;
 import com.example.mygame.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class GovernMenuActivityOnline extends AppCompatActivity {
 
@@ -42,6 +45,8 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
     ImageWithParams breadView;
 
     GameOnline game;
+    CountDownTimer timerDown;
+    boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         game = (GameOnline) arguments.getSerializable("GAME");
 
-        new CountDownTimer(game.time, 1000){
+        timerDown = new CountDownTimer(game.time, 1000){
 
             @Override
             public void onTick(long l) {
@@ -79,13 +84,20 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
                 else{
                     counter.setText(minutes + ":0" + seconds);
                 }
+                if (timerStop){
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class));
+                if (!timerStop){
+                    Log.d("timer", "govern");
+                    startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game));
+                }
             }
-        }.start();
+        };
+        timerDown.start();
 
         coinView = new ImageWithParams(findViewById(R.id.imageViewCoin), 0);
         bombView = new ImageWithParams(findViewById(R.id.imageViewBomb), 1);
@@ -117,6 +129,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         allianceMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timerStop = true;
                 startActivity(new Intent(GovernMenuActivityOnline.this, AllianceMenuActivityOnline.class).putExtra("GAME", game));
             }
         });
@@ -124,7 +137,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1).putExtra("RESOURCES", game.countries[game.yourCountryId].idOfMarker));
+                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1).putExtra("GAME", game).putExtra("RESOURCES", game.countries[game.yourCountryId].idOfMarker));
             }
         });
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +165,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
+                            timerStop = true;
                             startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game).putExtra("RANGE", 1));
                         }
                     }.start();
@@ -165,6 +179,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!game.isJobDone){
+                    timerStop = true;
                     startActivity(new Intent(GovernMenuActivityOnline.this, JobActivityOnline.class).putExtra("GAME", game));
                 }
                 else{
@@ -175,15 +190,23 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         relationshipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timerStop = true;
                 startActivity(new Intent(GovernMenuActivityOnline.this, RelationshipActivityOnline.class).putExtra("GAME", game));
             }
         });
         offers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timerStop = true;
                 startActivity(new Intent(GovernMenuActivityOnline.this, InvitationActivity.class).putExtra("GAME", game).putExtra("ADAPTER", adapter));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Назад идти некуда!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void setImagesWithGame(CountryOnline country){

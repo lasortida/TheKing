@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mygame.OnlineMode.Classes.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
@@ -37,8 +38,17 @@ public class LoadingActivity extends AppCompatActivity {
     GameService service;
     TextView view;
     TextView timer;
+    TextView advice;
+    int seconds = 10000;
+    int value;
 
-    CountDownTimer downTimer;
+    String[] advices = {
+            "Совет: Будьте внимательны, когда обрабатываете обращения! От этого зависит положение нашей страны!",
+            "Правило: Сразу после создания альянса, вы не можете отправлять приглашения на вступление, мировое сообщество должно утвердить ваш альянс!",
+            "Правило: Устраивать обмен можно только 1 раз в игровую неделю!",
+            "Совет: Сделайте хорошее описание вашему альянсу, чтобы в него хотелось вступить!",
+            "Совет: Старайтесь держать уровни (Деньги, Армия, Экономика, Промышленность, Еда) в средней позиции! (Не много и не мало)"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +59,29 @@ public class LoadingActivity extends AppCompatActivity {
         personName = (String) args.get("userName");
         view = findViewById(R.id.textViewTitle);
         timer = findViewById(R.id.textViewTimer);
+        advice = findViewById(R.id.textViewAdvice);
         view.setText("Поиск сервера");
+
+        value = (int) (Math.random() * advices.length);
+        advice.setText(advices[value]);
+        new CountDownTimer(seconds, 1000){
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                int index = (int) (Math.random() * advices.length);
+                while (index == value){
+                    index = (int) (Math.random() * advices.length);
+                }
+                value = index;
+                advice.setText(advices[index]);
+                start();
+            }
+        }.start();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
@@ -217,4 +249,10 @@ public class LoadingActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, "Назад идти некуда!", Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }
