@@ -40,6 +40,7 @@ public class RestActivity extends AppCompatActivity {
     GameOnline game;
     String jsonString;
     CountDownTimer timer;
+    boolean timerStop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,13 @@ public class RestActivity extends AppCompatActivity {
         timer = new CountDownTimer(55000, 1000) {
             @Override
             public void onTick(long l) {
-
+                if (game.post.end && l < 40000){
+                    timerStop = true;
+                    startActivity(new Intent(RestActivity.this, MapActivityOnline.class).putExtra("GAME", game));
+                }
+                if (timerStop){
+                    cancel();
+                }
             }
 
             @Override
@@ -76,9 +83,11 @@ public class RestActivity extends AppCompatActivity {
                 errorBut.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        flag = 5;
-                        block = true;
-                        startActivity(new Intent(RestActivity.this, MainActivity.class));
+                        if (!timerStop){
+                            flag = 5;
+                            block = true;
+                            startActivity(new Intent(RestActivity.this, MainActivity.class));
+                        }
                     }
                 });
             }
@@ -150,6 +159,7 @@ public class RestActivity extends AppCompatActivity {
                             if (format.next){
                                 flag++;
                                 game.getDataFromFormat(format);
+                                timerStop = true;
                                 startActivity(new Intent(RestActivity.this, MapActivityOnline.class).putExtra("GAME", game));
                             }
                             try {
