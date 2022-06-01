@@ -11,16 +11,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mygame.OnlineMode.Classes.Format;
-import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.MainActivity;
+import com.example.mygame.OnlineMode.Classes.StorageOnline;
+import com.example.mygame.OnlineMode.ForServer.Format;
+import com.example.mygame.OnlineMode.ForServer.Game;
+import com.example.mygame.OnlineMode.ForServer.Reply;
 import com.example.mygame.OnlineMode.GameService;
 import com.example.mygame.R;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,6 +44,7 @@ public class LoadingActivity extends AppCompatActivity {
     TextView advice;
     int seconds = 10000;
     int value;
+    int time;
 
     String[] advices = {
             "Совет: Будьте внимательны, когда обрабатываете обращения! От этого зависит положение нашей страны!",
@@ -62,9 +66,9 @@ public class LoadingActivity extends AppCompatActivity {
         timer = findViewById(R.id.textViewTimer);
         advice = findViewById(R.id.textViewAdvice);
         view.setText("Поиск сервера");
-
         value = (int) (Math.random() * advices.length);
         advice.setText(advices[value]);
+
         new CountDownTimer(seconds, 1000){
 
             @Override
@@ -104,149 +108,65 @@ public class LoadingActivity extends AppCompatActivity {
     Thread thread = new Thread(){
         @Override
         public void run() {
-            while(true){
-                if (flag == 0 && !block){
-                    block = true;
-                    Call<Format> call = service.getIDOfRoom();
-                    call.enqueue(new Callback<Format>() {
-                        @Override
-                        public void onResponse(Call<Format> call, Response<Format> response) {
-                            Format format = response.body();
-                            idOfRoom = format.id;
-                            view.setText("Сервер найден!");
-                            flag = 1;
-                            block = false;
-                        }
-
-                        @Override
-                        public void onFailure(Call<Format> call, Throwable t) {
-                            Log.d("fail", "fail");
-                            Log.d("fail", t.getMessage());
-                            block = false;
-                        }
-                    });
+            idOfRoom = getRoomID();
+            while (idOfRoom == null){
+                idOfRoom = getRoomID();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    view.setText("Комната найдена!");
                 }
-                if (flag == 1 && !block){
-                    block = true;
-                    Call<Format> call = service.getUserCode(idOfRoom);
-                    call.enqueue(new Callback<Format>() {
-                        @Override
-                        public void onResponse(Call<Format> call, Response<Format> response) {
-                            Format format = response.body();
-                            if (!format.error){
-                                userCode = format.userCode;
-                                view.setText("Ожидание игроков!");
-                                flag = 2;
-                            }
-                            else{
-                                flag = 0;
-                                view.setText("Ошибка! Поиск сервера!");
-                            }
-                            block = false;
-                        }
-
-                        @Override
-                        public void onFailure(Call<Format> call, Throwable t) {
-                            Log.d("fail", "fail2");
-                            Log.d("fail", t.getMessage());
-                            block = false;
-                        }
-                    });
+            });
+            userCode = getUserCode(idOfRoom);
+            while (userCode == -1){
+                userCode = getUserCode(idOfRoom);
+            }
+            Log.d("user", String.valueOf(userCode));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    view.setText("Ожидание игроков!");
                 }
-                if (flag == 2 && !block){
-                    block = true;
-                    Call<Format> call = service.setUserName(idOfRoom, userCode, personName);
-                    call.enqueue(new Callback<Format>() {
-                        @Override
-                        public void onResponse(Call<Format> call, Response<Format> response) {
-                            Format format = response.body();
-                            if (!format.error){
-                                flag = 3;
-                            }
-                            else{
-                                view.setText("Ошибка! Поиск сервера");
-                                flag = 0;
-                            }
-                            block = false;
-                        }
-
-                        @Override
-                        public void onFailure(Call<Format> call, Throwable t) {
-                            Log.d("fail", "fail3");
-                            Log.d("fail", t.getMessage());
-                            block = false;
-                        }
-                    });
+            });
+            time = getTimeReminder(idOfRoom, userCode);
+            while (time == -1){
+                Log.d("user", String.valueOf(time));
+                time = getTimeReminder(idOfRoom, userCode);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                if (flag == 3 && !block){
-                    block = true;
-                    Call<Format> call = service.getStartStatus(idOfRoom, userCode);
-                    call.enqueue(new Callback<Format>() {
-                        @Override
-                        public void onResponse(Call<Format> call, Response<Format> response) {
-                            Format format = response.body();
-                            if (!format.error){
-                                if (format.timerStart){
-                                    timer.setVisibility(View.VISIBLE);
-                                    int reminder = format.timerReminder;
-                                    timer.setText("Осталось: " + reminder);
-                                }
-                                if(format.start){
-                                    flag = 4;
-                                }
-                                else{
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            else{
-                                view.setText("Ошибка! Поиск сервера!");
-                                flag = 0;
-                            }
-                            block = false;
-                        }
-
-                        @Override
-                        public void onFailure(Call<Format> call, Throwable t) {
-                            Log.d("fail", "fail4");
-                            Log.d("fail", t.getMessage());
-                            block = false;
-                        }
-                    });
+            }
+            Log.d("user", String.valueOf(time));
+            while (time > 0){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        timer.setVisibility(View.VISIBLE);
+                        timer.setText("Осталось: " + time);
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                if (flag == 4 && !block){
-                    block = true;
-                    Call<Format> call = service.getInitialStatus(idOfRoom, userCode);
-                    call.enqueue(new Callback<Format>() {
-                        @Override
-                        public void onResponse(Call<Format> call, Response<Format> response) {
-                            Format format = response.body();
-                            if (!format.error){
-                                view.setText(R.string.game_start);
-                                flag = 5;
-                                GameOnline game = format.getInitialGameOnline();
-                                game.numberOfWeek = 1;
-                                game.yourUserCode = userCode;
-                                startActivity(new Intent(LoadingActivity.this, MapActivityOnline.class).putExtra("GAME", game));
-                            }
-                            else{
-                                view.setText("Ошибка! Поиск сервера!");
-                                flag = 0;
-                            }
-                            block = false;
-                        }
-
-                        @Override
-                        public void onFailure(Call<Format> call, Throwable t) {
-                            Log.d("idk", "fail");
-                            Log.d("idk", t.getMessage());
-                            block = false;
-                        }
-                    });
-                }
+                time = getTimeReminder(idOfRoom, userCode);
+            }
+            if (time == 0){
+                Reply reply = getReply(idOfRoom, userCode);
+                Game game = new Game(reply);
+                StringBuilder builder = new StringBuilder();
+                builder.append("Добро пожаловать! \n\n");
+                builder.append("Заботьтесь о процветании вашей страны и её жителей! Отстаивайте свои интересы, объединяйтесь в Альянсы с другими странами и поддерживайте друг друга! \n\n");
+                builder.append("Весь процесс игры разделён на игровые недели! Одна игровая неделя - 1 минута и 30 секунд реального времени!\n\n");
+                builder.append("На карте мира можно рассмотреть свою страну, а также обстановку в целом!");
+                game.news = builder.toString();
+                game.storage = new StorageOnline();
+                game.setWeek();
+                startActivity(new Intent(LoadingActivity.this, MapActivityOnline.class).putExtra("GAME", game));
             }
         }
     };
@@ -256,4 +176,57 @@ public class LoadingActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, "Назад идти некуда!", Toast.LENGTH_SHORT);
         toast.show();
     }
+
+    public String getRoomID(){
+        try{
+            Call<Format> call = service.getIDOfRoom();
+            Response<Format> r = call.execute();
+            Format f = r.body();
+            return f.id;
+        } catch (IOException e){ }
+        return null;
+    }
+
+    public int getUserCode(String idOfRoom){
+        try{
+            Call<Format> call = service.getUserCode(idOfRoom);
+            Response<Format> r = call.execute();
+            Format f = r.body();
+            if (!f.error){
+                return f.userCode;
+            }
+        } catch (IOException e){ }
+        return -1;
+    }
+
+    public int getTimeReminder(String idOfRoom, int userCode){
+        try{
+            Call<Format> call = service.getTimer(idOfRoom, userCode);
+            Response<Format> r = call.execute();
+            Format f = r.body();
+            if (!f.error){
+                if (f.isTimerStarted){
+                    return f.time;
+                }
+            }
+        } catch (IOException e){
+            Log.d("error", e.getLocalizedMessage());
+        }
+        return -1;
+    }
+
+    public Reply getReply(String idOfRoom, int userCode) {
+        try {
+            Call<Reply> call = service.getReply(idOfRoom, userCode);
+            Response<Reply> r = call.execute();
+            Reply reply = r.body();
+            if (reply.isGameStarted && !reply.error) {
+                return reply;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

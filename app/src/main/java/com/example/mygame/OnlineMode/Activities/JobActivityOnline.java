@@ -16,13 +16,15 @@ import android.widget.Toast;
 import com.example.mygame.ImageWithParams;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.OnlineMode.ForServer.Country;
+import com.example.mygame.OnlineMode.ForServer.Game;
 import com.example.mygame.R;
 import com.example.mygame.Week;
 
 public class JobActivityOnline extends AppCompatActivity implements View.OnTouchListener{
 
     private boolean flag = false;
-    private GameOnline game;
+    private Game game;
     private Week week;
     private View frameView;
     private View mainView;
@@ -46,28 +48,9 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
         frameView.setOnTouchListener(this);
 
         Bundle arguments = getIntent().getExtras();
-        game = (GameOnline) arguments.getSerializable("GAME");
+        game = (Game) arguments.getSerializable("GAME");
         week = game.week;
 
-        timer = new CountDownTimer(game.time, 1000){
-
-            @Override
-            public void onTick(long l) {
-                game.time = l;
-                if (timerStop){
-                    cancel();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (!timerStop){
-                    Log.d("timer", "job");
-                    startActivity(new Intent(JobActivityOnline.this, RestActivity.class).putExtra("GAME", game));
-                }
-            }
-        };
-        timer.start();
         mainView = findViewById(R.id.fullscreen);
         textViewLeft = findViewById(R.id.textLeft);
         textViewRight = findViewById(R.id.textRight);
@@ -82,7 +65,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
         anvilUnder = findViewById(R.id.imageViewAnvilUnderwrite);
         breadUnder = findViewById(R.id.imageViewBreadUnderwrite);
         thread.start();
-        setImagesWithGame(game.countries[game.yourCountryId]);
+        setImagesWithGame(game.user.country);
     }
 
     private int numberOfDay = 0;
@@ -148,11 +131,11 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
             while(true){
                 if (flag){
                     flag = false;
-                    double nowCoin = game.countries[game.yourCountryId].moneyStatus;
-                    double nowBomb = game.countries[game.yourCountryId].armyStatus;
-                    double nowTie = game.countries[game.yourCountryId].businessStatus;
-                    double nowAnvil = game.countries[game.yourCountryId].workerStatus;
-                    double nowBread = game.countries[game.yourCountryId].foodStatus;
+                    float nowCoin = game.user.country.moneyStatus;
+                    float nowBomb = game.user.country.armyStatus;
+                    float nowTie = game.user.country.businessStatus;
+                    float nowAnvil = game.user.country.workerStatus;
+                    float nowBread = game.user.country.foodStatus;
                     boolean isChangeCoin = false, isChangeBomb = false, isChangeTie = false, isChangeAnvil = false, isChangeBread = false;
                     if (coinImage.isStateChange(nowCoin)){
                         isChangeCoin = true;
@@ -325,7 +308,7 @@ public class JobActivityOnline extends AppCompatActivity implements View.OnTouch
         }
     });
 
-    public void setImagesWithGame(CountryOnline country){
+    public void setImagesWithGame(Country country){
         coinImage.setNewImage(country.moneyStatus);
         bombImage.setNewImage(country.armyStatus);
         tieImage.setNewImage(country.businessStatus);

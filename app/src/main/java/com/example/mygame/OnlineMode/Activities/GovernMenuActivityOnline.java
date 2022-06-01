@@ -18,6 +18,8 @@ import com.example.mygame.OnlineMode.Classes.AdapterToInvitations;
 import com.example.mygame.OnlineMode.Classes.CountryOnline;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.Classes.Note;
+import com.example.mygame.OnlineMode.ForServer.Country;
+import com.example.mygame.OnlineMode.ForServer.Game;
 import com.example.mygame.R;
 
 import java.util.ArrayList;
@@ -44,9 +46,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
     ImageWithParams anvilView;
     ImageWithParams breadView;
 
-    GameOnline game;
-    CountDownTimer timerDown;
-    boolean timerStop = false;
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,35 +69,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
 
         Bundle arguments = getIntent().getExtras();
-        game = (GameOnline) arguments.getSerializable("GAME");
-
-        timerDown = new CountDownTimer(game.time, 1000){
-
-            @Override
-            public void onTick(long l) {
-                game.time = l;
-                int minutes = (int)(l / 60000);
-                int seconds = (int)((l % 60000) / 1000);
-                if (seconds >= 10){
-                    counter.setText(minutes + ":" + seconds);
-                }
-                else{
-                    counter.setText(minutes + ":0" + seconds);
-                }
-                if (timerStop){
-                    cancel();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (!timerStop){
-                    Log.d("timer", "govern");
-                    startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game));
-                }
-            }
-        };
-        timerDown.start();
+        game = (Game) arguments.getSerializable("GAME");
 
         coinView = new ImageWithParams(findViewById(R.id.imageViewCoin), 0);
         bombView = new ImageWithParams(findViewById(R.id.imageViewBomb), 1);
@@ -107,79 +79,78 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
 
         textViewWeek.setText(" Неделя: " + game.numberOfWeek);
 
-        ArrayList<Note> notes = game.getNotes();
-        ArrayList<Note> offerNotes = game.getOfferNote();
-        AdapterToInvitations adapter = new AdapterToInvitations(game, notes, offerNotes);
-        if (game.post.isTradeAccepted == null){
-            game.post.isTradeAccepted = new boolean[notes.size()];
-            game.post.confirmation = new int[notes.size()];
-        }
-        if (game.post.isOfferAccepted == null){
-            game.post.isOfferAccepted = new boolean[offerNotes.size()];
-            game.post.allianceIdConfirmation = new int[offerNotes.size()];
-        }
-        countOfOffers.setText(String.valueOf(adapter.getItemCount()));
+//        ArrayList<Note> notes = game.getNotes();
+//        ArrayList<Note> offerNotes = game.getOfferNote();
+//        AdapterToInvitations adapter = new AdapterToInvitations(game, notes, offerNotes);
+//        if (game.post.isTradeAccepted == null){
+//            game.post.isTradeAccepted = new boolean[notes.size()];
+//            game.post.confirmation = new int[notes.size()];
+//        }
+//        if (game.post.isOfferAccepted == null){
+//            game.post.isOfferAccepted = new boolean[offerNotes.size()];
+//            game.post.allianceIdConfirmation = new int[offerNotes.size()];
+//        }
+//        countOfOffers.setText(String.valueOf(adapter.getItemCount()));
 
-        setImagesWithGame(game.countries[game.yourCountryId]);
+        setImagesWithGame(game.user.country);
 
         if (game.isJobDone){
             done.setVisibility(View.VISIBLE);
         }
 
-        allianceMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timerStop = true;
-                startActivity(new Intent(GovernMenuActivityOnline.this, AllianceMenuActivityOnline.class).putExtra("GAME", game));
-            }
-        });
+//        allianceMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                timerStop = true;
+//                startActivity(new Intent(GovernMenuActivityOnline.this, AllianceMenuActivityOnline.class).putExtra("GAME", game));
+//            }
+//        });
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1).putExtra("GAME", game).putExtra("RESOURCES", game.countries[game.yourCountryId].idOfMarker));
+                startActivity(new Intent(GovernMenuActivityOnline.this, MapActivityOnline.class).putExtra("INTERMEDIATE", 1).putExtra("GAME", game).putExtra("RESOURCES", game.user.country.idOfMarker));
             }
         });
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (game.isJobDone){
-                    curtain.setAlpha(0);
-                    curtain.setVisibility(View.VISIBLE);
-                    mapButton.setEnabled(false);
-                    jobButton.setEnabled(false);
-                    nextButton.setEnabled(false);
-                    allianceMenu.setEnabled(false);
-                    offers.setEnabled(false);
-                    relationshipButton.setEnabled(false);
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            float c = 0;
-                            for (int i = 0; i < 400; ++i){
-                                curtain.setAlpha(c);
-                                c += 0.0025;
-                                try {
-                                    Thread.sleep(4);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            timerStop = true;
-                            startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game).putExtra("RANGE", 1));
-                        }
-                    }.start();
-                }
-                else{
-                    warning.setText("Для начала вы должны рассмотреть 3 обращения!");
-                }
-            }
-        });
+//        nextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (game.isJobDone){
+//                    curtain.setAlpha(0);
+//                    curtain.setVisibility(View.VISIBLE);
+//                    mapButton.setEnabled(false);
+//                    jobButton.setEnabled(false);
+//                    nextButton.setEnabled(false);
+//                    allianceMenu.setEnabled(false);
+//                    offers.setEnabled(false);
+//                    relationshipButton.setEnabled(false);
+//                    new Thread(){
+//                        @Override
+//                        public void run() {
+//                            float c = 0;
+//                            for (int i = 0; i < 400; ++i){
+//                                curtain.setAlpha(c);
+//                                c += 0.0025;
+//                                try {
+//                                    Thread.sleep(4);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                            timerStop = true;
+//                            startActivity(new Intent(GovernMenuActivityOnline.this, RestActivity.class).putExtra("GAME", game).putExtra("RANGE", 1));
+//                        }
+//                    }.start();
+//                }
+//                else{
+//                    warning.setText("Для начала вы должны рассмотреть 3 обращения!");
+//                }
+//            }
+//        });
         jobButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!game.isJobDone){
-                    timerStop = true;
                     startActivity(new Intent(GovernMenuActivityOnline.this, JobActivityOnline.class).putExtra("GAME", game));
                 }
                 else{
@@ -187,20 +158,20 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
                 }
             }
         });
-        relationshipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timerStop = true;
-                startActivity(new Intent(GovernMenuActivityOnline.this, RelationshipActivityOnline.class).putExtra("GAME", game));
-            }
-        });
-        offers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timerStop = true;
-                startActivity(new Intent(GovernMenuActivityOnline.this, InvitationActivity.class).putExtra("GAME", game).putExtra("ADAPTER", adapter));
-            }
-        });
+//        relationshipButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                timerStop = true;
+//                startActivity(new Intent(GovernMenuActivityOnline.this, RelationshipActivityOnline.class).putExtra("GAME", game));
+//            }
+//        });
+//        offers.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                timerStop = true;
+//                startActivity(new Intent(GovernMenuActivityOnline.this, InvitationActivity.class).putExtra("GAME", game).putExtra("ADAPTER", adapter));
+//            }
+//        });
     }
 
     @Override
@@ -209,7 +180,7 @@ public class GovernMenuActivityOnline extends AppCompatActivity {
         toast.show();
     }
 
-    public void setImagesWithGame(CountryOnline country){
+    public void setImagesWithGame(Country country){
         coinView.setNewImage(country.moneyStatus);
         bombView.setNewImage(country.armyStatus);
         tieView.setNewImage(country.businessStatus);

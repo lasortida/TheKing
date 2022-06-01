@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mygame.MainActivity;
-import com.example.mygame.OnlineMode.Classes.Format;
+import com.example.mygame.OnlineMode.ForServer.Format;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
 import com.example.mygame.OnlineMode.GameService;
 import com.example.mygame.R;

@@ -8,7 +8,8 @@
     android:backgroundTint="#FFFFFF"
     android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
     tools:context=".MainActivity"
-    android:keepScreenOn="true">
+    android:keepScreenOn="true"
+    android:id="@+id/screen">
 
     <ImageView
         android:id="@+id/imageView"

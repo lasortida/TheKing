@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.mygame.MainActivity;
 import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.OnlineMode.ForServer.Game;
 import com.example.mygame.R;
 
 public class MapActivityOnline extends AppCompatActivity {
@@ -33,12 +34,11 @@ public class MapActivityOnline extends AppCompatActivity {
     public boolean isWorkNumber;
     public boolean directionOfNumber;
     public boolean continuade;
-    public CountDownTimer timer;
     boolean timerStop = false;
 
     int value;
 
-    GameOnline game;
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +85,6 @@ public class MapActivityOnline extends AppCompatActivity {
                                 }
                             });
                             curtain.setVisibility(View.INVISIBLE);
-
-                            timer.start();
-
-
                             continuade = true;
                             isWorkCurtain = false;
                         } catch (InterruptedException e) {
@@ -168,27 +164,10 @@ public class MapActivityOnline extends AppCompatActivity {
             });
         }
         else{
-
-            game = (GameOnline) args.getSerializable("GAME");
+            game = (Game) args.getSerializable("GAME");
             int number = game.numberOfWeek;
-            marker.setImageResource(game.countries[game.yourCountryId].idOfMarker);
-            timer = new CountDownTimer(game.time, 1000) {
-                @Override
-                public void onTick(long l) {
-                    game.time = l;
-                    if (timerStop){
-                        cancel();
-                    }
-                }
+            marker.setImageResource(game.user.country.idOfMarker);
 
-                @Override
-                public void onFinish() {
-                    if (!timerStop){
-                        Log.d("timer", "mapActivity");
-                        startActivity(new Intent(MapActivityOnline.this, RestActivity.class).putExtra("GAME", game));
-                    }
-                }
-            };
             showStart(number);
 
             newsText.setText(game.news);

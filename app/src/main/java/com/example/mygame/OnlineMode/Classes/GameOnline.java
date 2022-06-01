@@ -1,6 +1,8 @@
 package com.example.mygame.OnlineMode.Classes;
 
 import com.example.mygame.Effect;
+import com.example.mygame.OnlineMode.ForServer.Format;
+import com.example.mygame.OnlineMode.ForServer.Post;
 import com.example.mygame.Week;
 
 import java.io.Serializable;

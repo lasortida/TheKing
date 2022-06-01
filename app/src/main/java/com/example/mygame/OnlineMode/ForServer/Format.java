@@ -1,11 +1,17 @@
-package com.example.mygame.OnlineMode.Classes;
+package com.example.mygame.OnlineMode.ForServer;
+
+import com.example.mygame.OnlineMode.Classes.GameOnline;
+import com.example.mygame.OnlineMode.Classes.StorageOnline;
 
 public class Format {
     public String id;
     public int userCode;
+    public boolean error;
+    public boolean isTimerStarted;
+    public int time;
+
     public int countryId;
     public boolean start;
-    public boolean error;
     public int[] users;
     public int numberOfWeek;
     public double moneyStatus;
@@ -39,7 +45,7 @@ public class Format {
         GameOnline game = new GameOnline();
         game.idOfRoom = id;
         game.numberOfWeek = numberOfWeek;
-        game.countries = storage.countries;
+//        game.countries = storage.countries;
         game.storage = storage;
         game.setWeek();
         game.time = 90000;

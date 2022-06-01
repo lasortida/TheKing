@@ -60,6 +60,37 @@ public class ImageWithParams {
         }
     }
 
+    public void setNewImage(float level){
+        if (level <= 0f){
+            imageView.setImageResource(ids[id][0]);
+            state = 0;
+        }
+        if (level > 0f && level <= 0.17f){
+            imageView.setImageResource(ids[id][1]);
+            state = 1;
+        }
+        if (level > 0.17f && level <= 0.34f){
+            imageView.setImageResource(ids[id][2]);
+            state = 2;
+        }
+        if (level > 0.34f && level <= 0.51f){
+            imageView.setImageResource(ids[id][3]);
+            state = 3;
+        }
+        if (level > 0.51f && level <= 0.68f){
+            imageView.setImageResource(ids[id][4]);
+            state = 4;
+        }
+        if (level > 0.68f && level < 0.85f){
+            imageView.setImageResource(ids[id][5]);
+            state = 5;
+        }
+        if (level >= 0.85f){
+            imageView.setImageResource(ids[id][6]);
+            state = 6;
+        }
+    }
+
     public boolean isStateChange(double level){
         int newState = 0;
         if (level <= 0) {

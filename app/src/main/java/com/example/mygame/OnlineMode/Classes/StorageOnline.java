@@ -8,7 +8,7 @@ import com.example.mygame.R;
 import java.io.Serializable;
 
 public class StorageOnline implements Serializable {
-    CountryOnline[] countries = {
+    public CountryOnline[] countries = {
             new CountryOnline("Гоуленд", 0, R.drawable.goland, R.drawable.you_goland),
             new CountryOnline("Догсленд", 1, R.drawable.dogsland, R.drawable.you_dogsland),
             new CountryOnline("Грандерберг", 2, R.drawable.granderberg, R.drawable.you_granderberg),

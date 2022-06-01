@@ -1,4 +1,4 @@
-package com.example.mygame.OnlineMode.Classes;
+package com.example.mygame.OnlineMode.ForServer;
 
 import java.io.Serializable;
 
